@@ -17,9 +17,6 @@ class App extends Component {
       <Router>
         <div>
           <Navigation />
-
-          <hr />
-
           <Route exact path={ROUTES.LANDING} component={Landing} />
           <Route path={ROUTES.SIGN_UP} component={SignUp} />
           <Route path={ROUTES.SIGN_IN} component={SignIn} />

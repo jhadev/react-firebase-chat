@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import * as ROUTES from "../constants/routes";
 import {
   Collapse,
   Navbar,
@@ -9,6 +8,9 @@ import {
   Nav,
   NavItem
 } from "reactstrap";
+
+import SignOut from "./SignOut";
+import * as ROUTES from "../constants/routes";
 
 class Navigation extends Component {
   state = {
@@ -22,6 +24,8 @@ class Navigation extends Component {
   };
 
   render() {
+    const { authUser } = this.props;
+
     return (
       <div className="sticky-top">
         <Navbar
@@ -35,12 +39,42 @@ class Navigation extends Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
+              {authUser ? (
+                <React.Fragment>
+                  <NavItem>
+                    <NavLink className="font nav-link" to={ROUTES.LANDING}>
+                      Landing
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink className="navStyle nav-link" to={ROUTES.HOME}>
+                      Home
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink className="navStyle nav-link" to={ROUTES.ACCOUNT}>
+                      Account
+                    </NavLink>
+                  </NavItem>
+                  <NavItem className="nav-link">
+                    <SignOut />
+                  </NavItem>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <NavItem>
+                    <NavLink className="navStyle nav-link" to={ROUTES.SIGN_UP}>
+                      Sign Up
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink className="navStyle nav-link" to={ROUTES.SIGN_IN}>
+                      Sign In
+                    </NavLink>
+                  </NavItem>
+                </React.Fragment>
+              )}
               {/* <NavItem>
-                <NavLink className="font nav-link" to={ROUTES.LANDING}>
-                  Landing
-                </NavLink>
-              </NavItem> */}
-              <NavItem>
                 <NavLink className="navStyle nav-link" to={ROUTES.HOME}>
                   Home
                 </NavLink>
@@ -59,7 +93,7 @@ class Navigation extends Component {
                 <NavLink className="navStyle nav-link" to={ROUTES.ACCOUNT}>
                   Account
                 </NavLink>
-              </NavItem>
+              </NavItem> */}
               <NavItem>
                 <NavLink className="navStyle nav-link" to={ROUTES.ADMIN}>
                   Admin

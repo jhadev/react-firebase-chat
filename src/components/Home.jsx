@@ -1,9 +1,11 @@
 import React from "react";
 
 const Home = () => {
+  const user = localStorage.getItem("email");
   return (
-    <div>
-      <h1>Home</h1>
+    <div className="container">
+      <h1 className="text-center my-4">Home</h1>
+      {user ? <h2 className="userName text-center">Welcome, {user}</h2> : null}
     </div>
   );
 };

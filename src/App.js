@@ -29,13 +29,15 @@ class App extends Component {
       <Router>
         <div>
           <Navigation isOpen={this.state.isOpen} toggle={this.toggle} />
-          <Route exact path={ROUTES.LANDING} component={Landing} />
-          <Route path={ROUTES.SIGN_UP} component={SignUp} />
-          <Route path={ROUTES.SIGN_IN} component={SignIn} />
-          <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
-          <Route path={ROUTES.HOME} component={Home} />
-          <Route path={ROUTES.ACCOUNT} component={Account} />
-          <Route path={ROUTES.ADMIN} component={Admin} />
+          <div className="container">
+            <Route exact path={ROUTES.LANDING} component={Landing} />
+            <Route path={ROUTES.SIGN_UP} component={SignUp} />
+            <Route path={ROUTES.SIGN_IN} component={SignIn} />
+            <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
+            <Route path={ROUTES.HOME} component={Home} />
+            <Route path={ROUTES.ACCOUNT} component={Account} />
+            <Route path={ROUTES.ADMIN} component={Admin} />
+          </div>
         </div>
       </Router>
     );

@@ -5,8 +5,9 @@ import * as ROUTES from "../constants/routes";
 
 const PasswordForget = () => (
   <div>
-    <h1 className="my-4 text-center">Forgot Your Password?</h1>
-    <PasswordForgetForm />
+    <div className="my-4">
+      <PasswordForgetForm />
+    </div>
   </div>
 );
 
@@ -43,6 +44,7 @@ class PasswordForgetFormBase extends Component {
     return (
       <div className="row justify-content-center">
         <div className="col-md-6 col-12">
+          <h4 className="text-center mb-4">Forgot your password?</h4>
           <form onSubmit={this.onSubmit}>
             <div className="form-group">
               <input
@@ -56,7 +58,7 @@ class PasswordForgetFormBase extends Component {
             </div>
             <button
               disabled={isInvalid}
-              className="btn btn-primary"
+              className="btn btn-primary mb-2"
               type="submit"
             >
               Reset My Password

@@ -78,7 +78,17 @@ const AllUsers = ({ users }) => {
   );
 };
 
+//restrict route based on if user is authed and if they are identified as an admin
 const condition = authUser =>
-  authUser ? authUser.email === ROLES.ADMIN : false;
+  authUser ? ROLES.ADMIN.includes(authUser.email) : false;
+
+// {
+
+//   if (authUser) {
+//     if (ROLES.ADMIN.includes(authUser.email)) {
+//       return true;
+//     }
+//   }
+// };
 
 export default withAuthorization(condition)(Admin);

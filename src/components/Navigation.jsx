@@ -54,7 +54,7 @@ const Navigation = ({ isOpen, toggle }) => {
                         </NavLink>
                       </NavItem>
                       {/* RESTRICT ADMIN */}
-                      {authUser.email === ROLES.ADMIN && (
+                      {ROLES.ADMIN.includes(authUser.email) && (
                         <NavItem>
                           <NavLink
                             className="navStyle nav-link"

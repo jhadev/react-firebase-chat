@@ -1,4 +1,5 @@
 import React from "react";
+import { withAuthorization } from "../components/Session/index";
 
 const Home = () => {
   // const user = localStorage.getItem("email");
@@ -10,4 +11,7 @@ const Home = () => {
   );
 };
 
-export default Home;
+//condition for authuser check to restrict routes. If user isn't authorized, home is off limits
+const condition = authUser => !!authUser;
+
+export default withAuthorization(condition)(Home);

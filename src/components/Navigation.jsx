@@ -52,6 +52,14 @@ const Navigation = ({ isOpen, toggle }) => {
                           Account
                         </NavLink>
                       </NavItem>
+                      <NavItem>
+                        <NavLink
+                          className="navStyle nav-link"
+                          to={ROUTES.ADMIN}
+                        >
+                          Admin
+                        </NavLink>
+                      </NavItem>
                       <NavItem className="nav-link">
                         <SignOut />
                       </NavItem>
@@ -97,11 +105,6 @@ const Navigation = ({ isOpen, toggle }) => {
             Account
           </NavLink>
         </NavItem> */}
-                  <NavItem>
-                    <NavLink className="navStyle nav-link" to={ROUTES.ADMIN}>
-                      Admin
-                    </NavLink>
-                  </NavItem>
                 </Nav>
               </Collapse>
             </Navbar>

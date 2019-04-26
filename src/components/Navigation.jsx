@@ -60,7 +60,7 @@ const Navigation = ({ isOpen, toggle }) => {
                           Admin
                         </NavLink>
                       </NavItem>
-                      <NavItem className="nav-link">
+                      <NavItem>
                         <SignOut />
                       </NavItem>
                     </React.Fragment>

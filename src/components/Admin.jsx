@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withAuthorization } from "../components/Session/index";
+import { Table } from "reactstrap";
 
 //only shown if authed
 //admin page adds ability to see all users
@@ -41,7 +42,7 @@ class Admin extends Component {
 
     return (
       <div>
-        <h1 className="admin my-4">Admin</h1>
+        <h1 className="admin my-4 text-center">Admin Panel</h1>
         {loading && <div>Loading...</div>}
 
         <AllUsers users={users} />
@@ -53,23 +54,26 @@ class Admin extends Component {
 
 const AllUsers = ({ users }) => {
   return (
-    <ul>
-      {users.map(user => (
-        <li key={user.uid}>
-          <span>
-            <strong>ID: </strong>
-            {`${user.uid} `}
-          </span>
-          <span>
-            <strong>E-Mail: </strong>
-            {`${user.email} `}
-          </span>
-          <span>
-            <strong>Username: </strong> {`${user.username} `}
-          </span>
-        </li>
-      ))}
-    </ul>
+    <Table striped responsive bordered>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>UID</th>
+          <th>Username</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        {users.map((user, index) => (
+          <tr key={user.uid}>
+            <th scope="row">{index + 1}</th>
+            <td>{user.uid}</td>
+            <td>{user.username}</td>
+            <td>{user.email}</td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
   );
 };
 

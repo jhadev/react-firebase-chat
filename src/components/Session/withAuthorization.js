@@ -25,7 +25,7 @@ const withAuthorization = condition => Component => {
     render() {
       return (
         //consume auth user from the context
-        //avoid showing protected page before the redirect usings the higher order component
+        //avoid showing protected page before the redirect using the higher order component
         <AuthUserContext.Consumer>
           {authUser =>
             condition(authUser) ? <Component {...this.props} /> : null

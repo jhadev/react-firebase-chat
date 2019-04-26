@@ -62,7 +62,7 @@ class PasswordChangeForm extends Component {
               className="btn btn-primary"
               type="submit"
             >
-              Reset My Password
+              Change My Password
             </button>
 
             {error && <p>{error.message}</p>}

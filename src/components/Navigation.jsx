@@ -16,6 +16,7 @@ import * as ROUTES from "../constants/routes";
 const Navigation = ({ isOpen, toggle }) => {
   return (
     <div>
+      {/* consume context provied in session index based on if user is authed */}
       <AuthUserContext.Consumer>
         {authUser => (
           <div className="sticky-top">
@@ -30,6 +31,7 @@ const Navigation = ({ isOpen, toggle }) => {
               <NavbarToggler onClick={toggle} />
               <Collapse isOpen={isOpen} navbar>
                 <Nav className="ml-auto" navbar>
+                  {/* conditionally render navbar items based on if a user is signed in or not */}
                   {authUser ? (
                     <React.Fragment>
                       <NavItem>

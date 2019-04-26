@@ -11,8 +11,12 @@ const SignIn = () => {
     <div>
       <h1 className="text-center my-4">Sign In</h1>
       <SignInForm />
-      <PasswordForgetLink />
-      <SignUpLink />
+      <div className="row justify-content-center">
+        <div className="col-md-6 col-12 mt-2">
+          <PasswordForgetLink />
+          <SignUpLink />
+        </div>
+      </div>
     </div>
   );
 };

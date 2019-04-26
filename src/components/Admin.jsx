@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withAuthorization } from "../components/Session/index";
 import { Table } from "reactstrap";
+import * as ROLES from "../constants/roles";
 
 //only shown if authed
 //admin page adds ability to see all users
@@ -77,6 +78,7 @@ const AllUsers = ({ users }) => {
   );
 };
 
-const condition = authUser => !!authUser;
+const condition = authUser =>
+  authUser ? authUser.email === ROLES.ADMIN : false;
 
 export default withAuthorization(condition)(Admin);

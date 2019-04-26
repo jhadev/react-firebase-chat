@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 
 import SignOut from "./SignOut";
+import * as ROLES from "../constants/roles";
 import * as ROUTES from "../constants/routes";
 
 const Navigation = ({ isOpen, toggle }) => {
@@ -52,14 +53,17 @@ const Navigation = ({ isOpen, toggle }) => {
                           Account
                         </NavLink>
                       </NavItem>
-                      <NavItem>
-                        <NavLink
-                          className="navStyle nav-link"
-                          to={ROUTES.ADMIN}
-                        >
-                          Admin
-                        </NavLink>
-                      </NavItem>
+                      {/* RESTRICT ADMIN */}
+                      {authUser.email === ROLES.ADMIN && (
+                        <NavItem>
+                          <NavLink
+                            className="navStyle nav-link"
+                            to={ROUTES.ADMIN}
+                          >
+                            Admin
+                          </NavLink>
+                        </NavItem>
+                      )}
                       <NavItem>
                         <SignOut />
                       </NavItem>
@@ -84,27 +88,6 @@ const Navigation = ({ isOpen, toggle }) => {
                       </NavItem>
                     </React.Fragment>
                   )}
-
-                  {/* <NavItem>
-          <NavLink className="navStyle nav-link" to={ROUTES.HOME}>
-            Home
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink className="navStyle nav-link" to={ROUTES.SIGN_UP}>
-            Sign Up
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink className="navStyle nav-link" to={ROUTES.SIGN_IN}>
-            Sign In
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink className="navStyle nav-link" to={ROUTES.ACCOUNT}>
-            Account
-          </NavLink>
-        </NavItem> */}
                 </Nav>
               </Collapse>
             </Navbar>

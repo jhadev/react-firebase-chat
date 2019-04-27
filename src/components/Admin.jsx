@@ -82,13 +82,4 @@ const AllUsers = ({ users }) => {
 const condition = authUser =>
   authUser ? ROLES.ADMIN.includes(authUser.email) : false;
 
-// {
-
-//   if (authUser) {
-//     if (ROLES.ADMIN.includes(authUser.email)) {
-//       return true;
-//     }
-//   }
-// };
-
 export default withAuthorization(condition)(Admin);

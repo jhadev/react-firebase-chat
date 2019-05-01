@@ -33,6 +33,8 @@ class Firebase {
 
   //firebase api for users
   //match the location where users are stored based on their uid
+  chat = message => this.db.ref(`chat`).push(message);
+
   user = uid => this.db.ref(`users/${uid}`);
 
   //ref to the users db

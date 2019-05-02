@@ -20,9 +20,9 @@ const Navigation = ({ isOpen, toggle }) => {
       {/* consume context provied in session index based on if user is authed */}
       <AuthUserContext.Consumer>
         {authUser => (
-          <div className="sticky-top">
+          <>
             <Navbar
-              className="shadow"
+              className="shadow fixed-top"
               color="light"
               light
               fixed="fixed"
@@ -91,7 +91,7 @@ const Navigation = ({ isOpen, toggle }) => {
                 </Nav>
               </Collapse>
             </Navbar>
-          </div>
+          </>
         )}
       </AuthUserContext.Consumer>
     </div>

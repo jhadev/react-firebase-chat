@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import AuthUserContext from "../components/Session/context";
 import { withAuthorization } from "../components/Session/index";
-import useStayScrolled from "react-stay-scrolled";
 import Message from "./Message";
 import MessageForm from "./MessageForm";
 import moment from "moment";
 
 const Home = props => {
   // const divRef = useRef(null);
-  // const { stayScrolled } = useStayScrolled(divRef);
   const [showChat, handleChange] = useState(false);
   const [username, setUsername] = useState("");
   const [timestamp, setTimestamp] = useState("");
@@ -28,9 +26,14 @@ const Home = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useLayoutEffect(() => {
-  //   stayScrolled();
-  // }, [message]);
+  useEffect(() => {
+    scrollToBottom();
+  }, [chat]);
+
+  const scrollToBottom = () => {
+    const scrollingElement = document.scrollingElement || document.body;
+    scrollingElement.scrollTop = scrollingElement.scrollHeight;
+  };
 
   const sendMessage = () => {
     if (message !== "") {
@@ -57,25 +60,25 @@ const Home = props => {
   };
 
   return (
-    <AuthUserContext.Consumer>
-      {authUser => (
-        <div className="container-fluid">
-          <h1 className="text-center welcome my-4">
-            Welcome, {authUser.email}
-          </h1>
-          {/* WILL BE CHAT EVENTUALLY */}
-          <button
-            className="btn btn-primary"
-            onClick={() => {
-              handleChange(!showChat);
-              setUsername(authUser.email);
-            }}
-          >
-            {!showChat ? "Show Chat" : "Hide Chat"}
-          </button>
-          {showChat && (
-            <div className="mt-4">
-              <div className="row">
+    <>
+      <AuthUserContext.Consumer>
+        {authUser => (
+          <div className="container-fluid">
+            <h1 className="text-center welcome my-4">
+              Welcome, {authUser.email}
+            </h1>
+            {/* WILL BE CHAT EVENTUALLY */}
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                handleChange(!showChat);
+                setUsername(authUser.email);
+              }}
+            >
+              {!showChat ? "Show Chat" : "Hide Chat"}
+            </button>
+            {showChat && (
+              <div className="row mt-4">
                 <div className="col-12">
                   <div className="wrapper">
                     <>
@@ -122,11 +125,11 @@ const Home = props => {
                   />
                 </div>
               </div>
-            </div>
-          )}
-        </div>
-      )}
-    </AuthUserContext.Consumer>
+            )}
+          </div>
+        )}
+      </AuthUserContext.Consumer>
+    </>
   );
 };
 

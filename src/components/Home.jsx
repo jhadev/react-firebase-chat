@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import AuthUserContext from "../components/Session/context";
 import { withAuthorization } from "../components/Session/index";
 import { Col, Form, FormGroup, Label, Input } from "reactstrap";
+import Message from "./Message";
 import moment from "moment";
 
 const Home = props => {
@@ -48,10 +49,45 @@ const Home = props => {
               setUsername(authUser.email);
             }}
           >
-            Show Chat
+            {!showChat ? "Show Chat" : "Hide Chat"}
           </button>
           {showChat && (
             <div className="my-4">
+              <>
+                {/* EXTRACT THIS */}
+                {chat !== null &&
+                  Object.keys(chat).map((message, index) => {
+                    if (authUser.email === chat[message]["user"]) {
+                      return (
+                        <div
+                          className="d-flex flex-column align-items-end"
+                          key={index}
+                        >
+                          <Message
+                            user={chat[message]["user"]}
+                            timestamp={chat[message]["timestamp"]}
+                            message={chat[message]["message"]}
+                            badge={"badge badge-primary msgText mb-2"}
+                          />
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div
+                          className="d-flex flex-column align-items-start"
+                          key={index}
+                        >
+                          <Message
+                            user={chat[message]["user"]}
+                            timestamp={chat[message]["timestamp"]}
+                            message={chat[message]["message"]}
+                            badge={"badge badge-secondary msgText mb-2"}
+                          />
+                        </div>
+                      );
+                    }
+                  })}
+              </>
               {/* RENDER CHAT COMPONENT */}
               <Form>
                 <FormGroup row>
@@ -81,39 +117,6 @@ const Home = props => {
                   Send
                 </button>
               </Form>
-              <>
-                {/* EXTRACT THIS */}
-                {chat !== null &&
-                  Object.keys(chat).map((message, index) => {
-                    if (authUser.email === chat[message]["user"]) {
-                      return (
-                        <div
-                          className="d-flex flex-column align-items-end"
-                          key={index}
-                        >
-                          <div className="my-1">{chat[message]["user"]}</div>
-                          <div className="my-1">
-                            {chat[message]["timestamp"]}
-                          </div>
-                          <div className="my-1">{chat[message]["message"]}</div>
-                        </div>
-                      );
-                    } else {
-                      return (
-                        <div
-                          className="d-flex flex-column align-items-start"
-                          key={index}
-                        >
-                          <div className="my-1">{chat[message]["user"]}</div>
-                          <div className="my-1">
-                            {chat[message]["timestamp"]}
-                          </div>
-                          <div className="my-1">{chat[message]["message"]}</div>
-                        </div>
-                      );
-                    }
-                  })}
-              </>
             </div>
           )}
         </div>

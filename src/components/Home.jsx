@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import AuthUserContext from "../components/Session/context";
 import { withAuthorization } from "../components/Session/index";
-import { Col, Form, FormGroup, Label, Input } from "reactstrap";
 import Message from "./Message";
+import MessageForm from "./MessageForm";
 import moment from "moment";
 
 const Home = props => {
@@ -15,8 +15,8 @@ const Home = props => {
   const chatroom = props.firebase.chat();
 
   useEffect(() => {
-    const handleNewMessages = snap => {
-      if (snap.val()) setChat(snap.val());
+    const handleNewMessages = snapshot => {
+      if (snapshot.val()) setChat(snapshot.val());
     };
     chatroom.on("value", handleNewMessages);
     return () => {
@@ -25,22 +25,34 @@ const Home = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(chat);
-  // console.log();
-  // console.log(username, timestamp, message);
-
   const sendMessage = () => {
-    let messageObj = { user: username, timestamp: timestamp, message: message };
-    props.firebase.send(messageObj);
+    if (message !== "") {
+      let messageObj = {
+        user: username,
+        timestamp: timestamp,
+        message: message
+      };
+      props.firebase.send(messageObj);
+    }
     setMessage("");
     setTimestamp("");
+  };
+
+  const packageMsg = event => {
+    event.preventDefault();
+    sendMessage();
+  };
+
+  const setMsg = event => {
+    setTimestamp(moment().format("LLLL"));
+    setMessage(event.target.value);
   };
 
   return (
     <AuthUserContext.Consumer>
       {authUser => (
         <div className="container">
-          <h1 className="text-center my-4">Home {authUser.email}</h1>
+          <h1 className="text-center my-4">Welcome, {authUser.email}</h1>
           {/* WILL BE CHAT EVENTUALLY */}
           <button
             className="btn btn-primary"
@@ -88,35 +100,11 @@ const Home = props => {
                     }
                   })}
               </>
-              {/* RENDER CHAT COMPONENT */}
-              <Form>
-                <FormGroup row>
-                  <Label for="exampleText" sm={2}>
-                    Chat!
-                  </Label>
-                  <Col sm={10}>
-                    <Input
-                      type="textarea"
-                      name="text"
-                      id="exampleText"
-                      value={message}
-                      onChange={event => {
-                        setMessage(event.target.value);
-                        setTimestamp(moment().format("LLLL"));
-                      }}
-                    />
-                  </Col>
-                </FormGroup>
-                <button
-                  className="btn btn-primary"
-                  onClick={event => {
-                    event.preventDefault();
-                    sendMessage();
-                  }}
-                >
-                  Send
-                </button>
-              </Form>
+              <MessageForm
+                message={message}
+                setMsg={setMsg}
+                packageMsg={packageMsg}
+              />
             </div>
           )}
         </div>

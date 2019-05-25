@@ -1,7 +1,9 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { withFirebase } from "../components/Firebase/index";
-import * as ROUTES from "../constants/routes";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { withFirebase } from '../components/Firebase/index';
+import * as ROUTES from '../constants/routes';
+import Row from './common/Row';
+import Column from './common/Column';
 
 const PasswordForget = () => (
   <div>
@@ -13,7 +15,7 @@ const PasswordForget = () => (
 
 class PasswordForgetFormBase extends Component {
   state = {
-    email: "",
+    email: '',
     error: null
   };
 
@@ -24,7 +26,7 @@ class PasswordForgetFormBase extends Component {
     this.props.firebase
       .doPasswordReset(email)
       .then(() => {
-        this.setState({ email: "", error: null });
+        this.setState({ email: '', error: null });
       })
       .catch(error => {
         this.setState({ error });
@@ -39,11 +41,11 @@ class PasswordForgetFormBase extends Component {
   render() {
     const { email, error } = this.state;
 
-    const isInvalid = email === "";
+    const isInvalid = email === '';
 
     return (
-      <div className="row justify-content-center">
-        <div className="col-md-6 col-12">
+      <Row helper="justify-content-center">
+        <Column size="md-6 12">
           <h4 className="text-center mb-4">Forgot your password?</h4>
           <form onSubmit={this.onSubmit}>
             <div className="form-group">
@@ -66,8 +68,8 @@ class PasswordForgetFormBase extends Component {
 
             {error && <p>{error.message}</p>}
           </form>
-        </div>
-      </div>
+        </Column>
+      </Row>
     );
   }
 }

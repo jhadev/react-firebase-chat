@@ -1,6 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
+import Container from './common/Container';
+import Row from './common/Row';
+import Column from './common/Column';
 import Message from './Message';
 import MessageForm from './MessageForm';
 import moment from 'moment';
@@ -86,7 +89,7 @@ const Home = props => {
       } else if (imgUrlPattern.test(word)) {
         newMsg = (
           <Message user={user} timestamp={timestamp}>
-            <div className={`badge badge-${badgeClass} msgText mb-2`}>
+            <div className={`badge badge-${badgeClass} msgText msgImg mb-2`}>
               <a
                 className="msg-link text-light"
                 href={word}
@@ -121,23 +124,24 @@ const Home = props => {
     <>
       <AuthUserContext.Consumer>
         {authUser => (
-          <div className="container-fluid">
-            <h1 className="text-center welcome my-4">
-              Welcome, {authUser.email}
-            </h1>
-            {/* WILL BE CHAT EVENTUALLY */}
-            <button
-              className="btn btn-primary"
-              onClick={() => {
-                handleChange(!showChat);
-                setUsername(authUser.email);
-              }}
-            >
-              {!showChat ? 'Show Chat' : 'Hide Chat'}
-            </button>
+          <Container fluid>
+            <div className="text-center">
+              <h1 className=" welcome my-4">Welcome, {authUser.email}</h1>
+              {/* WILL BE CHAT EVENTUALLY */}
+
+              <button
+                className="btn btn-primary btn-lg"
+                onClick={() => {
+                  handleChange(!showChat);
+                  setUsername(authUser.email);
+                }}
+              >
+                {!showChat ? 'Show Chat' : 'Hide Chat'}
+              </button>
+            </div>
             {showChat && (
-              <div className="row mt-4">
-                <div className="col-12">
+              <Row helper="mt-4">
+                <Column size="12">
                   <div className="wrapper">
                     <>
                       {/* EXTRACT THIS */}
@@ -181,10 +185,10 @@ const Home = props => {
                     packageMsg={packageMsg}
                     sendMessage={sendMessage}
                   />
-                </div>
-              </div>
+                </Column>
+              </Row>
             )}
-          </div>
+          </Container>
         )}
       </AuthUserContext.Consumer>
     </>

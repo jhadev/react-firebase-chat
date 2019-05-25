@@ -1,8 +1,10 @@
-import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
-import { compose } from "recompose";
-import { withFirebase } from "./Firebase/index";
-import * as ROUTES from "../constants/routes";
+import React, { Component } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import { compose } from 'recompose';
+import { withFirebase } from './Firebase/index';
+import * as ROUTES from '../constants/routes';
+import Row from './common/Row';
+import Column from './common/Column';
 
 const SignUp = () => {
   return (
@@ -15,10 +17,10 @@ const SignUp = () => {
 
 class SignUpFormBase extends Component {
   state = {
-    username: "",
-    email: "",
-    passwordOne: "",
-    passwordTwo: "",
+    username: '',
+    email: '',
+    passwordOne: '',
+    passwordTwo: '',
     error: null
   };
 
@@ -39,10 +41,10 @@ class SignUpFormBase extends Component {
       .then(() => {
         //set state back to original values
         this.setState({
-          username: "",
-          email: "",
-          passwordOne: "",
-          passwordTwo: "",
+          username: '',
+          email: '',
+          passwordOne: '',
+          passwordTwo: '',
           error: null
         });
         //send them to home page
@@ -64,13 +66,13 @@ class SignUpFormBase extends Component {
 
     const isInvalid =
       passwordOne !== passwordTwo ||
-      passwordOne === "" ||
-      email === "" ||
-      username === "";
+      passwordOne === '' ||
+      email === '' ||
+      username === '';
 
     return (
-      <div className="row justify-content-center">
-        <div className="col-md-6 col-12">
+      <Row helper="justify-content-center">
+        <Column size="md-6 12">
           <form onSubmit={this.onSubmit}>
             <div className="form-group">
               <input
@@ -122,8 +124,8 @@ class SignUpFormBase extends Component {
 
             {error && <p>{error.message}</p>}
           </form>
-        </div>
-      </div>
+        </Column>
+      </Row>
     );
   }
 }

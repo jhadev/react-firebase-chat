@@ -45,6 +45,10 @@ video {
   margin: 2% auto;
 }
 
+.msgImg {
+  width: 50%;
+}
+
 .msg-link {
   text-decoration: underline;
   margin-bottom: 2px;
@@ -83,5 +87,60 @@ body {
 @media screen and (max-width: 600px) {
   .welcome {
     font-size: 1.4rem;
+  }
+}
+
+@media screen and (max-width: 999px) {
+
+  iframe {
+    width: 100%;
+  }
+
+  button,
+  .nav-user,
+  #upload,
+  .user-name {
+    cursor: pointer;
+  }
+
+  .nav-user {
+    margin-bottom: 6px;
+  }
+
+  .time {
+    font-style: italic;
+    font-size: 12px;
+  }
+
+  .user-name,
+  .label,
+  #count-message {
+    font-size: 14px;
+  }
+
+  .msg-link {
+    font-size: 0.9rem;
+  }
+
+  .alert {
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  .msgImg {
+    width: 100%;
+  }
+
+  .sticky-footer {
+    position: sticky !important;
+    position: -webkit-sticky;
+  }
+
+  .github,
+  .log-in,
+  .input,
+  .show-user {
+    font-size: 14px;
+    margin-bottom: 8px;
   }
 }

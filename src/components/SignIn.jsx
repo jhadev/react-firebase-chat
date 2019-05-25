@@ -1,30 +1,32 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import { compose } from "recompose";
-import { SignUpLink } from "./SignUp";
-import { PasswordForgetLink } from "./PasswordForget";
-import { withFirebase } from "./Firebase/index";
-import * as ROUTES from "../constants/routes";
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'recompose';
+import { SignUpLink } from './SignUp';
+import { PasswordForgetLink } from './PasswordForget';
+import { withFirebase } from './Firebase/index';
+import * as ROUTES from '../constants/routes';
+import Row from './common/Row';
+import Column from './common/Column';
 
 const SignIn = () => {
   return (
     <div>
       <h1 className="text-center my-4">Sign In</h1>
       <SignInForm />
-      <div className="row justify-content-center">
-        <div className="col-md-6 col-12 mt-2">
+      <Row helper="justify-content-center">
+        <Column size="md-6 12">
           <PasswordForgetLink />
           <SignUpLink />
-        </div>
-      </div>
+        </Column>
+      </Row>
     </div>
   );
 };
 
 class SignInFormBase extends Component {
   state = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
     error: null
   };
 
@@ -37,12 +39,12 @@ class SignInFormBase extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { email, password } = this.state;
-    localStorage.setItem("email", email);
+    localStorage.setItem('email', email);
 
     this.props.firebase
       .doSignInUser(email, password)
       .then(() => {
-        this.setState({ email: "", password: "", error: null });
+        this.setState({ email: '', password: '', error: null });
         this.props.history.push(ROUTES.HOME);
       })
       .catch(error => {
@@ -53,11 +55,11 @@ class SignInFormBase extends Component {
   render() {
     const { email, password, error } = this.state;
 
-    const isInvalid = password === "" || email === "";
+    const isInvalid = password === '' || email === '';
 
     return (
-      <div className="row justify-content-center">
-        <div className="col-md-6 col-12">
+      <Row helper="justify-content-center">
+        <Column size="md-6 12">
           <form onSubmit={this.onSubmit}>
             <div className="form-group">
               <input
@@ -89,8 +91,8 @@ class SignInFormBase extends Component {
 
             {error && <p>{error.message}</p>}
           </form>
-        </div>
-      </div>
+        </Column>
+      </Row>
     );
   }
 }

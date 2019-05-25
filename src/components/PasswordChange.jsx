@@ -1,10 +1,12 @@
-import React, { Component } from "react";
-import { withFirebase } from "../components/Firebase/index";
+import React, { Component } from 'react';
+import { withFirebase } from '../components/Firebase/index';
+import Row from './common/Row';
+import Column from './common/Column';
 
 class PasswordChangeForm extends Component {
   state = {
-    passwordOne: "",
-    passwordTwo: "",
+    passwordOne: '',
+    passwordTwo: '',
     error: null
   };
 
@@ -15,7 +17,7 @@ class PasswordChangeForm extends Component {
     this.props.firebase
       .doPasswordUpdate(passwordOne)
       .then(() => {
-        this.setState({ passwordOne: "", passwordTwo: "", error: null });
+        this.setState({ passwordOne: '', passwordTwo: '', error: null });
       })
       .catch(error => {
         this.setState({ error });
@@ -30,11 +32,11 @@ class PasswordChangeForm extends Component {
   render() {
     const { passwordOne, passwordTwo, error } = this.state;
 
-    const isInvalid = passwordOne !== passwordTwo || passwordOne === "";
+    const isInvalid = passwordOne !== passwordTwo || passwordOne === '';
 
     return (
-      <div className="row justify-content-center">
-        <div className="col-md-6 col-12">
+      <Row helper="justify-content-center">
+        <Column size="md-6 12">
           <h4 className="text-center my-4">Change your password.</h4>
           <form onSubmit={this.onSubmit}>
             <div className="form-group">
@@ -67,8 +69,8 @@ class PasswordChangeForm extends Component {
 
             {error && <p>{error.message}</p>}
           </form>
-        </div>
-      </div>
+        </Column>
+      </Row>
     );
   }
 }

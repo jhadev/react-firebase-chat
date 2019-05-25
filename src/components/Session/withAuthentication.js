@@ -1,6 +1,6 @@
-import React from "react";
-import { withFirebase } from "../Firebase/index";
-import { AuthUserContext } from "./index";
+import React from 'react';
+import { withFirebase } from '../Firebase/index';
+import { AuthUserContext } from './index';
 
 const withAuthentication = Component => {
   class IsAuthenticated extends React.Component {

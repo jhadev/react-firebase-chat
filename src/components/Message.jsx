@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-const Message = ({ user, timestamp, message, badge }) => {
+const Message = ({ children, user, timestamp }) => {
   return (
     <>
-      <div className="my-1">{user}</div>
-      <div className="my-1">{timestamp}</div>
-      <div className={badge}>{message}</div>
+      <div className="mt-4 user-name">{user}</div>
+      <div className="my-1 time">{timestamp}</div>
+      {children}
     </>
   );
 };

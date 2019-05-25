@@ -60,20 +60,17 @@ const Home = props => {
   };
 
   const handleMsgDataTypes = (message, user, timestamp, badgeClass) => {
-    let urlPattern = /(?!.*(?:\.jpe?g|\/iframe>|\.gif|\.png|\.mp4|\.mp3)$)\b(?:https?|ftp):\/\/[a-z0-9-+&@#%?=~_|!:,.;]*[a-z0-9-+&@#%=~_|]/gim;
-    // let pseudoUrlPattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-    // let emailAddressPattern = /[\w.]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,6})+/gim;
-    // let imgUrlPattern = /(?=.*(?:\.jpe?g|\.gif|\.png)$)\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
+    const urlPattern = /(?!.*(?:\.jpe?g|\/iframe>|\.gif|\.png|\.mp4|\.mp3)$)\b(?:https?|ftp):\/\/[a-z0-9-+&@#%?=~_|!:,.;]*[a-z0-9-+&@#%=~_|]/gim;
+
+    const imgUrlPattern = /(?=.*(?:\.jpe?g|\.gif|\.png)$)\b(?:https?|ftp):\/\/[a-z0-9-+&@#%?=~_|!:,.;]*[a-z0-9-+&@#%=~_|]/gim;
     // let videoUrlPattern = /(?=.*(?:\.mp4|\.ogg)$)\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
     // let audioUrlPattern = /(?=.*(?:\.mp3)$)\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
     let newMsg;
     let destructuredMsg = message.split(' ');
-    destructuredMsg.map(word => {
+    destructuredMsg.forEach(word => {
       if (urlPattern.test(word)) {
         newMsg = (
-          <Message>
-            <div className="my-1">{user}</div>
-            <div className="my-1">{timestamp}</div>
+          <Message user={user} timestamp={timestamp}>
             <div className={`badge badge-${badgeClass} msgText mb-2`}>
               <a
                 className="msg-link text-light"
@@ -86,11 +83,29 @@ const Home = props => {
             </div>
           </Message>
         );
+      } else if (imgUrlPattern.test(word)) {
+        newMsg = (
+          <Message user={user} timestamp={timestamp}>
+            <div className={`badge badge-${badgeClass} msgText mb-2`}>
+              <a
+                className="msg-link text-light"
+                href={word}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <img
+                  className="msg-img img-fluid rounded img-thumbnail"
+                  src={word}
+                  alt="Message"
+                />
+              </a>
+              {destructuredMsg.join(' ')}
+            </div>
+          </Message>
+        );
       } else {
         newMsg = (
-          <Message>
-            <div className="my-1">{user}</div>
-            <div className="my-1">{timestamp}</div>
+          <Message user={user} timestamp={timestamp}>
             <div className={`badge badge-${badgeClass} msgText mb-2`}>
               {message}
             </div>
@@ -132,7 +147,7 @@ const Home = props => {
                             return (
                               <div
                                 className="d-flex flex-column align-items-end"
-                                key={index}
+                                key={message}
                               >
                                 {handleMsgDataTypes(
                                   chat[message]['message'],

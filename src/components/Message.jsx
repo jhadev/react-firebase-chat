@@ -1,11 +1,12 @@
 import React from 'react';
+import MessageBody from './MessageBody';
 
-const Message = ({ children, user, timestamp }) => {
+const Message = ({ user, timestamp, message, badgeClass }) => {
   return (
     <>
       <div className="mt-4 user-name">{user}</div>
       <div className="mt-1 mb-2 time">{timestamp}</div>
-      {children}
+      <MessageBody body={message} badgeClass={badgeClass} />
     </>
   );
 };

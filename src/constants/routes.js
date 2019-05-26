@@ -1,7 +1,7 @@
-export const LANDING = '/react-firebase-chat';
-export const SIGN_UP = '/react-firebase-chat/signup';
-export const SIGN_IN = '/react-firebase-chat/signin';
-export const HOME = '/react-firebase-chat/home';
-export const ACCOUNT = '/react-firebase-chat/account';
-export const ADMIN = '/react-firebase-chat/admin';
-export const PASSWORD_FORGET = '/react-firebase-chat/pw-forget';
+export const LANDING = '/';
+export const SIGN_UP = '/signup';
+export const SIGN_IN = '/signin';
+export const HOME = '/home';
+export const ACCOUNT = '/account';
+export const ADMIN = '/admin';
+export const PASSWORD_FORGET = '/pw-forget';

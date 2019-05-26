@@ -108,7 +108,7 @@ const Home = props => {
                             return (
                               <div
                                 className="d-flex flex-column align-items-start"
-                                key={index}
+                                key={message}
                               >
                                 <Message
                                   badgeClass="secondary"

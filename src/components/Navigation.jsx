@@ -1,6 +1,6 @@
-import React from "react";
-import { AuthUserContext } from "./Session/index";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { AuthUserContext } from './Session/index';
+import { NavLink } from 'react-router-dom';
 import {
   Collapse,
   Navbar,
@@ -8,11 +8,11 @@ import {
   NavbarBrand,
   Nav,
   NavItem
-} from "reactstrap";
+} from 'reactstrap';
 
-import SignOut from "./SignOut";
-import * as ROLES from "../constants/roles";
-import * as ROUTES from "../constants/routes";
+import SignOut from './SignOut';
+import * as ROLES from '../constants/roles';
+import * as ROUTES from '../constants/routes';
 
 const Navigation = ({ isOpen, toggle }) => {
   return (
@@ -28,7 +28,9 @@ const Navigation = ({ isOpen, toggle }) => {
               fixed="fixed"
               expand="md"
             >
-              <NavbarBrand href="/">React Firebase Auth</NavbarBrand>
+              <NavbarBrand href={ROUTES.LANDING}>
+                React Firebase Chat
+              </NavbarBrand>
               <NavbarToggler onClick={toggle} />
               <Collapse isOpen={isOpen} navbar>
                 <Nav className="ml-auto" navbar>

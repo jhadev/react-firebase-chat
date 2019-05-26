@@ -62,6 +62,32 @@ const Home = props => {
     setMessage(value);
   };
 
+  const handleLayout = (authUser, chat, message) => {
+    if (authUser.email === chat[message]['user']) {
+      return (
+        <div className="d-flex flex-column align-items-end" key={message}>
+          <Message
+            color="primary"
+            message={chat[message]['message']}
+            user={chat[message]['user']}
+            timestamp={chat[message]['timestamp']}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div className="d-flex flex-column align-items-start" key={message}>
+          <Message
+            color="secondary"
+            message={chat[message]['message']}
+            user={chat[message]['user']}
+            timestamp={chat[message]['timestamp']}
+          />
+        </div>
+      );
+    }
+  };
+
   return (
     <>
       <AuthUserContext.Consumer>
@@ -76,7 +102,6 @@ const Home = props => {
                 onClick={() => {
                   handleChange(!showChat);
                   setUsername(authUser.email);
-                  scrollToBottom();
                 }}
               >
                 {!showChat ? 'Show Chat' : 'Hide Chat'}
@@ -87,39 +112,10 @@ const Home = props => {
                 <Column size="12">
                   <div className="wrapper">
                     <>
-                      {/* EXTRACT THIS */}
                       {chat !== null &&
-                        Object.keys(chat).map((message, index) => {
-                          if (authUser.email === chat[message]['user']) {
-                            return (
-                              <div
-                                className="d-flex flex-column align-items-end"
-                                key={message}
-                              >
-                                <Message
-                                  color="primary"
-                                  message={chat[message]['message']}
-                                  user={chat[message]['user']}
-                                  timestamp={chat[message]['timestamp']}
-                                />
-                              </div>
-                            );
-                          } else {
-                            return (
-                              <div
-                                className="d-flex flex-column align-items-start"
-                                key={message}
-                              >
-                                <Message
-                                  color="secondary"
-                                  message={chat[message]['message']}
-                                  user={chat[message]['user']}
-                                  timestamp={chat[message]['timestamp']}
-                                />
-                              </div>
-                            );
-                          }
-                        })}
+                        Object.keys(chat).map(message =>
+                          handleLayout(authUser, chat, message)
+                        )}
                     </>
                   </div>
                   <MessageForm

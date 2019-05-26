@@ -37,11 +37,11 @@ const Navigation = ({ isOpen, toggle }) => {
                   {/* conditionally render navbar items based on if a user is signed in or not */}
                   {authUser ? (
                     <React.Fragment>
-                      <NavItem>
+                      {/* <NavItem>
                         <NavLink className="font nav-link" to={ROUTES.LANDING}>
                           Landing
                         </NavLink>
-                      </NavItem>
+                      </NavItem> */}
                       <NavItem>
                         <NavLink className="navStyle nav-link" to={ROUTES.HOME}>
                           Home

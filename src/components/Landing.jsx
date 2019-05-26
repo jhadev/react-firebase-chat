@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 const Landing = () => {
   return (
-    <div>
+    <div className="text-center my-2">
       <h1>Landing</h1>
     </div>
   );

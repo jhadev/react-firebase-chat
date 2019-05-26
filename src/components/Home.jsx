@@ -62,89 +62,6 @@ const Home = props => {
     setMessage(value);
   };
 
-  const handleLinks = (message, user, timestamp, badgeClass) => {
-    const urlPattern = /(?!.*(?:\.jpe?g|\/iframe>|\.gif|\.png|\.mp4|\.mp3)$)\b(?:https?|ftp):\/\/[a-z0-9-+&@#%?=~_|!:,.;]*[a-z0-9-+&@#%=~_|]/gim;
-    const imgUrlPattern = /(?=.*(?:\.jpe?g|\.gif|\.png)$)\b(?:https?|ftp):\/\/[a-z0-9-+&@#%?=~_|!:,.;]*[a-z0-9-+&@#%=~_|]/gim;
-    const videoUrlPattern = /(?=.*(?:\.mp4|\.ogg)$)\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
-    const audioUrlPattern = /(?=.*(?:\.mp3)$)\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
-    let newMsg;
-    const destructuredMsg = message.split(' ');
-    destructuredMsg.forEach(word => {
-      if (urlPattern.test(word)) {
-        newMsg = (
-          <Message user={user} timestamp={timestamp}>
-            <div className={`badge badge-${badgeClass} msgText mb-2`}>
-              <a
-                className="msg-link text-light"
-                href={word}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {destructuredMsg.join(' ')}
-              </a>
-            </div>
-          </Message>
-        );
-      } else if (imgUrlPattern.test(word)) {
-        newMsg = (
-          <Message user={user} timestamp={timestamp}>
-            <div className={`badge badge-${badgeClass} msgText msgImg mb-2`}>
-              <a
-                className="msg-link text-light"
-                href={word}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                <img
-                  className="msg-img img-fluid rounded img-thumbnail"
-                  src={word}
-                  alt="Message"
-                />
-              </a>
-              {destructuredMsg.join(' ')}
-            </div>
-          </Message>
-        );
-      } else if (audioUrlPattern.test(word)) {
-        newMsg = (
-          <Message user={user} timestamp={timestamp}>
-            <div className={`badge badge-${badgeClass} msgText msgImg mb-2`}>
-              <div>
-                <audio controls>
-                  <source src={word} type="audio/mpeg" />
-                </audio>
-              </div>
-              <div>{destructuredMsg.join(' ')}</div>
-            </div>
-          </Message>
-        );
-      } else if (videoUrlPattern.test(word)) {
-        newMsg = (
-          <Message user={user} timestamp={timestamp}>
-            <div className={`badge badge-${badgeClass} msgText msgImg mb-2`}>
-              <div>
-                <video className="msg-video img-thumbnail" controls>
-                  <source src={word} type="video/mp4" />
-                </video>
-              </div>
-              <div>{destructuredMsg.join(' ')}</div>
-            </div>
-          </Message>
-        );
-      } else {
-        newMsg = (
-          <Message user={user} timestamp={timestamp}>
-            <div className={`badge badge-${badgeClass} msgText mb-2`}>
-              {message}
-            </div>
-          </Message>
-        );
-      }
-    });
-
-    return newMsg;
-  };
-
   return (
     <>
       <AuthUserContext.Consumer>
@@ -179,12 +96,12 @@ const Home = props => {
                                 className="d-flex flex-column align-items-end"
                                 key={message}
                               >
-                                {handleLinks(
-                                  chat[message]['message'],
-                                  chat[message]['user'],
-                                  chat[message]['timestamp'],
-                                  'primary'
-                                )}
+                                <Message
+                                  badgeClass="primary"
+                                  message={chat[message]['message']}
+                                  user={chat[message]['user']}
+                                  timestamp={chat[message]['timestamp']}
+                                />
                               </div>
                             );
                           } else {
@@ -193,12 +110,12 @@ const Home = props => {
                                 className="d-flex flex-column align-items-start"
                                 key={index}
                               >
-                                {handleLinks(
-                                  chat[message]['message'],
-                                  chat[message]['user'],
-                                  chat[message]['timestamp'],
-                                  'secondary'
-                                )}
+                                <Message
+                                  badgeClass="secondary"
+                                  message={chat[message]['message']}
+                                  user={chat[message]['user']}
+                                  timestamp={chat[message]['timestamp']}
+                                />
                               </div>
                             );
                           }

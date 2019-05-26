@@ -56,6 +56,10 @@ const Home = props => {
     sendMessage();
   };
 
+  const handleCloudinary = str => {
+    setMessage(str);
+  };
+
   const setMsg = event => {
     const { value } = event.target;
     setTimestamp(moment().format('LLLL'));
@@ -123,6 +127,7 @@ const Home = props => {
                     setMsg={setMsg}
                     packageMsg={packageMsg}
                     sendMessage={sendMessage}
+                    handleCloudinary={handleCloudinary}
                   />
                 </Column>
               </Row>

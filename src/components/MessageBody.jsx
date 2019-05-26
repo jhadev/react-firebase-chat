@@ -3,7 +3,9 @@ import * as REGEX from '../constants/regex';
 
 const MessageBody = ({ body, color }) => {
   let newMsg;
+
   const destructuredMsg = body.split(' ');
+  console.log(destructuredMsg);
   destructuredMsg.forEach(word => {
     if (REGEX.urlPattern.test(word)) {
       newMsg = (

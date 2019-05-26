@@ -1,14 +1,11 @@
 import React from 'react';
+import * as REGEX from '../constants/regex';
 
 const MessageBody = ({ body, badgeClass }) => {
-  const urlPattern = /(?!.*(?:\.jpe?g|\/iframe>|\.gif|\.png|\.mp4|\.mp3)$)\b(?:https?|ftp):\/\/[a-z0-9-+&@#%?=~_|!:,.;]*[a-z0-9-+&@#%=~_|]/gim;
-  const imgUrlPattern = /(?=.*(?:\.jpe?g|\.gif|\.png)$)\b(?:https?|ftp):\/\/[a-z0-9-+&@#%?=~_|!:,.;]*[a-z0-9-+&@#%=~_|]/gim;
-  const videoUrlPattern = /(?=.*(?:\.mp4|\.ogg)$)\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
-  const audioUrlPattern = /(?=.*(?:\.mp3)$)\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
   let newMsg;
   const destructuredMsg = body.split(' ');
   destructuredMsg.forEach(word => {
-    if (urlPattern.test(word)) {
+    if (REGEX.urlPattern.test(word)) {
       newMsg = (
         <div className={`badge badge-${badgeClass} msgText mb-2`}>
           <a
@@ -21,7 +18,7 @@ const MessageBody = ({ body, badgeClass }) => {
           </a>
         </div>
       );
-    } else if (imgUrlPattern.test(word)) {
+    } else if (REGEX.imgUrlPattern.test(word)) {
       newMsg = (
         <div className={`badge badge-${badgeClass} msgText msgImg mb-2`}>
           <a
@@ -39,7 +36,7 @@ const MessageBody = ({ body, badgeClass }) => {
           {destructuredMsg.join(' ')}
         </div>
       );
-    } else if (audioUrlPattern.test(word)) {
+    } else if (REGEX.audioUrlPattern.test(word)) {
       newMsg = (
         <div className={`badge badge-${badgeClass} msgText msgImg mb-2`}>
           <div>
@@ -50,7 +47,7 @@ const MessageBody = ({ body, badgeClass }) => {
           <div>{destructuredMsg.join(' ')}</div>
         </div>
       );
-    } else if (videoUrlPattern.test(word)) {
+    } else if (REGEX.videoUrlPattern.test(word)) {
       newMsg = (
         <div className={`badge badge-${badgeClass} msgText msgImg mb-2`}>
           <div>

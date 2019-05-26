@@ -1,13 +1,13 @@
 import React from 'react';
 import * as REGEX from '../constants/regex';
 
-const MessageBody = ({ body, badgeClass }) => {
+const MessageBody = ({ body, color }) => {
   let newMsg;
   const destructuredMsg = body.split(' ');
   destructuredMsg.forEach(word => {
     if (REGEX.urlPattern.test(word)) {
       newMsg = (
-        <div className={`badge badge-${badgeClass} msgText mb-2`}>
+        <div className={`badge badge-${color} msgText mb-2`}>
           <a
             className="msg-link text-light"
             href={word}
@@ -20,7 +20,7 @@ const MessageBody = ({ body, badgeClass }) => {
       );
     } else if (REGEX.imgUrlPattern.test(word)) {
       newMsg = (
-        <div className={`badge badge-${badgeClass} msgText msgImg mb-2`}>
+        <div className={`badge badge-${color} msgText msgImg mb-2`}>
           <a
             className="msg-link text-light"
             href={word}
@@ -38,7 +38,7 @@ const MessageBody = ({ body, badgeClass }) => {
       );
     } else if (REGEX.audioUrlPattern.test(word)) {
       newMsg = (
-        <div className={`badge badge-${badgeClass} msgText msgImg mb-2`}>
+        <div className={`badge badge-${color} msgText msgImg mb-2`}>
           <div>
             <audio controls>
               <source src={word} type="audio/mpeg" />
@@ -49,7 +49,7 @@ const MessageBody = ({ body, badgeClass }) => {
       );
     } else if (REGEX.videoUrlPattern.test(word)) {
       newMsg = (
-        <div className={`badge badge-${badgeClass} msgText msgImg mb-2`}>
+        <div className={`badge badge-${color} msgText msgImg mb-2`}>
           <div>
             <video className="msg-video img-thumbnail" controls>
               <source src={word} type="video/mp4" />
@@ -60,7 +60,7 @@ const MessageBody = ({ body, badgeClass }) => {
       );
     } else {
       newMsg = (
-        <div className={`badge badge-${badgeClass} msgText mb-2`}>{body}</div>
+        <div className={`badge badge-${color} msgText mb-2`}>{body}</div>
       );
     }
   });

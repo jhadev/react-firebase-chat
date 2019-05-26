@@ -97,7 +97,7 @@ const Home = props => {
                                 key={message}
                               >
                                 <Message
-                                  badgeClass="primary"
+                                  color="primary"
                                   message={chat[message]['message']}
                                   user={chat[message]['user']}
                                   timestamp={chat[message]['timestamp']}
@@ -111,7 +111,7 @@ const Home = props => {
                                 key={message}
                               >
                                 <Message
-                                  badgeClass="secondary"
+                                  color="secondary"
                                   message={chat[message]['message']}
                                   user={chat[message]['user']}
                                   timestamp={chat[message]['timestamp']}

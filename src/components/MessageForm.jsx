@@ -1,9 +1,9 @@
-import React from "react";
-import { Col, Form, FormGroup, Label, Input } from "reactstrap";
+import React from 'react';
+import { Col, Form, FormGroup, Label, Input } from 'reactstrap';
 
 const MessageForm = ({ message, setMsg, packageMsg, sendMessage }) => {
   return (
-    <React.Fragment>
+    <>
       <div className="sticky-footer">
         <Form onSubmit={packageMsg}>
           <FormGroup row>
@@ -18,7 +18,7 @@ const MessageForm = ({ message, setMsg, packageMsg, sendMessage }) => {
                 value={message}
                 onChange={setMsg}
                 onKeyUp={event =>
-                  event.key === "Enter" ? sendMessage() : false
+                  event.key === 'Enter' ? sendMessage() : false
                 }
               />
             </Col>
@@ -26,7 +26,7 @@ const MessageForm = ({ message, setMsg, packageMsg, sendMessage }) => {
           <button className="btn btn-primary mb-2">Send</button>
         </Form>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

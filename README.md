@@ -1,4 +1,4 @@
-# react-firebaset-chat
+# react-firebase-chat
 
 ### A barebones chat built with React and Firebase.
 

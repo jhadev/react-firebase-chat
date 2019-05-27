@@ -15,6 +15,7 @@ const Home = props => {
   const [timestamp, setTimestamp] = useState('');
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState(null);
+  const [charCounter, setCounter] = useState(0);
 
   const chatroom = props.firebase.chat();
 
@@ -33,6 +34,12 @@ const Home = props => {
     scrollToBottom();
   }, [chat]);
 
+  // const prevMessageRef = useRef();
+  // useEffect(() => {
+  //   prevMessageRef.current = message;
+  // });
+  // const prevMessage = prevMessageRef.current;
+
   const scrollToBottom = () => {
     const scrollingElement = document.scrollingElement || document.body;
     scrollingElement.scrollTop = scrollingElement.scrollHeight;
@@ -49,6 +56,7 @@ const Home = props => {
     }
     setMessage('');
     setTimestamp('');
+    setCounter(0);
   };
 
   const packageMsg = event => {
@@ -65,6 +73,7 @@ const Home = props => {
     const { value } = event.target;
     setTimestamp(moment().format('LLLL'));
     setMessage(value);
+    setCounter(value.length);
   };
 
   const handleLayout = (authUser, chat, message) => {
@@ -90,6 +99,7 @@ const Home = props => {
             message={chat[message]['message']}
             user={chat[message]['user']}
             timestamp={chat[message]['timestamp']}
+            displayName={authUser.username}
           />
         </div>
       );
@@ -103,8 +113,6 @@ const Home = props => {
           <Container fluid>
             <div className="text-center">
               <h1 className=" welcome my-4">Welcome, {authUser.email}</h1>
-              {/* WILL BE CHAT EVENTUALLY */}
-
               <button
                 className="btn btn-primary btn-lg"
                 onClick={() => {
@@ -132,6 +140,7 @@ const Home = props => {
                     packageMsg={packageMsg}
                     sendMessage={sendMessage}
                     handleCloudinary={handleCloudinary}
+                    counter={charCounter}
                   />
                 </Column>
               </Row>

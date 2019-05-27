@@ -1,5 +1,6 @@
 import React from 'react';
 import * as REGEX from '../constants/regex';
+import PropTypes from 'prop-types';
 
 const MessageBody = ({ body, color }) => {
   let msgBody = (
@@ -69,6 +70,11 @@ const MessageBody = ({ body, color }) => {
   });
 
   return msgBody;
+};
+
+MessageBody.propTypes = {
+  body: PropTypes.string,
+  color: PropTypes.string
 };
 
 export default MessageBody;

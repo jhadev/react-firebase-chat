@@ -28,7 +28,7 @@ const MessageForm = ({
       },
       (error, result) => {
         if (!error && result && result.event === 'success') {
-          handleCloudinary(`link: ${result.info.secure_url}`);
+          handleCloudinary(result.info.secure_url);
         }
       }
     );
@@ -43,14 +43,14 @@ const MessageForm = ({
               Chat!
             </Label>
             <Col sm={10}>
-              <InputGroup className="mt-2" size="md">
+              <InputGroup className="mt-2" size="lg">
                 <InputGroupAddon onClick={widget} addonType="prepend">
                   <InputGroupText>
                     <i className="fas fa-camera" />
                   </InputGroupText>
                 </InputGroupAddon>
                 <Input
-                  type="textarea"
+                  type="text"
                   name="text"
                   id="exampleText"
                   value={message}

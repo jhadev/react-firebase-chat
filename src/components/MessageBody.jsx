@@ -2,11 +2,15 @@ import React from 'react';
 import * as REGEX from '../constants/regex';
 
 const MessageBody = ({ body, color }) => {
-  let newMsg;
-
-  const destructuredMsg = body.split(' ');
+  let newMsg = (
+    <div className={`badge badge-${color} msgText mb-2`}>{body}</div>
+  );
+  //extremely hacky
+  let fakedMsg = ` ${body}`;
+  const destructuredMsg = fakedMsg.split(' ');
   console.log(destructuredMsg);
   destructuredMsg.forEach(word => {
+    console.log(word);
     if (REGEX.urlPattern.test(word)) {
       newMsg = (
         <div className={`badge badge-${color} msgText mb-2`}>
@@ -61,9 +65,7 @@ const MessageBody = ({ body, color }) => {
         </div>
       );
     } else {
-      newMsg = (
-        <div className={`badge badge-${color} msgText mb-2`}>{body}</div>
-      );
+      return newMsg;
     }
   });
 

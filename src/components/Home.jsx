@@ -34,11 +34,11 @@ const Home = props => {
     scrollToBottom();
   }, [chat]);
 
-  // const prevCountRef = useRef();
+  // const prevMessageRef = useRef();
   // useEffect(() => {
-  //   prevCountRef.current = charCounter;
+  //   prevMessageRef.current = message;
   // });
-  // const prevCount = prevCountRef.current;
+  // const prevMessage = prevMessageRef.current;
 
   const scrollToBottom = () => {
     const scrollingElement = document.scrollingElement || document.body;

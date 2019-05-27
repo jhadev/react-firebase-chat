@@ -30,7 +30,11 @@ const MessageForm = ({
       },
       (error, result) => {
         if (!error && result && result.event === 'success') {
-          handleCloudinary(result.info.secure_url);
+          if (message !== '') {
+            handleCloudinary(`${message} ${result.info.secure_url}`);
+          } else {
+            handleCloudinary(result.info.secure_url);
+          }
         }
       }
     );
@@ -45,7 +49,7 @@ const MessageForm = ({
           <FormGroup row>
             <Label for="exampleText" sm={2}>
               {counter < maxCount
-                ? (counter - maxCount).toString().slice(1)
+                ? (counter - maxCount * 1).toString().slice(1)
                 : 0}{' '}
               chars remaining
             </Label>

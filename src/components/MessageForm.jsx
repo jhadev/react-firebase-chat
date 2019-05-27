@@ -16,7 +16,8 @@ const MessageForm = ({
   setMsg,
   packageMsg,
   sendMessage,
-  handleCloudinary
+  handleCloudinary,
+  counter
 }) => {
   const widget = () => {
     window.cloudinary.openUploadWidget(
@@ -41,7 +42,7 @@ const MessageForm = ({
         <Form onSubmit={packageMsg}>
           <FormGroup row>
             <Label for="exampleText" sm={2}>
-              Chat!
+              {counter}
             </Label>
             <Col sm={10}>
               <InputGroup className="mt-2" size="md">
@@ -57,7 +58,7 @@ const MessageForm = ({
                   value={message}
                   onChange={setMsg}
                   onKeyUp={event =>
-                    event.key === 'Enter' ? sendMessage() : false
+                    event.key === 'Enter' && counter > 0 ? sendMessage() : false
                   }
                 />
               </InputGroup>
@@ -75,7 +76,8 @@ MessageForm.propTypes = {
   setMsg: PropTypes.func,
   packageMsg: PropTypes.func,
   sendMessage: PropTypes.func,
-  handleCloudinary: PropTypes.func
+  handleCloudinary: PropTypes.func,
+  counter: PropTypes.number
 };
 
 export default MessageForm;

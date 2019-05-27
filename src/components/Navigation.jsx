@@ -9,10 +9,10 @@ import {
   Nav,
   NavItem
 } from 'reactstrap';
-
 import SignOut from './SignOut';
 import * as ROLES from '../constants/roles';
 import * as ROUTES from '../constants/routes';
+import PropTypes from 'prop-types';
 
 const Navigation = ({ isOpen, toggle }) => {
   return (
@@ -37,11 +37,6 @@ const Navigation = ({ isOpen, toggle }) => {
                   {/* conditionally render navbar items based on if a user is signed in or not */}
                   {authUser ? (
                     <React.Fragment>
-                      {/* <NavItem>
-                        <NavLink className="font nav-link" to={ROUTES.LANDING}>
-                          Landing
-                        </NavLink>
-                      </NavItem> */}
                       <NavItem>
                         <NavLink
                           onClick={toggle}
@@ -106,6 +101,11 @@ const Navigation = ({ isOpen, toggle }) => {
       </AuthUserContext.Consumer>
     </div>
   );
+};
+
+Navigation.propTypes = {
+  isOpen: PropTypes.bool,
+  toggle: PropTypes.func
 };
 
 export default Navigation;

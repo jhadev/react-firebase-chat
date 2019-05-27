@@ -15,6 +15,7 @@ const Home = props => {
   const [timestamp, setTimestamp] = useState('');
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState(null);
+  const [charCounter, setCounter] = useState(200);
 
   const chatroom = props.firebase.chat();
 
@@ -62,6 +63,7 @@ const Home = props => {
   };
 
   const setMsg = event => {
+    setCounter(charCounter - 1);
     const { value } = event.target;
     setTimestamp(moment().format('LLLL'));
     setMessage(value);
@@ -132,6 +134,7 @@ const Home = props => {
                     packageMsg={packageMsg}
                     sendMessage={sendMessage}
                     handleCloudinary={handleCloudinary}
+                    counter={charCounter}
                   />
                 </Column>
               </Row>

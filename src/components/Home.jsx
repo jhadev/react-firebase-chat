@@ -99,6 +99,7 @@ const Home = props => {
             message={chat[message]['message']}
             user={chat[message]['user']}
             timestamp={chat[message]['timestamp']}
+            displayName={authUser.username}
           />
         </div>
       );
@@ -112,8 +113,6 @@ const Home = props => {
           <Container fluid>
             <div className="text-center">
               <h1 className=" welcome my-4">Welcome, {authUser.email}</h1>
-              {/* WILL BE CHAT EVENTUALLY */}
-
               <button
                 className="btn btn-primary btn-lg"
                 onClick={() => {

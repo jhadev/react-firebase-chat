@@ -46,15 +46,15 @@ const MessageForm = ({
     <>
       <div className="sticky-footer">
         <Form onSubmit={packageMsg}>
-          <FormGroup row>
-            <Label for="exampleText" sm={2}>
+          <FormGroup id="messageForm" row>
+            <Label for="chatInput" className="text-center" sm={2}>
               {counter < maxCount
-                ? (counter - maxCount * 1).toString().slice(1)
+                ? (counter - maxCount).toString().slice(1)
                 : 0}{' '}
               chars remaining
             </Label>
             <Col sm={10}>
-              <InputGroup className="mt-2" size="md">
+              <InputGroup className="mt-2 mb-3" size="md">
                 <InputGroupAddon onClick={widget} addonType="prepend">
                   <InputGroupText>
                     <i className="fas fa-camera" />
@@ -63,7 +63,7 @@ const MessageForm = ({
                 <Input
                   type="textarea"
                   name="text"
-                  id="exampleText"
+                  id="chatInput"
                   value={message}
                   onChange={setMsg}
                   onKeyUp={event =>
@@ -72,15 +72,22 @@ const MessageForm = ({
                       : false
                   }
                 />
+                <InputGroupAddon
+                  disabled={counter > maxCount}
+                  addonType="append"
+                >
+                  <InputGroupText id="sendBtnInput">
+                    <button
+                      disabled={counter > maxCount}
+                      className="btn font-weight-bold text-dark btn-link"
+                    >
+                      Send
+                    </button>
+                  </InputGroupText>
+                </InputGroupAddon>
               </InputGroup>
             </Col>
           </FormGroup>
-          <button
-            disabled={counter > maxCount}
-            className="btn btn-primary mb-2"
-          >
-            Send
-          </button>
         </Form>
       </div>
     </>

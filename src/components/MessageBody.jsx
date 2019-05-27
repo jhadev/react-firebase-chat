@@ -9,6 +9,12 @@ const MessageBody = ({ body, color }) => {
   //extremely hacky
   let fakedMsg = ` ${body}`;
   const destructuredMsg = fakedMsg.split(' ');
+
+  // easier to read
+  const textWithoutLink = (arr, input) => {
+    return arr.filter(string => string !== input).join(' ');
+  };
+
   destructuredMsg.forEach(word => {
     if (REGEX.urlPattern.test(word)) {
       msgBody = (
@@ -21,7 +27,7 @@ const MessageBody = ({ body, color }) => {
           >
             {word}
           </a>
-          {destructuredMsg.filter(str => str !== word).join(' ')}
+          {textWithoutLink(destructuredMsg, word)}
         </div>
       );
     } else if (REGEX.imgUrlPattern.test(word)) {
@@ -39,7 +45,7 @@ const MessageBody = ({ body, color }) => {
               alt="Message"
             />
           </a>
-          {destructuredMsg.filter(str => str !== word).join(' ')}
+          {textWithoutLink(destructuredMsg, word)}
         </div>
       );
     } else if (REGEX.audioUrlPattern.test(word)) {
@@ -50,7 +56,7 @@ const MessageBody = ({ body, color }) => {
               <source src={word} type="audio/mpeg" />
             </audio>
           </div>
-          <div>{destructuredMsg.filter(str => str !== word).join(' ')}</div>
+          <div>{textWithoutLink(destructuredMsg, word)}</div>
         </div>
       );
     } else if (REGEX.videoUrlPattern.test(word)) {
@@ -61,7 +67,7 @@ const MessageBody = ({ body, color }) => {
               <source src={word} type="video/mp4" />
             </video>
           </div>
-          <div>{destructuredMsg.filter(str => str !== word).join(' ')}</div>
+          <div>{textWithoutLink(destructuredMsg, word)}</div>
         </div>
       );
     } else {

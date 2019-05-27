@@ -58,6 +58,7 @@ const Home = props => {
 
   const handleCloudinary = str => {
     setMessage(str);
+    setTimestamp(moment().format('LLLL'));
   };
 
   const setMsg = event => {

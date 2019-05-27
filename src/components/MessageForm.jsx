@@ -1,5 +1,14 @@
 import React from 'react';
-import { Col, Form, FormGroup, Label, Input } from 'reactstrap';
+import {
+  Col,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  InputGroup,
+  InputGroupText,
+  InputGroupAddon
+} from 'reactstrap';
 
 const MessageForm = ({
   message,
@@ -19,7 +28,7 @@ const MessageForm = ({
       },
       (error, result) => {
         if (!error && result && result.event === 'success') {
-          handleCloudinary(result.info.secure_url);
+          handleCloudinary(`link: ${result.info.secure_url}`);
         }
       }
     );
@@ -34,16 +43,12 @@ const MessageForm = ({
               Chat!
             </Label>
             <Col sm={10}>
-              <div className="input-group py-3">
-                <span
-                  className="input-group-text"
-                  id="inputGroup-sizing-default"
-                  onClick={widget}
-                >
-                  <div id="upload" className="cloudinary btn btn-sm">
+              <InputGroup className="mt-2" size="md">
+                <InputGroupAddon onClick={widget} addonType="prepend">
+                  <InputGroupText>
                     <i className="fas fa-camera" />
-                  </div>
-                </span>
+                  </InputGroupText>
+                </InputGroupAddon>
                 <Input
                   type="textarea"
                   name="text"
@@ -54,7 +59,7 @@ const MessageForm = ({
                     event.key === 'Enter' ? sendMessage() : false
                   }
                 />
-              </div>
+              </InputGroup>
             </Col>
           </FormGroup>
           <button className="btn btn-primary mb-2">Send</button>

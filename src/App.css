@@ -13,6 +13,7 @@
   padding-bottom: 5px;
   padding-left: 10px;
   padding-right: 10px;
+  max-width: 30%;
   /* text-align: left !important; */
   /* line-height: 20px; */
 }
@@ -129,6 +130,10 @@ body {
 
   .msgImg {
     width: 100%;
+  }
+
+  .msgText {
+    max-width: 90%;
   }
 
   .sticky-footer {

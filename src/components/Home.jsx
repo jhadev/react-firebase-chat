@@ -15,7 +15,7 @@ const Home = props => {
   const [timestamp, setTimestamp] = useState('');
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState(null);
-  const [charCounter, setCounter] = useState(200);
+  const [charCounter, setCounter] = useState(0);
 
   const chatroom = props.firebase.chat();
 
@@ -34,6 +34,12 @@ const Home = props => {
     scrollToBottom();
   }, [chat]);
 
+  // const prevCountRef = useRef();
+  // useEffect(() => {
+  //   prevCountRef.current = charCounter;
+  // });
+  // const prevCount = prevCountRef.current;
+
   const scrollToBottom = () => {
     const scrollingElement = document.scrollingElement || document.body;
     scrollingElement.scrollTop = scrollingElement.scrollHeight;
@@ -50,6 +56,7 @@ const Home = props => {
     }
     setMessage('');
     setTimestamp('');
+    setCounter(0);
   };
 
   const packageMsg = event => {
@@ -63,10 +70,10 @@ const Home = props => {
   };
 
   const setMsg = event => {
-    setCounter(charCounter - 1);
     const { value } = event.target;
     setTimestamp(moment().format('LLLL'));
     setMessage(value);
+    setCounter(value.length);
   };
 
   const handleLayout = (authUser, chat, message) => {

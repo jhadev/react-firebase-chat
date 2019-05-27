@@ -36,13 +36,18 @@ const MessageForm = ({
     );
   };
 
+  const maxCount = 200;
+
   return (
     <>
       <div className="sticky-footer">
         <Form onSubmit={packageMsg}>
           <FormGroup row>
             <Label for="exampleText" sm={2}>
-              {counter}
+              {counter < maxCount
+                ? (counter - maxCount).toString().slice(1)
+                : 0}{' '}
+              chars remaining
             </Label>
             <Col sm={10}>
               <InputGroup className="mt-2" size="md">
@@ -58,13 +63,20 @@ const MessageForm = ({
                   value={message}
                   onChange={setMsg}
                   onKeyUp={event =>
-                    event.key === 'Enter' && counter > 0 ? sendMessage() : false
+                    event.key === 'Enter' && counter <= maxCount
+                      ? sendMessage()
+                      : false
                   }
                 />
               </InputGroup>
             </Col>
           </FormGroup>
-          <button className="btn btn-primary mb-2">Send</button>
+          <button
+            disabled={counter > maxCount}
+            className="btn btn-primary mb-2"
+          >
+            Send
+          </button>
         </Form>
       </div>
     </>

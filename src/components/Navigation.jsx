@@ -43,12 +43,17 @@ const Navigation = ({ isOpen, toggle }) => {
                         </NavLink>
                       </NavItem> */}
                       <NavItem>
-                        <NavLink className="navStyle nav-link" to={ROUTES.HOME}>
+                        <NavLink
+                          onClick={toggle}
+                          className="navStyle nav-link"
+                          to={ROUTES.HOME}
+                        >
                           Home
                         </NavLink>
                       </NavItem>
                       <NavItem>
                         <NavLink
+                          onClick={toggle}
                           className="navStyle nav-link"
                           to={ROUTES.ACCOUNT}
                         >
@@ -59,6 +64,7 @@ const Navigation = ({ isOpen, toggle }) => {
                       {ROLES.ADMIN.includes(authUser.email) && (
                         <NavItem>
                           <NavLink
+                            onClick={toggle}
                             className="navStyle nav-link"
                             to={ROUTES.ADMIN}
                           >
@@ -74,6 +80,7 @@ const Navigation = ({ isOpen, toggle }) => {
                     <React.Fragment>
                       <NavItem>
                         <NavLink
+                          onClick={toggle}
                           className="navStyle nav-link"
                           to={ROUTES.SIGN_UP}
                         >
@@ -82,6 +89,7 @@ const Navigation = ({ isOpen, toggle }) => {
                       </NavItem>
                       <NavItem>
                         <NavLink
+                          onClick={toggle}
                           className="navStyle nav-link"
                           to={ROUTES.SIGN_IN}
                         >

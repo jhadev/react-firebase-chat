@@ -9,6 +9,7 @@ import {
   InputGroupText,
   InputGroupAddon
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 const MessageForm = ({
   message,
@@ -67,6 +68,14 @@ const MessageForm = ({
       </div>
     </>
   );
+};
+
+MessageForm.propTypes = {
+  message: PropTypes.string,
+  setMsg: PropTypes.func,
+  packageMsg: PropTypes.func,
+  sendMessage: PropTypes.func,
+  handleCloudinary: PropTypes.func
 };
 
 export default MessageForm;

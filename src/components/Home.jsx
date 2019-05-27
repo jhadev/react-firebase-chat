@@ -70,7 +70,7 @@ const Home = props => {
   const handleLayout = (authUser, chat, message) => {
     if (authUser.email === chat[message]['user']) {
       return (
-        <div className="d-flex flex-column align-items-end" key={message}>
+        <div className="d-flex flex-column align-items-end my-1" key={message}>
           <Message
             color="primary"
             message={chat[message]['message']}
@@ -81,7 +81,10 @@ const Home = props => {
       );
     } else {
       return (
-        <div className="d-flex flex-column align-items-start" key={message}>
+        <div
+          className="d-flex flex-column align-items-start my-1"
+          key={message}
+        >
           <Message
             color="secondary"
             message={chat[message]['message']}

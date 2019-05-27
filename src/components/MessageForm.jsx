@@ -43,14 +43,14 @@ const MessageForm = ({
               Chat!
             </Label>
             <Col sm={10}>
-              <InputGroup className="mt-2" size="lg">
+              <InputGroup className="mt-2" size="md">
                 <InputGroupAddon onClick={widget} addonType="prepend">
                   <InputGroupText>
                     <i className="fas fa-camera" />
                   </InputGroupText>
                 </InputGroupAddon>
                 <Input
-                  type="text"
+                  type="textarea"
                   name="text"
                   id="exampleText"
                   value={message}

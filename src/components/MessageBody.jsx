@@ -20,8 +20,9 @@ const MessageBody = ({ body, color }) => {
             rel="noopener noreferrer"
             target="_blank"
           >
-            {destructuredMsg.join(' ')}
+            {word}
           </a>
+          {destructuredMsg.filter(str => str !== word).join(' ')}
         </div>
       );
     } else if (REGEX.imgUrlPattern.test(word)) {
@@ -39,7 +40,7 @@ const MessageBody = ({ body, color }) => {
               alt="Message"
             />
           </a>
-          {destructuredMsg.join(' ')}
+          {destructuredMsg.filter(str => str !== word).join(' ')}
         </div>
       );
     } else if (REGEX.audioUrlPattern.test(word)) {
@@ -50,7 +51,7 @@ const MessageBody = ({ body, color }) => {
               <source src={word} type="audio/mpeg" />
             </audio>
           </div>
-          <div>{destructuredMsg.join(' ')}</div>
+          <div>{destructuredMsg.filter(str => str !== word).join(' ')}</div>
         </div>
       );
     } else if (REGEX.videoUrlPattern.test(word)) {
@@ -61,7 +62,7 @@ const MessageBody = ({ body, color }) => {
               <source src={word} type="video/mp4" />
             </video>
           </div>
-          <div>{destructuredMsg.join(' ')}</div>
+          <div>{destructuredMsg.filter(str => str !== word).join(' ')}</div>
         </div>
       );
     } else {

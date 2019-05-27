@@ -25,11 +25,18 @@ const MessageForm = ({
         cloud_name: process.env.REACT_APP_CLOUDINARY_NAME,
         upload_preset: process.env.REACT_APP_CLOUDINARY_PRESET,
         tags: ['react-firebase-chat'],
-        sources: ['local', 'url'],
-        defaultSource: 'local'
+        sources: ['local', 'url', 'image_search'],
+        googleApiKey: process.env.REACT_APP_GOOGLE_IMAGE_SEARCH,
+        defaultSource: 'local',
+        multiple: false,
+        folder: 'react_chat',
+        clientAllowedFormats: ['png', 'gif', 'jpeg', 'jpg'],
+        maxFileSize: 10000000,
+        showUploadMoreButton: false
       },
       (error, result) => {
         if (!error && result && result.event === 'success') {
+          console.log(result);
           if (message !== '') {
             handleCloudinary(`${message} ${result.info.secure_url}`);
           } else {
@@ -72,10 +79,7 @@ const MessageForm = ({
                       : false
                   }
                 />
-                <InputGroupAddon
-                  disabled={counter > maxCount}
-                  addonType="append"
-                >
+                <InputGroupAddon addonType="append">
                   <InputGroupText id="sendBtnInput">
                     <button
                       disabled={counter > maxCount}

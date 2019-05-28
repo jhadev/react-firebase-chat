@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
 import Container from './common/Container';
@@ -9,9 +9,9 @@ import Message from './Message';
 import MessageForm from './MessageForm';
 import ChatList from './ChatList';
 import moment from 'moment';
+// import useStayScrolled from 'react-stay-scrolled';
 
 const Home = props => {
-  // const divRef = useRef(null);
   const [showChat, handleChange] = useState(false);
   const [username, setUsername] = useState('');
   const [timestamp, setTimestamp] = useState('');
@@ -25,18 +25,19 @@ const Home = props => {
   const chatroom = props.firebase.chat(room);
   //returns all array of all rooms
   const allRooms = props.firebase.allRooms();
-  /* TODO
-  store all rooms in state on mount - check
-  render list group based on all rooms in state
-  onclick of list group setRoom to corresponding value
-  
-  */
+
+  // const messageRef = useRef();
+  // const { stayScrolled } = useStayScrolled(messageRef);
 
   useEffect(() => {
     allRooms.then(res => {
       setRoomList(res);
     });
   }, []);
+
+  // useLayoutEffect(() => {
+  //   stayScrolled();
+  // }, [chat]);
 
   useEffect(() => {
     const handleNewMessages = snapshot => {
@@ -72,6 +73,7 @@ const Home = props => {
       };
       props.firebase.send(room, messageObj);
     }
+    scrollToBottom();
     setMessage('');
     setTimestamp('');
     setCounter(0);
@@ -174,6 +176,7 @@ const Home = props => {
                 </Column>
               </Row>
             )}
+            {/* <div id="spacer" ref={messageRef} /> */}
           </Container>
         )}
       </AuthUserContext.Consumer>

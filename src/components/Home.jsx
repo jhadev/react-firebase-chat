@@ -18,7 +18,7 @@ const Home = props => {
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState(null);
   const [charCounter, setCounter] = useState(0);
-  const [room, setRoom] = useState('chat');
+  const [room, setRoom] = useState('test');
   const [roomList, setRoomList] = useState([]);
 
   //refers to current room string in state
@@ -38,11 +38,6 @@ const Home = props => {
     });
   }, []);
 
-  setChatRoom = event => {
-    const { value } = event.target;
-    setRoom(value);
-  };
-
   useEffect(() => {
     const handleNewMessages = snapshot => {
       if (snapshot.val()) setChat(snapshot.val());
@@ -51,11 +46,11 @@ const Home = props => {
     return () => {
       chatroom.off('value', handleNewMessages);
     };
-  }, []);
+  }, [chat]);
 
   useEffect(() => {
     scrollToBottom();
-  }, [chat]);
+  }, []);
 
   // const prevMessageRef = useRef();
   // useEffect(() => {
@@ -97,6 +92,13 @@ const Home = props => {
     setTimestamp(moment().format('LLLL'));
     setMessage(value);
     setCounter(value.length);
+  };
+
+  const setChatRoom = event => {
+    console.log('clicked');
+    const { name, value } = event.target;
+    console.log(name);
+    setRoom(value);
   };
 
   const handleLayout = (authUser, chat, message) => {
@@ -148,10 +150,11 @@ const Home = props => {
             </div>
             {showChat && (
               <Row helper="mt-4">
-                <Column size="2">
+                <Column size="12 md-2">
+                  <h6>Current Room: {room}</h6>
                   <ChatList rooms={roomList} setChatRoom={setChatRoom} />
                 </Column>
-                <Column size="10">
+                <Column size="12 md-10">
                   <div className="wrapper">
                     <>
                       {chat !== null &&

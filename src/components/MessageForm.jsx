@@ -64,31 +64,6 @@ const MessageForm = ({
         <Form onSubmit={packageMsg}>
           <FormGroup id="messageForm" row>
             <Label for="chatInput" className="text-center" md={2} sm={2}>
-              <div className="my-1">
-                <Dropdown
-                  direction="up"
-                  size="sm"
-                  group
-                  isOpen={isOpen}
-                  toggle={handleDropdown}
-                >
-                  <DropdownToggle caret>Choose Room</DropdownToggle>
-                  <DropdownMenu>
-                    {rooms.map(room => (
-                      <DropdownItem
-                        tag="button"
-                        active={currentRoom === room ? true : false}
-                        key={room}
-                        value={room}
-                        name={room}
-                        onClick={setChatRoom}
-                      >
-                        {room}
-                      </DropdownItem>
-                    ))}
-                  </DropdownMenu>
-                </Dropdown>
-              </div>
               {counter < maxCount
                 ? (counter - maxCount).toString().slice(1)
                 : 0}{' '}
@@ -96,6 +71,35 @@ const MessageForm = ({
             </Label>
             <Col md={10} sm={12}>
               <InputGroup className="mt-2 mb-3" size="md">
+                <InputGroupAddon onClick={handleDropdown} addonType="prepend">
+                  <InputGroupText id="roomBtnInput">
+                    <Dropdown
+                      direction="up"
+                      size="sm"
+                      group
+                      isOpen={isOpen}
+                      toggle={handleDropdown}
+                    >
+                      <DropdownToggle className="text-dark" color="link">
+                        <i className="fas fa-comments" />
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        {rooms.map(room => (
+                          <DropdownItem
+                            tag="button"
+                            active={currentRoom === room ? true : false}
+                            key={room}
+                            value={room}
+                            name={room}
+                            onClick={setChatRoom}
+                          >
+                            {room}
+                          </DropdownItem>
+                        ))}
+                      </DropdownMenu>
+                    </Dropdown>
+                  </InputGroupText>
+                </InputGroupAddon>
                 <InputGroupAddon onClick={widget} addonType="prepend">
                   <InputGroupText>
                     <i className="fas fa-camera" />
@@ -138,7 +142,12 @@ MessageForm.propTypes = {
   packageMsg: PropTypes.func,
   sendMessage: PropTypes.func,
   handleCloudinary: PropTypes.func,
-  counter: PropTypes.number
+  counter: PropTypes.number,
+  handleDropdown: PropTypes.func,
+  isOpen: PropTypes.bool,
+  rooms: PropTypes.array,
+  setChatRoom: PropTypes.func,
+  currentRoom: PropTypes.string
 };
 
 export default MessageForm;

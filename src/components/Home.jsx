@@ -161,6 +161,7 @@ const Home = props => {
                     </div>
                   </Column>
                 </Row>
+                <div id="spacer" />
                 <MessageForm
                   message={message}
                   setMsg={setMsg}
@@ -176,7 +177,6 @@ const Home = props => {
                 />
               </>
             )}
-            {/* <div id="spacer" ref={messageRef} /> */}
           </Container>
         )}
       </AuthUserContext.Consumer>

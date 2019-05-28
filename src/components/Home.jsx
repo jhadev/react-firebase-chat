@@ -7,6 +7,7 @@ import Row from './common/Row';
 import Column from './common/Column';
 import Message from './Message';
 import MessageForm from './MessageForm';
+import ChatList from './ChatList';
 import moment from 'moment';
 
 const Home = props => {
@@ -24,7 +25,6 @@ const Home = props => {
   const chatroom = props.firebase.chat(room);
   //returns all array of all rooms
   const allRooms = props.firebase.allRooms();
-
   /* TODO
   store all rooms in state on mount - check
   render list group based on all rooms in state
@@ -33,10 +33,15 @@ const Home = props => {
   */
 
   useEffect(() => {
-    setRoomList(allRooms);
+    allRooms.then(res => {
+      setRoomList(res);
+    });
   }, []);
 
-  console.log(roomList);
+  setChatRoom = event => {
+    const { value } = event.target;
+    setRoom(value);
+  };
 
   useEffect(() => {
     const handleNewMessages = snapshot => {
@@ -143,7 +148,10 @@ const Home = props => {
             </div>
             {showChat && (
               <Row helper="mt-4">
-                <Column size="12">
+                <Column size="2">
+                  <ChatList rooms={roomList} setChatRoom={setChatRoom} />
+                </Column>
+                <Column size="10">
                   <div className="wrapper">
                     <>
                       {chat !== null &&

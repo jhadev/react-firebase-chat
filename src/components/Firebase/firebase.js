@@ -1,6 +1,6 @@
-import app from "firebase/app";
-import "firebase/auth";
-import "firebase/database";
+import app from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -32,15 +32,26 @@ class Firebase {
   doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
 
   //firebase api for users
+
+  //allows sending to each room
+  send = (room, message) => this.db.ref(room).push(message);
+
+  //get all firebase table numbers but not users table
+  allRooms = () =>
+    this.db
+      .ref()
+      .once('value')
+      .then(snapshot => {
+        return Object.keys(snapshot.val()).filter(room => room !== 'users');
+      });
+
+  //allows rooms to be set using state in home
+  chat = room => this.db.ref(room);
   //match the location where users are stored based on their uid
-  send = message => this.db.ref(`chat`).push(message);
-
-  chat = () => this.db.ref("chat");
-
   user = uid => this.db.ref(`users/${uid}`);
 
   //ref to the users db
-  users = () => this.db.ref("users");
+  users = () => this.db.ref('users');
 }
 
 export default Firebase;

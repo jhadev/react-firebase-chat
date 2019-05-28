@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
@@ -16,8 +17,26 @@ const Home = props => {
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState(null);
   const [charCounter, setCounter] = useState(0);
+  const [room, setRoom] = useState('chat');
+  const [roomList, setRoomList] = useState([]);
 
-  const chatroom = props.firebase.chat();
+  //refers to current room string in state
+  const chatroom = props.firebase.chat(room);
+  //returns all array of all rooms
+  const allRooms = props.firebase.allRooms();
+
+  /* TODO
+  store all rooms in state on mount - check
+  render list group based on all rooms in state
+  onclick of list group setRoom to corresponding value
+  
+  */
+
+  useEffect(() => {
+    setRoomList(allRooms);
+  }, []);
+
+  console.log(roomList);
 
   useEffect(() => {
     const handleNewMessages = snapshot => {
@@ -27,7 +46,6 @@ const Home = props => {
     return () => {
       chatroom.off('value', handleNewMessages);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -52,7 +70,7 @@ const Home = props => {
         timestamp: timestamp,
         message: message
       };
-      props.firebase.send(messageObj);
+      props.firebase.send(room, messageObj);
     }
     setMessage('');
     setTimestamp('');

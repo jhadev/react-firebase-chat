@@ -16,7 +16,8 @@ class Admin extends Component {
     //users set to empty array
     users: [],
     rooms: [],
-    roomToAdd: ''
+    roomToAdd: '',
+    roomToRemove: ''
   };
 
   //call firebase on mount
@@ -59,13 +60,38 @@ class Admin extends Component {
       this.props.firebase.send(roomToAdd.split(' ').join(''), roomToAdd);
     }
     this.setState({ roomToAdd: '' });
-    this.props.firebase.allRooms().then(res => {
-      this.setState({ rooms: res });
-    });
+    this.props.firebase
+      .allRooms()
+      .then(res => {
+        this.setState({ rooms: res });
+      })
+      .catch(err => console.log(err.message));
   };
 
+  removeRoom = () => {
+    const { roomToRemove, rooms } = this.state;
+
+    if (rooms.includes(roomToRemove)) {
+      this.props.firebase
+        .chat(roomToRemove)
+        .remove()
+        .then(() => {
+          alert(`${roomToRemove} has been removed`);
+        })
+        .catch(err => console.log(err.message));
+    } else {
+      alert('room not found');
+    }
+    this.setState({ roomToRemove: '' });
+    this.props.firebase
+      .allRooms()
+      .then(res => {
+        this.setState({ rooms: res });
+      })
+      .catch(err => console.log(err.message));
+  };
   render() {
-    const { loading, users, rooms, roomToAdd } = this.state;
+    const { loading, users, rooms, roomToAdd, roomToRemove } = this.state;
 
     return (
       <div>
@@ -80,12 +106,20 @@ class Admin extends Component {
           <Column size="12 md-2">
             <AllRooms rooms={rooms} />
           </Column>
-          <Column size="12 md-10">
+          <Column size="12 md-5">
             <AddRoom
               handleInputChange={this.handleInputChange}
               roomToAdd={roomToAdd}
               rooms={rooms}
               submitRoom={this.submitRoom}
+            />
+          </Column>
+          <Column size="12 md-5">
+            <RemoveRoom
+              handleInputChange={this.handleInputChange}
+              roomToRemove={roomToRemove}
+              rooms={rooms}
+              removeRoom={this.removeRoom}
             />
           </Column>
         </Row>
@@ -113,7 +147,7 @@ const AllRooms = ({ rooms }) => {
 const AddRoom = ({ handleInputChange, roomToAdd, submitRoom }) => {
   return (
     <>
-      <h3 className="text-center">Add A Room</h3>
+      <h3 className="text-center my-3">Add Room</h3>
       <InputGroup>
         <Input
           placeholder="add a room"
@@ -124,6 +158,27 @@ const AddRoom = ({ handleInputChange, roomToAdd, submitRoom }) => {
         <InputGroupAddon addonType="append">
           <Button color="success" onClick={submitRoom}>
             Add Room
+          </Button>
+        </InputGroupAddon>
+      </InputGroup>
+    </>
+  );
+};
+
+const RemoveRoom = ({ handleInputChange, roomToRemove, removeRoom }) => {
+  return (
+    <>
+      <h3 className="text-center my-3">Remove Room</h3>
+      <InputGroup>
+        <Input
+          placeholder="remove a room"
+          name="roomToRemove"
+          value={roomToRemove}
+          onChange={handleInputChange}
+        />
+        <InputGroupAddon addonType="append">
+          <Button color="danger" onClick={removeRoom}>
+            Remove Room
           </Button>
         </InputGroupAddon>
       </InputGroup>

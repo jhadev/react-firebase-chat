@@ -11,7 +11,7 @@ import ChatList from './ChatList';
 import moment from 'moment';
 
 const Home = props => {
-  const [showChat, handleChange] = useState(true);
+  const [showChat, handleChange] = useState(false);
   const [username, setUsername] = useState('');
   const [timestamp, setTimestamp] = useState('');
   const [message, setMessage] = useState('');

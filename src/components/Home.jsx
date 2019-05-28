@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
 import Container from './common/Container';
@@ -9,7 +9,6 @@ import Message from './Message';
 import MessageForm from './MessageForm';
 import ChatList from './ChatList';
 import moment from 'moment';
-// import useStayScrolled from 'react-stay-scrolled';
 
 const Home = props => {
   const [showChat, handleChange] = useState(false);
@@ -26,18 +25,11 @@ const Home = props => {
   //returns all array of all rooms
   const allRooms = props.firebase.allRooms();
 
-  // const messageRef = useRef();
-  // const { stayScrolled } = useStayScrolled(messageRef);
-
   useEffect(() => {
     allRooms.then(res => {
       setRoomList(res);
     });
   }, []);
-
-  // useLayoutEffect(() => {
-  //   stayScrolled();
-  // }, [chat]);
 
   useEffect(() => {
     const handleNewMessages = snapshot => {
@@ -47,17 +39,11 @@ const Home = props => {
     return () => {
       chatroom.off('value', handleNewMessages);
     };
-  }, [chat]);
+  }, [room]);
 
   useEffect(() => {
     scrollToBottom();
-  }, []);
-
-  // const prevMessageRef = useRef();
-  // useEffect(() => {
-  //   prevMessageRef.current = message;
-  // });
-  // const prevMessage = prevMessageRef.current;
+  }, [chat]);
 
   const scrollToBottom = () => {
     const scrollingElement = document.scrollingElement || document.body;
@@ -73,7 +59,7 @@ const Home = props => {
       };
       props.firebase.send(room, messageObj);
     }
-    scrollToBottom();
+    // scrollToBottom();
     setMessage('');
     setTimestamp('');
     setCounter(0);
@@ -97,9 +83,7 @@ const Home = props => {
   };
 
   const setChatRoom = event => {
-    console.log('clicked');
-    const { name, value } = event.target;
-    console.log(name);
+    const { value } = event.target;
     setRoom(value);
   };
 

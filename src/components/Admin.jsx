@@ -3,6 +3,7 @@ import { withAuthorization } from '../components/Session/index';
 import { InputGroup, InputGroupAddon, Input, Button } from 'reactstrap';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
+import ChatList from '../components/ChatList';
 import { Table } from 'reactstrap';
 import * as ROLES from '../constants/roles';
 
@@ -104,7 +105,8 @@ class Admin extends Component {
         </Row>
         <Row helper="my-3">
           <Column size="12 md-2">
-            <AllRooms rooms={rooms} />
+            <p className="text-center">Chatrooms</p>
+            <ChatList rooms={rooms} />
           </Column>
           <Column size="12 md-5">
             <AddRoom
@@ -127,22 +129,6 @@ class Admin extends Component {
     );
   }
 }
-//start users component
-
-const AllRooms = ({ rooms }) => {
-  return (
-    <div className="text-center">
-      <p>All Rooms</p>
-      <ul className="list-group">
-        {rooms.map(room => (
-          <li key={room} className="list-group-item">
-            {room}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
 
 const AddRoom = ({ handleInputChange, roomToAdd, submitRoom }) => {
   return (

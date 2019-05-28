@@ -53,6 +53,7 @@ const ChatList = ({
           value={room}
           name={room}
           onClick={setChatRoom}
+          className="text-center"
         >
           {room}
         </ListGroupItem>

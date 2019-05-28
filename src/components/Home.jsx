@@ -17,7 +17,7 @@ const Home = props => {
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState(null);
   const [charCounter, setCounter] = useState(0);
-  const [room, setRoom] = useState('test');
+  const [room, setRoom] = useState('chat');
   const [roomList, setRoomList] = useState([]);
 
   //refers to current room string in state
@@ -59,7 +59,6 @@ const Home = props => {
       };
       props.firebase.send(room, messageObj);
     }
-    // scrollToBottom();
     setMessage('');
     setTimestamp('');
     setCounter(0);
@@ -134,35 +133,38 @@ const Home = props => {
                 {!showChat ? 'Show Chat' : 'Hide Chat'}
               </button>
             </div>
+
             {showChat && (
-              <Row helper="mt-4">
-                <Column size="12 md-2">
-                  <h6>Current Room: {room}</h6>
-                  <ChatList
-                    rooms={roomList}
-                    setChatRoom={setChatRoom}
-                    currentRoom={room}
-                  />
-                </Column>
-                <Column size="12 md-10">
-                  <div className="wrapper">
-                    <>
-                      {chat !== null &&
-                        Object.keys(chat).map(message =>
-                          handleLayout(authUser, chat, message)
-                        )}
-                    </>
-                  </div>
-                  <MessageForm
-                    message={message}
-                    setMsg={setMsg}
-                    packageMsg={packageMsg}
-                    sendMessage={sendMessage}
-                    handleCloudinary={handleCloudinary}
-                    counter={charCounter}
-                  />
-                </Column>
-              </Row>
+              <>
+                <Row helper="mt-4">
+                  <Column size="12 md-2">
+                    <h6>Current Room: {room}</h6>
+                    <ChatList
+                      rooms={roomList}
+                      setChatRoom={setChatRoom}
+                      currentRoom={room}
+                    />
+                  </Column>
+                  <Column size="12 md-10">
+                    <div className="wrapper">
+                      <>
+                        {chat !== null &&
+                          Object.keys(chat).map(message =>
+                            handleLayout(authUser, chat, message)
+                          )}
+                      </>
+                    </div>
+                  </Column>
+                </Row>
+                <MessageForm
+                  message={message}
+                  setMsg={setMsg}
+                  packageMsg={packageMsg}
+                  sendMessage={sendMessage}
+                  handleCloudinary={handleCloudinary}
+                  counter={charCounter}
+                />
+              </>
             )}
             {/* <div id="spacer" ref={messageRef} /> */}
           </Container>

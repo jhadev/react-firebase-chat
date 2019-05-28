@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withAuthorization } from '../components/Session/index';
+import { InputGroup, InputGroupAddon, Input, Button } from 'reactstrap';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
 import { Table } from 'reactstrap';
@@ -14,11 +15,13 @@ class Admin extends Component {
     loading: false,
     //users set to empty array
     users: [],
-    rooms: []
+    rooms: [],
+    roomToAdd: ''
   };
 
   //call firebase on mount
   componentDidMount() {
+    this._isMounted = true;
     //set loading to true
     this.setState({ loading: true });
     //call firebase
@@ -44,19 +47,47 @@ class Admin extends Component {
     this.props.firebase.users().off();
   }
 
+  handleInputChange = event => {
+    const { value, name } = event.target;
+    this.setState({ [name]: value });
+  };
+
+  submitRoom = () => {
+    const { roomToAdd, rooms } = this.state;
+    if (rooms.includes(roomToAdd)) {
+      alert('room already exists');
+    } else {
+      this.props.firebase.send(roomToAdd.split(' ').join(''), roomToAdd);
+    }
+    this.setState({ roomToAdd: '' });
+    this.props.firebase.allRooms().then(res => {
+      this.setState({ rooms: res });
+    });
+  };
+
   render() {
-    const { loading, users, rooms } = this.state;
+    const { loading, users, rooms, roomToAdd } = this.state;
 
     return (
       <div>
         <h1 className="admin my-4 text-center">Admin Panel</h1>
         {loading && <div>Loading...</div>}
         <Row>
-          <Column size="2">
+          <Column size="12">
+            <AllUsers users={users} />
+          </Column>
+        </Row>
+        <Row helper="my-3">
+          <Column size="12 md-2">
             <AllRooms rooms={rooms} />
           </Column>
-          <Column size="10">
-            <AllUsers users={users} />
+          <Column size="12 md-10">
+            <AddRoom
+              handleInputChange={this.handleInputChange}
+              roomToAdd={roomToAdd}
+              rooms={rooms}
+              submitRoom={this.submitRoom}
+            />
           </Column>
         </Row>
       </div>
@@ -80,9 +111,30 @@ const AllRooms = ({ rooms }) => {
   );
 };
 
+const AddRoom = ({ handleInputChange, roomToAdd, submitRoom }) => {
+  return (
+    <>
+      <h3 className="text-center">Add A Room</h3>
+      <InputGroup>
+        <Input
+          placeholder="add a room"
+          name="roomToAdd"
+          value={roomToAdd}
+          onChange={handleInputChange}
+        />
+        <InputGroupAddon addonType="append">
+          <Button color="success" onClick={submitRoom}>
+            Add Room
+          </Button>
+        </InputGroupAddon>
+      </InputGroup>
+    </>
+  );
+};
+
 const AllUsers = ({ users }) => {
   return (
-    <Table striped responsive bordered>
+    <Table className="mb-3" striped responsive bordered>
       <thead>
         <tr>
           <th>#</th>

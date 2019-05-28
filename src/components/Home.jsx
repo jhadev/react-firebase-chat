@@ -154,7 +154,11 @@ const Home = props => {
               <Row helper="mt-4">
                 <Column size="12 md-2">
                   <h6>Current Room: {room}</h6>
-                  <ChatList rooms={roomList} setChatRoom={setChatRoom} />
+                  <ChatList
+                    rooms={roomList}
+                    setChatRoom={setChatRoom}
+                    currentRoom={room}
+                  />
                 </Column>
                 <Column size="12 md-10">
                   <div className="wrapper">

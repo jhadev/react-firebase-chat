@@ -69,9 +69,11 @@ const AllRooms = ({ rooms }) => {
   return (
     <div className="text-center">
       <p>All Rooms</p>
-      <ul>
+      <ul className="list-group">
         {rooms.map(room => (
-          <li key={room}>{room}</li>
+          <li key={room} className="list-group-item">
+            {room}
+          </li>
         ))}
       </ul>
     </div>

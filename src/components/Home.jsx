@@ -19,6 +19,7 @@ const Home = props => {
   const [charCounter, setCounter] = useState(0);
   const [room, setRoom] = useState('chat');
   const [roomList, setRoomList] = useState([]);
+  const [dropdownOpen, setdDropdown] = useState(false);
 
   //refers to current room string in state
   const chatroom = props.firebase.chat(room);
@@ -48,6 +49,10 @@ const Home = props => {
   const scrollToBottom = () => {
     const scrollingElement = document.scrollingElement || document.body;
     scrollingElement.scrollTop = scrollingElement.scrollHeight;
+  };
+
+  const handleDropdown = () => {
+    setdDropdown(!dropdownOpen);
   };
 
   const sendMessage = () => {
@@ -163,6 +168,11 @@ const Home = props => {
                   sendMessage={sendMessage}
                   handleCloudinary={handleCloudinary}
                   counter={charCounter}
+                  handleDropdown={handleDropdown}
+                  isOpen={dropdownOpen}
+                  rooms={roomList}
+                  setChatRoom={setChatRoom}
+                  currentRoom={room}
                 />
               </>
             )}

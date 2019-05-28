@@ -7,7 +7,11 @@ import {
   Input,
   InputGroup,
   InputGroupText,
-  InputGroupAddon
+  InputGroupAddon,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 
@@ -17,7 +21,12 @@ const MessageForm = ({
   packageMsg,
   sendMessage,
   handleCloudinary,
-  counter
+  counter,
+  handleDropdown,
+  isOpen,
+  rooms,
+  setChatRoom,
+  currentRoom
 }) => {
   const widget = () => {
     window.cloudinary.openUploadWidget(
@@ -54,13 +63,38 @@ const MessageForm = ({
       <div className="sticky-footer">
         <Form onSubmit={packageMsg}>
           <FormGroup id="messageForm" row>
-            <Label for="chatInput" className="text-center" sm={2}>
+            <Label for="chatInput" className="text-center" md={2} sm={2}>
+              <div className="my-1">
+                <Dropdown
+                  direction="up"
+                  size="sm"
+                  group
+                  isOpen={isOpen}
+                  toggle={handleDropdown}
+                >
+                  <DropdownToggle caret>Choose Room</DropdownToggle>
+                  <DropdownMenu>
+                    {rooms.map(room => (
+                      <DropdownItem
+                        tag="button"
+                        active={currentRoom === room ? true : false}
+                        key={room}
+                        value={room}
+                        name={room}
+                        onClick={setChatRoom}
+                      >
+                        {room}
+                      </DropdownItem>
+                    ))}
+                  </DropdownMenu>
+                </Dropdown>
+              </div>
               {counter < maxCount
                 ? (counter - maxCount).toString().slice(1)
                 : 0}{' '}
               chars remaining
             </Label>
-            <Col sm={10}>
+            <Col md={10} sm={12}>
               <InputGroup className="mt-2 mb-3" size="md">
                 <InputGroupAddon onClick={widget} addonType="prepend">
                   <InputGroupText>

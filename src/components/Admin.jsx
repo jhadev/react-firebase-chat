@@ -21,7 +21,6 @@ class Admin extends Component {
 
   //call firebase on mount
   componentDidMount() {
-    this._isMounted = true;
     //set loading to true
     this.setState({ loading: true });
     //call firebase

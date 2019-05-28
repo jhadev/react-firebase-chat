@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
@@ -6,18 +7,29 @@ import Row from './common/Row';
 import Column from './common/Column';
 import Message from './Message';
 import MessageForm from './MessageForm';
+import ChatList from './ChatList';
 import moment from 'moment';
 
 const Home = props => {
-  // const divRef = useRef(null);
   const [showChat, handleChange] = useState(false);
   const [username, setUsername] = useState('');
   const [timestamp, setTimestamp] = useState('');
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState(null);
   const [charCounter, setCounter] = useState(0);
+  const [room, setRoom] = useState('test');
+  const [roomList, setRoomList] = useState([]);
 
-  const chatroom = props.firebase.chat();
+  //refers to current room string in state
+  const chatroom = props.firebase.chat(room);
+  //returns all array of all rooms
+  const allRooms = props.firebase.allRooms();
+
+  useEffect(() => {
+    allRooms.then(res => {
+      setRoomList(res);
+    });
+  }, []);
 
   useEffect(() => {
     const handleNewMessages = snapshot => {
@@ -27,18 +39,11 @@ const Home = props => {
     return () => {
       chatroom.off('value', handleNewMessages);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [room]);
 
   useEffect(() => {
     scrollToBottom();
   }, [chat]);
-
-  // const prevMessageRef = useRef();
-  // useEffect(() => {
-  //   prevMessageRef.current = message;
-  // });
-  // const prevMessage = prevMessageRef.current;
 
   const scrollToBottom = () => {
     const scrollingElement = document.scrollingElement || document.body;
@@ -52,8 +57,9 @@ const Home = props => {
         timestamp: timestamp,
         message: message
       };
-      props.firebase.send(messageObj);
+      props.firebase.send(room, messageObj);
     }
+    // scrollToBottom();
     setMessage('');
     setTimestamp('');
     setCounter(0);
@@ -74,6 +80,11 @@ const Home = props => {
     setTimestamp(moment().format('LLLL'));
     setMessage(value);
     setCounter(value.length);
+  };
+
+  const setChatRoom = event => {
+    const { value } = event.target;
+    setRoom(value);
   };
 
   const handleLayout = (authUser, chat, message) => {
@@ -125,7 +136,15 @@ const Home = props => {
             </div>
             {showChat && (
               <Row helper="mt-4">
-                <Column size="12">
+                <Column size="12 md-2">
+                  <h6>Current Room: {room}</h6>
+                  <ChatList
+                    rooms={roomList}
+                    setChatRoom={setChatRoom}
+                    currentRoom={room}
+                  />
+                </Column>
+                <Column size="12 md-10">
                   <div className="wrapper">
                     <>
                       {chat !== null &&
@@ -145,6 +164,7 @@ const Home = props => {
                 </Column>
               </Row>
             )}
+            {/* <div id="spacer" ref={messageRef} /> */}
           </Container>
         )}
       </AuthUserContext.Consumer>

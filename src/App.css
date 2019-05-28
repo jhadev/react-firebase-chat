@@ -73,8 +73,12 @@ body {
 }
 
 .wrapper {
-  margin-bottom: 5vh;
+  margin-bottom: 10vh;
 }
+
+/* #spacer {
+  height: 100px;
+} */
 
 #messageForm {
   margin-bottom: 0rem !important;

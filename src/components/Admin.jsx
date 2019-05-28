@@ -1,7 +1,9 @@
-import React, { Component } from "react";
-import { withAuthorization } from "../components/Session/index";
-import { Table } from "reactstrap";
-import * as ROLES from "../constants/roles";
+import React, { Component } from 'react';
+import { withAuthorization } from '../components/Session/index';
+import Row from '../components/common/Row';
+import Column from '../components/common/Column';
+import { Table } from 'reactstrap';
+import * as ROLES from '../constants/roles';
 
 //only shown if authed
 //admin page adds ability to see all users
@@ -11,7 +13,8 @@ class Admin extends Component {
     //set loading flag
     loading: false,
     //users set to empty array
-    users: []
+    users: [],
+    rooms: []
   };
 
   //call firebase on mount
@@ -19,7 +22,10 @@ class Admin extends Component {
     //set loading to true
     this.setState({ loading: true });
     //call firebase
-    this.props.firebase.users().on("value", snapshot => {
+    this.props.firebase.allRooms().then(res => {
+      this.setState({ rooms: res });
+    });
+    this.props.firebase.users().on('value', snapshot => {
       const usersObj = snapshot.val();
 
       const usersArr = Object.keys(usersObj).map(key => ({
@@ -39,19 +45,40 @@ class Admin extends Component {
   }
 
   render() {
-    const { loading, users } = this.state;
+    const { loading, users, rooms } = this.state;
 
     return (
       <div>
         <h1 className="admin my-4 text-center">Admin Panel</h1>
         {loading && <div>Loading...</div>}
-
-        <AllUsers users={users} />
+        <Row>
+          <Column size="2">
+            <AllRooms rooms={rooms} />
+          </Column>
+          <Column size="10">
+            <AllUsers users={users} />
+          </Column>
+        </Row>
       </div>
     );
   }
 }
 //start users component
+
+const AllRooms = ({ rooms }) => {
+  return (
+    <div className="text-center">
+      <p>All Rooms</p>
+      <ul className="list-group">
+        {rooms.map(room => (
+          <li key={room} className="list-group-item">
+            {room}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 const AllUsers = ({ users }) => {
   return (

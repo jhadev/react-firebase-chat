@@ -1,4 +1,5 @@
 import React from 'react';
+import ChatList from './ChatList';
 import {
   Col,
   Form,
@@ -7,11 +8,7 @@ import {
   Input,
   InputGroup,
   InputGroupText,
-  InputGroupAddon,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
+  InputGroupAddon
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 
@@ -73,31 +70,14 @@ const MessageForm = ({
               <InputGroup className="mt-2 mb-3" size="md">
                 <InputGroupAddon onClick={handleDropdown} addonType="prepend">
                   <InputGroupText id="roomBtnInput">
-                    <Dropdown
-                      direction="up"
-                      size="sm"
-                      group
+                    <ChatList
+                      rooms={rooms}
+                      setChatRoom={setChatRoom}
+                      currentRoom={currentRoom}
                       isOpen={isOpen}
-                      toggle={handleDropdown}
-                    >
-                      <DropdownToggle className="text-dark" color="link">
-                        <i className="fas fa-comments" />
-                      </DropdownToggle>
-                      <DropdownMenu>
-                        {rooms.map(room => (
-                          <DropdownItem
-                            tag="button"
-                            active={currentRoom === room ? true : false}
-                            key={room}
-                            value={room}
-                            name={room}
-                            onClick={setChatRoom}
-                          >
-                            {room}
-                          </DropdownItem>
-                        ))}
-                      </DropdownMenu>
-                    </Dropdown>
+                      handleDropdown={handleDropdown}
+                      dropdown
+                    />
                   </InputGroupText>
                 </InputGroupAddon>
                 <InputGroupAddon onClick={widget} addonType="prepend">

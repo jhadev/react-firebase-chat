@@ -11,7 +11,7 @@ import ChatList from './ChatList';
 import moment from 'moment';
 
 const Home = props => {
-  const [showChat, handleChange] = useState(false);
+  const [showChat, handleChange] = useState(true);
   const [username, setUsername] = useState('');
   const [timestamp, setTimestamp] = useState('');
   const [message, setMessage] = useState('');
@@ -138,7 +138,6 @@ const Home = props => {
                 {!showChat ? 'Show Chat' : 'Hide Chat'}
               </button>
             </div>
-
             {showChat && (
               <>
                 <Row helper="mt-4">

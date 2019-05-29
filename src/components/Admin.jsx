@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { withAuthorization } from '../components/Session/index';
-import { InputGroup, InputGroupAddon, Input, Button } from 'reactstrap';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
 import ChatList from '../components/ChatList';
 import { Table } from 'reactstrap';
+import { InputGroup, InputGroupAddon, Input, Button } from 'reactstrap';
 import * as ROLES from '../constants/roles';
 
 //only shown if authed
@@ -29,6 +29,7 @@ class Admin extends Component {
     this.props.firebase.allRooms().then(res => {
       this.setState({ rooms: res });
     });
+
     this.props.firebase.users().on('value', snapshot => {
       const usersObj = snapshot.val();
 
@@ -55,8 +56,8 @@ class Admin extends Component {
 
   submitRoom = () => {
     const { roomToAdd, rooms } = this.state;
-    if (rooms.includes(roomToAdd)) {
-      alert('room already exists');
+    if (rooms.includes(roomToAdd) || roomToAdd === '') {
+      alert('room already exists or room name not defined');
     } else {
       this.props.firebase.send(roomToAdd.split(' ').join(''), roomToAdd);
     }
@@ -91,6 +92,7 @@ class Admin extends Component {
       })
       .catch(err => console.log(err.message));
   };
+
   render() {
     const { loading, users, rooms, roomToAdd, roomToRemove } = this.state;
 
@@ -111,7 +113,7 @@ class Admin extends Component {
           <Column size="12 md-5">
             <AddRoom
               handleInputChange={this.handleInputChange}
-              roomToAdd={roomToAdd}
+              roomName={roomToAdd}
               rooms={rooms}
               submitRoom={this.submitRoom}
             />
@@ -119,7 +121,7 @@ class Admin extends Component {
           <Column size="12 md-5">
             <RemoveRoom
               handleInputChange={this.handleInputChange}
-              roomToRemove={roomToRemove}
+              roomName={roomToRemove}
               rooms={rooms}
               removeRoom={this.removeRoom}
             />
@@ -143,7 +145,7 @@ const AddRoom = ({ handleInputChange, roomToAdd, submitRoom }) => {
         />
         <InputGroupAddon addonType="append">
           <Button color="success" onClick={submitRoom}>
-            Add Room
+            Add
           </Button>
         </InputGroupAddon>
       </InputGroup>
@@ -164,7 +166,7 @@ const RemoveRoom = ({ handleInputChange, roomToRemove, removeRoom }) => {
         />
         <InputGroupAddon addonType="append">
           <Button color="danger" onClick={removeRoom}>
-            Remove Room
+            Remove
           </Button>
         </InputGroupAddon>
       </InputGroup>

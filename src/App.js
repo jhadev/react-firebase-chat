@@ -26,7 +26,6 @@ class App extends Component {
 
   render() {
     return (
-      //allows authUser value to be used in child components by making it a consumer inside those components.
       <Router>
         <div>
           <Navigation isOpen={this.state.isOpen} toggle={this.toggle} />

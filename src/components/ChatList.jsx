@@ -7,6 +7,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 const ChatList = ({
   rooms,
@@ -60,5 +61,14 @@ const ChatList = ({
       ))}
     </ListGroup>
   );
+
+ChatList.propTypes = {
+  rooms: PropTypes.array,
+  setChatRoom: PropTypes.func,
+  currentRoom: PropTypes.string,
+  dropdown: PropTypes.bool,
+  isOpen: PropTypes.bool,
+  handleDropdown: PropTypes.func
+};
 
 export default ChatList;

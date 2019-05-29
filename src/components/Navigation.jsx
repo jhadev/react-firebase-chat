@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 const Navigation = ({ isOpen, toggle }) => {
   return (
     <div>
-      {/* consume context provied in session index based on if user is authed */}
+      {/* consume context provided in session index based on if user is authed */}
       <AuthUserContext.Consumer>
         {authUser => (
           <>

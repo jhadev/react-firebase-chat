@@ -8,10 +8,7 @@ const Landing = () => (
     <Row helper="my-4">
       <Column size="12">
         <div className="main">
-          <h3>
-            something will go here :). Turnrf off domr features bc firebase data
-            was eaten up quick.
-          </h3>
+          <h3>something will go here :)</h3>
         </div>
       </Column>
     </Row>

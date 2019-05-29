@@ -9,8 +9,8 @@ const Landing = () => (
       <Column size="12">
         <div className="main">
           <h3>
-            something will go here :). Turn off main features bc firebase data
-            was eaten up
+            something will go here :). Turnrf off domr features bc firebase data
+            was eaten up quick.
           </h3>
         </div>
       </Column>

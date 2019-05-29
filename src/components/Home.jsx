@@ -22,7 +22,7 @@ const Home = props => {
   const [dropdownOpen, setDropdown] = useState(false);
 
   //refers to current room string in state
-  const chatroom = props.firebase.chat(room);
+  // const chatroom = props.firebase.chat(room);
   //returns all array of all rooms
   const allRooms = props.firebase.allRooms();
 
@@ -38,11 +38,11 @@ const Home = props => {
     const handleNewMessages = snapshot => {
       if (snapshot.val()) setChat(snapshot.val());
     };
-    chatroom.on('value', handleNewMessages);
+    props.firebase.chat(room).on('value', handleNewMessages);
     return () => {
-      chatroom.off('value', handleNewMessages);
+      props.firebase.chat(room).off('value', handleNewMessages);
     };
-  }, []);
+  }, [room]);
 
   useEffect(() => {
     scrollToBottom();
@@ -92,8 +92,6 @@ const Home = props => {
     const { value } = event.target;
     setRoom(value);
   };
-
-  console.log(chat);
 
   const handleLayout = (authUser, chat, message) => {
     if (authUser.email === chat[message]['user']) {

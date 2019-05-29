@@ -25,6 +25,7 @@ const MessageForm = ({
   setChatRoom,
   currentRoom
 }) => {
+  console.log(message);
   const widget = () => {
     window.cloudinary.openUploadWidget(
       {
@@ -91,11 +92,11 @@ const MessageForm = ({
                   id="chatInput"
                   value={message}
                   onChange={setMsg}
-                  onKeyUp={event =>
-                    event.key === 'Enter' && counter <= maxCount
-                      ? sendMessage()
-                      : false
-                  }
+                  // onKeyUp={event =>
+                  //   event.key === 'Enter' && counter <= maxCount
+                  //     ? sendMessage()
+                  //     : false
+                  // }
                 />
                 <InputGroupAddon addonType="append">
                   <InputGroupText id="sendBtnInput">

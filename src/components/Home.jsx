@@ -19,7 +19,7 @@ const Home = props => {
   const [charCounter, setCounter] = useState(0);
   const [room, setRoom] = useState('chat');
   const [roomList, setRoomList] = useState([]);
-  const [dropdownOpen, setdDropdown] = useState(false);
+  const [dropdownOpen, setDropdown] = useState(false);
 
   //refers to current room string in state
   const chatroom = props.firebase.chat(room);
@@ -52,7 +52,7 @@ const Home = props => {
   };
 
   const handleDropdown = () => {
-    setdDropdown(!dropdownOpen);
+    setDropdown(!dropdownOpen);
   };
 
   const sendMessage = () => {

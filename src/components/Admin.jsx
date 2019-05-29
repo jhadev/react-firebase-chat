@@ -21,6 +21,7 @@ class Admin extends Component {
     roomToRemove: ''
   };
 
+  // need to add a way to update admin for new rooms without refresh
   //call firebase on mount
   componentDidMount() {
     //set loading to true
@@ -61,13 +62,14 @@ class Admin extends Component {
     } else {
       this.props.firebase.send(roomToAdd.split(' ').join(''), roomToAdd);
     }
-    this.setState({ roomToAdd: '' });
     this.props.firebase
       .allRooms()
       .then(res => {
         this.setState({ rooms: res });
       })
       .catch(err => console.log(err.message));
+
+    this.setState({ roomToAdd: '' });
   };
 
   removeRoom = () => {
@@ -84,17 +86,20 @@ class Admin extends Component {
     } else {
       alert('room not found');
     }
-    this.setState({ roomToRemove: '' });
     this.props.firebase
       .allRooms()
       .then(res => {
         this.setState({ rooms: res });
       })
       .catch(err => console.log(err.message));
+
+    this.setState({ roomToRemove: '' });
   };
 
   render() {
     const { loading, users, rooms, roomToAdd, roomToRemove } = this.state;
+
+    console.log(rooms);
 
     return (
       <div>
@@ -111,68 +116,48 @@ class Admin extends Component {
             <ChatList rooms={rooms} />
           </Column>
           <Column size="12 md-5">
-            <AddRoom
-              handleInputChange={this.handleInputChange}
-              roomName={roomToAdd}
-              rooms={rooms}
-              submitRoom={this.submitRoom}
-            />
+            {/* ADD ROOM */}
+            <>
+              <h3 className="text-center my-3">Add Room</h3>
+              <InputGroup>
+                <Input
+                  placeholder="add a room"
+                  name="roomToAdd"
+                  value={roomToAdd}
+                  onChange={this.handleInputChange}
+                />
+                <InputGroupAddon addonType="append">
+                  <Button color="success" onClick={this.submitRoom}>
+                    Add
+                  </Button>
+                </InputGroupAddon>
+              </InputGroup>
+            </>
           </Column>
           <Column size="12 md-5">
-            <RemoveRoom
-              handleInputChange={this.handleInputChange}
-              roomName={roomToRemove}
-              rooms={rooms}
-              removeRoom={this.removeRoom}
-            />
+            {/* REMOVE ROOM */}
+            <>
+              <h3 className="text-center my-3">Remove Room</h3>
+              <InputGroup>
+                <Input
+                  placeholder="remove a room"
+                  name="roomToRemove"
+                  value={roomToRemove}
+                  onChange={this.handleInputChange}
+                />
+                <InputGroupAddon addonType="append">
+                  <Button color="danger" onClick={this.removeRoom}>
+                    Remove
+                  </Button>
+                </InputGroupAddon>
+              </InputGroup>
+            </>
           </Column>
         </Row>
       </div>
     );
   }
 }
-
-const AddRoom = ({ handleInputChange, roomToAdd, submitRoom }) => {
-  return (
-    <>
-      <h3 className="text-center my-3">Add Room</h3>
-      <InputGroup>
-        <Input
-          placeholder="add a room"
-          name="roomToAdd"
-          value={roomToAdd}
-          onChange={handleInputChange}
-        />
-        <InputGroupAddon addonType="append">
-          <Button color="success" onClick={submitRoom}>
-            Add
-          </Button>
-        </InputGroupAddon>
-      </InputGroup>
-    </>
-  );
-};
-
-const RemoveRoom = ({ handleInputChange, roomToRemove, removeRoom }) => {
-  return (
-    <>
-      <h3 className="text-center my-3">Remove Room</h3>
-      <InputGroup>
-        <Input
-          placeholder="remove a room"
-          name="roomToRemove"
-          value={roomToRemove}
-          onChange={handleInputChange}
-        />
-        <InputGroupAddon addonType="append">
-          <Button color="danger" onClick={removeRoom}>
-            Remove
-          </Button>
-        </InputGroupAddon>
-      </InputGroup>
-    </>
-  );
-};
 
 const AllUsers = ({ users }) => {
   return (

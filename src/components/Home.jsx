@@ -27,9 +27,11 @@ const Home = props => {
   const allRooms = props.firebase.allRooms();
 
   useEffect(() => {
-    allRooms.then(res => {
-      setRoomList(res);
-    });
+    allRooms
+      .then(res => {
+        setRoomList(res);
+      })
+      .catch(err => console.log(err));
   }, []);
 
   useEffect(() => {
@@ -40,11 +42,11 @@ const Home = props => {
     return () => {
       chatroom.off('value', handleNewMessages);
     };
-  }, [room]);
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
-  }, [chat]);
+  }, []);
 
   const scrollToBottom = () => {
     const scrollingElement = document.scrollingElement || document.body;
@@ -90,6 +92,8 @@ const Home = props => {
     const { value } = event.target;
     setRoom(value);
   };
+
+  console.log(chat);
 
   const handleLayout = (authUser, chat, message) => {
     if (authUser.email === chat[message]['user']) {

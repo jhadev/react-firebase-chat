@@ -8,7 +8,7 @@ const Landing = () => (
     <Row helper="my-4">
       <Column size="12">
         <div className="main">
-          <h3>something will go here :)</h3>
+          <h3>something will go here {':)'}</h3>
         </div>
       </Column>
     </Row>

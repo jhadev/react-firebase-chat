@@ -66,6 +66,7 @@ const Home = props => {
       };
       props.firebase.send(room, messageObj);
     }
+    scrollToBottom();
     setMessage('');
     setTimestamp('');
     setCounter(0);
@@ -93,6 +94,9 @@ const Home = props => {
     setRoom(value);
   };
 
+  console.log(chat);
+  console.log(room);
+  console.log(roomList);
   const handleLayout = (authUser, chat, message) => {
     if (authUser.email === chat[message]['user']) {
       return (

@@ -95,7 +95,7 @@ const MessageForm = ({
                   // onKeyUp={event =>
                   //   event.key === 'Enter' && counter <= maxCount
                   //     ? sendMessage()
-                  //     : false
+                  //     : alert('please enter text')
                   // }
                 />
                 <InputGroupAddon addonType="append">
@@ -103,6 +103,7 @@ const MessageForm = ({
                     <button
                       disabled={counter > maxCount}
                       className="btn font-weight-bold text-dark btn-link"
+                      type="submit"
                     >
                       Send
                     </button>

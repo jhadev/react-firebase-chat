@@ -46,7 +46,7 @@ const Home = props => {
 
   useEffect(() => {
     scrollToBottom();
-  }, []);
+  }, [chat, room]);
 
   const scrollToBottom = () => {
     const scrollingElement = document.scrollingElement || document.body;
@@ -66,6 +66,7 @@ const Home = props => {
       };
       props.firebase.send(room, messageObj);
     }
+
     setMessage('');
     setTimestamp('');
     setCounter(0);

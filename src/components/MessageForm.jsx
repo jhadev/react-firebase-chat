@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ChatList from './ChatList';
 import {
   Col,
@@ -10,21 +10,44 @@ import {
   InputGroupText,
   InputGroupAddon
 } from 'reactstrap';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 
 const MessageForm = ({
   message,
-  setMsg,
-  packageMsg,
-  sendMessage,
-  handleCloudinary,
-  counter,
   handleDropdown,
   isOpen,
   rooms,
   setChatRoom,
-  currentRoom
+  currentRoom,
+  firebase,
+  username
 }) => {
+  const [newMessage, setNewMessage] = useState('');
+  const [timestamp, setTimestamp] = useState('');
+  const [charCounter, setCounter] = useState(0);
+
+  const sendNewMessage = e => {
+    e.preventDefault();
+    if (newMessage !== '' && newMessage.length > 1 && charCounter <= maxCount) {
+      let messageObj = {
+        user: username,
+        timestamp: timestamp,
+        message: newMessage
+      };
+      firebase.send(currentRoom, messageObj);
+    }
+
+    setNewMessage('');
+    setTimestamp('');
+    setCounter(0);
+  };
+
+  const handleCloudinary = str => {
+    setNewMessage(str);
+    setTimestamp(moment().format('LLLL'));
+  };
+
   const widget = () => {
     window.cloudinary.openUploadWidget(
       {
@@ -58,11 +81,11 @@ const MessageForm = ({
   return (
     <>
       <div className="sticky-footer">
-        <Form onSubmit={packageMsg}>
+        <Form onSubmit={sendNewMessage}>
           <FormGroup id="messageForm" row>
             <Label for="chatInput" className="text-center" md={2} sm={2}>
-              {counter < maxCount
-                ? (counter - maxCount).toString().slice(1)
+              {charCounter < maxCount
+                ? (charCounter - maxCount).toString().slice(1)
                 : 0}{' '}
               chars remaining
             </Label>
@@ -89,18 +112,22 @@ const MessageForm = ({
                   type="textarea"
                   name="text"
                   id="chatInput"
-                  value={message}
-                  onChange={setMsg}
-                  // onKeyUp={event =>
-                  //   event.key === 'Enter' && counter <= maxCount
-                  //     ? sendMessage()
-                  //     : alert('please enter text')
-                  // }
+                  value={newMessage}
+                  onChange={e => {
+                    setNewMessage(e.target.value);
+                    setTimestamp(moment().format('LLLL'));
+                    setCounter(e.target.value.length);
+                  }}
+                  onKeyUp={event =>
+                    event.key === 'Enter' && sendNewMessage(event)
+                  }
                 />
                 <InputGroupAddon addonType="append">
                   <InputGroupText id="sendBtnInput">
                     <button
-                      disabled={counter > maxCount}
+                      disabled={
+                        charCounter > maxCount || newMessage.length === 0
+                      }
                       className="btn font-weight-bold text-dark btn-link"
                       type="submit"
                     >
@@ -119,11 +146,8 @@ const MessageForm = ({
 
 MessageForm.propTypes = {
   message: PropTypes.string,
-  setMsg: PropTypes.func,
-  packageMsg: PropTypes.func,
-  sendMessage: PropTypes.func,
   handleCloudinary: PropTypes.func,
-  counter: PropTypes.number,
+  charCounter: PropTypes.number,
   handleDropdown: PropTypes.func,
   isOpen: PropTypes.bool,
   rooms: PropTypes.array,

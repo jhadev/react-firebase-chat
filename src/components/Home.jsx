@@ -8,15 +8,11 @@ import Column from './common/Column';
 import Message from './Message';
 import MessageForm from './MessageForm';
 import ChatList from './ChatList';
-import moment from 'moment';
 
 const Home = props => {
   const [showChat, handleChange] = useState(false);
   const [username, setUsername] = useState('');
-  const [timestamp, setTimestamp] = useState('');
-  const [message, setMessage] = useState('');
   const [chat, setChat] = useState(null);
-  const [charCounter, setCounter] = useState(0);
   const [room, setRoom] = useState('chat');
   const [roomList, setRoomList] = useState([]);
   const [dropdownOpen, setDropdown] = useState(false);
@@ -57,38 +53,6 @@ const Home = props => {
 
   const handleDropdown = () => {
     setDropdown(!dropdownOpen);
-  };
-
-  const sendMessage = () => {
-    if (message !== '') {
-      let messageObj = {
-        user: username,
-        timestamp: timestamp,
-        message: message
-      };
-      props.firebase.send(room, messageObj);
-    }
-
-    setMessage('');
-    setTimestamp('');
-    setCounter(0);
-  };
-
-  const packageMsg = event => {
-    event.preventDefault();
-    sendMessage();
-  };
-
-  const handleCloudinary = str => {
-    setMessage(str);
-    setTimestamp(moment().format('LLLL'));
-  };
-
-  const setMsg = event => {
-    const { value } = event.target;
-    setTimestamp(moment().format('LLLL'));
-    setMessage(value);
-    setCounter(value.length);
   };
 
   const setChatRoom = event => {
@@ -164,17 +128,13 @@ const Home = props => {
               </Column>
             </Row>
             <MessageForm
-              message={message}
-              setMsg={setMsg}
-              packageMsg={packageMsg}
-              sendMessage={sendMessage}
-              handleCloudinary={handleCloudinary}
-              counter={charCounter}
+              username={username}
               handleDropdown={handleDropdown}
               isOpen={dropdownOpen}
               rooms={roomList}
               setChatRoom={setChatRoom}
               currentRoom={room}
+              firebase={props.firebase}
             />
           </>
         )}

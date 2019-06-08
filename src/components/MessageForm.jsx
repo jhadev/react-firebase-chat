@@ -25,7 +25,6 @@ const MessageForm = ({
   setChatRoom,
   currentRoom
 }) => {
-  console.log(message);
   const widget = () => {
     window.cloudinary.openUploadWidget(
       {

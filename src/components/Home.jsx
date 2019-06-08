@@ -24,9 +24,9 @@ const Home = props => {
   const authUser = useContext(AuthUserContext);
 
   //refers to current room string in state
-  // const chatroom = props.firebase.chat(room);
   //returns all array of all rooms
   const allRooms = props.firebase.allRooms();
+  const chatroom = props.firebase.chat(room);
 
   useEffect(() => {
     allRooms
@@ -40,9 +40,9 @@ const Home = props => {
     const handleNewMessages = snapshot => {
       if (snapshot.val()) setChat(snapshot.val());
     };
-    props.firebase.chat(room).on('value', handleNewMessages);
+    chatroom.on('value', handleNewMessages);
     return () => {
-      props.firebase.chat(room).off('value', handleNewMessages);
+      chatroom.off('value', handleNewMessages);
     };
   }, [room]);
 
@@ -96,7 +96,7 @@ const Home = props => {
     setRoom(value);
   };
 
-  const handleLayout = (authUser, chat, message) => {
+  const handleLayout = (chat, message) => {
     if (authUser.email === chat[message]['user']) {
       return (
         <div className="d-flex flex-column align-items-end my-1" key={message}>
@@ -157,7 +157,7 @@ const Home = props => {
                   <>
                     {chat !== null &&
                       Object.keys(chat).map(message =>
-                        handleLayout(authUser, chat, message)
+                        handleLayout(chat, message)
                       )}
                   </>
                 </div>
@@ -179,7 +179,6 @@ const Home = props => {
           </>
         )}
       </Container>
-      )}
     </>
   );
 };

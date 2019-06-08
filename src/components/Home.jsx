@@ -10,14 +10,13 @@ import MessageForm from './MessageForm';
 import ChatList from './ChatList';
 
 const Home = props => {
-  const [showChat, handleChange] = useState(false);
-  const [username, setUsername] = useState('');
+  const authUser = useContext(AuthUserContext);
+
+  const [showChat, handleChange] = useState(true);
   const [chat, setChat] = useState(null);
   const [room, setRoom] = useState('chat');
   const [roomList, setRoomList] = useState([]);
   const [dropdownOpen, setDropdown] = useState(false);
-
-  const authUser = useContext(AuthUserContext);
 
   //refers to current room string in state
   //returns all array of all rooms
@@ -99,7 +98,6 @@ const Home = props => {
             className="btn btn-primary btn-lg"
             onClick={() => {
               handleChange(!showChat);
-              setUsername(authUser.email);
             }}
           >
             {!showChat ? 'Show Chat' : 'Hide Chat'}
@@ -128,7 +126,7 @@ const Home = props => {
               </Column>
             </Row>
             <MessageForm
-              username={username}
+              username={authUser.email}
               handleDropdown={handleDropdown}
               isOpen={dropdownOpen}
               rooms={roomList}

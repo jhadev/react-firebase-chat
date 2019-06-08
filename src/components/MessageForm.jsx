@@ -25,7 +25,6 @@ const MessageForm = ({
   username
 }) => {
   const [newMessage, setNewMessage] = useState('');
-  const [timestamp, setTimestamp] = useState('');
   const [charCounter, setCounter] = useState(0);
   const [emojiPicker, handlePickerOpen] = useState(false);
 
@@ -34,20 +33,14 @@ const MessageForm = ({
     if (newMessage !== '' && newMessage.length > 1 && charCounter <= maxCount) {
       let messageObj = {
         user: username,
-        timestamp: timestamp,
+        timestamp: moment().format('LLLL'),
         message: newMessage
       };
       firebase.send(currentRoom, messageObj);
     }
 
     setNewMessage('');
-    setTimestamp('');
     setCounter(0);
-  };
-
-  const handleCloudinary = str => {
-    setNewMessage(str);
-    setTimestamp(moment().format('LLLL'));
   };
 
   const widget = () => {
@@ -68,11 +61,9 @@ const MessageForm = ({
       (error, result) => {
         if (!error && result && result.event === 'success') {
           console.log(result);
-          if (newMessage !== '') {
-            handleCloudinary(`${newMessage} ${result.info.secure_url}`);
-          } else {
-            handleCloudinary(result.info.secure_url);
-          }
+          setNewMessage(prevMessage =>
+            prevMessage.concat(` ${result.info.secure_url}`)
+          );
         }
       }
     );
@@ -115,10 +106,7 @@ const MessageForm = ({
                   onClick={() => handlePickerOpen(!emojiPicker)}
                   addonType="prepend"
                 >
-                  <EmojiContainer
-                    setNewMessage={setNewMessage}
-                    setTimestamp={setTimestamp}
-                  />
+                  <EmojiContainer setNewMessage={setNewMessage} />
                   <InputGroupText>
                     <i className="far fa-grin-tongue-squint" />
                   </InputGroupText>
@@ -130,7 +118,6 @@ const MessageForm = ({
                   value={newMessage}
                   onChange={e => {
                     setNewMessage(e.target.value);
-                    setTimestamp(moment().format('LLLL'));
                     setCounter(e.target.value.length);
                   }}
                   onKeyUp={event =>

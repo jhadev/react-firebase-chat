@@ -92,15 +92,6 @@ body {
   padding: 0 0 !important;
 }
 
-.sticky-footer {
-  /* box-shadow: 0 -0.5rem 1rem rgba(0, 0, 0, 0.15) !important; */
-  background: white;
-  position: sticky !important;
-  position: -webkit-sticky;
-  bottom: 0px;
-  z-index: 0;
-}
-
 @media screen and (max-width: 600px) {
   .welcome {
     font-size: 1.4rem;

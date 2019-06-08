@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ChatList from './ChatList';
+import Footer from './common/Footer';
 import {
   Col,
   Form,
@@ -78,7 +79,7 @@ const MessageForm = ({
 
   return (
     <>
-      <div className="sticky-footer">
+      <Footer>
         <Form onSubmit={sendNewMessage}>
           <FormGroup id="messageForm" row>
             <Label for="chatInput" className="text-center" md={2} sm={2}>
@@ -137,7 +138,7 @@ const MessageForm = ({
             </Col>
           </FormGroup>
         </Form>
-      </div>
+      </Footer>
     </>
   );
 };

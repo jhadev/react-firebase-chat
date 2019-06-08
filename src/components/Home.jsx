@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
 import Container from './common/Container';
@@ -21,10 +21,12 @@ const Home = props => {
   const [roomList, setRoomList] = useState([]);
   const [dropdownOpen, setDropdown] = useState(false);
 
+  const authUser = useContext(AuthUserContext);
+
   //refers to current room string in state
-  // const chatroom = props.firebase.chat(room);
   //returns all array of all rooms
   const allRooms = props.firebase.allRooms();
+  const chatroom = props.firebase.chat(room);
 
   useEffect(() => {
     allRooms
@@ -38,9 +40,9 @@ const Home = props => {
     const handleNewMessages = snapshot => {
       if (snapshot.val()) setChat(snapshot.val());
     };
-    props.firebase.chat(room).on('value', handleNewMessages);
+    chatroom.on('value', handleNewMessages);
     return () => {
-      props.firebase.chat(room).off('value', handleNewMessages);
+      chatroom.off('value', handleNewMessages);
     };
   }, [room]);
 
@@ -94,7 +96,7 @@ const Home = props => {
     setRoom(value);
   };
 
-  const handleLayout = (authUser, chat, message) => {
+  const handleLayout = (chat, message) => {
     if (authUser.email === chat[message]['user']) {
       return (
         <div className="d-flex flex-column align-items-end my-1" key={message}>
@@ -126,61 +128,57 @@ const Home = props => {
 
   return (
     <>
-      <AuthUserContext.Consumer>
-        {authUser => (
-          <Container fluid>
-            <div className="text-center">
-              <h1 className=" welcome my-4">Welcome, {authUser.email}</h1>
-              <button
-                className="btn btn-primary btn-lg"
-                onClick={() => {
-                  handleChange(!showChat);
-                  setUsername(authUser.email);
-                }}
-              >
-                {!showChat ? 'Show Chat' : 'Hide Chat'}
-              </button>
-            </div>
-            {showChat && (
-              <>
-                <Row helper="mt-4">
-                  <Column size="12 md-2">
-                    <h6>Current Room: {room}</h6>
-                    <ChatList
-                      rooms={roomList}
-                      setChatRoom={setChatRoom}
-                      currentRoom={room}
-                    />
-                  </Column>
-                  <Column size="12 md-10">
-                    <div className="wrapper">
-                      <>
-                        {chat !== null &&
-                          Object.keys(chat).map(message =>
-                            handleLayout(authUser, chat, message)
-                          )}
-                      </>
-                    </div>
-                  </Column>
-                </Row>
-                <MessageForm
-                  message={message}
-                  setMsg={setMsg}
-                  packageMsg={packageMsg}
-                  sendMessage={sendMessage}
-                  handleCloudinary={handleCloudinary}
-                  counter={charCounter}
-                  handleDropdown={handleDropdown}
-                  isOpen={dropdownOpen}
+      <Container fluid>
+        <div className="text-center">
+          <h1 className=" welcome my-4">Welcome, {authUser.email}</h1>
+          <button
+            className="btn btn-primary btn-lg"
+            onClick={() => {
+              handleChange(!showChat);
+              setUsername(authUser.email);
+            }}
+          >
+            {!showChat ? 'Show Chat' : 'Hide Chat'}
+          </button>
+        </div>
+        {showChat && (
+          <>
+            <Row helper="mt-4">
+              <Column size="12 md-2">
+                <h6>Current Room: {room}</h6>
+                <ChatList
                   rooms={roomList}
                   setChatRoom={setChatRoom}
                   currentRoom={room}
                 />
-              </>
-            )}
-          </Container>
+              </Column>
+              <Column size="12 md-10">
+                <div className="wrapper">
+                  <>
+                    {chat !== null &&
+                      Object.keys(chat).map(message =>
+                        handleLayout(chat, message)
+                      )}
+                  </>
+                </div>
+              </Column>
+            </Row>
+            <MessageForm
+              message={message}
+              setMsg={setMsg}
+              packageMsg={packageMsg}
+              sendMessage={sendMessage}
+              handleCloudinary={handleCloudinary}
+              counter={charCounter}
+              handleDropdown={handleDropdown}
+              isOpen={dropdownOpen}
+              rooms={roomList}
+              setChatRoom={setChatRoom}
+              currentRoom={room}
+            />
+          </>
         )}
-      </AuthUserContext.Consumer>
+      </Container>
     </>
   );
 };

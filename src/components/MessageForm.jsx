@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ChatList from './ChatList';
-import Footer from './common/Footer';
+// import Footer from './common/Footer';
 import {
   Col,
   Form,
@@ -12,6 +12,8 @@ import {
   InputGroupAddon
 } from 'reactstrap';
 import moment from 'moment';
+import 'emoji-mart/css/emoji-mart.css';
+import EmojiContainer from './EmojiContainer';
 
 const MessageForm = ({
   handleDropdown,
@@ -25,6 +27,7 @@ const MessageForm = ({
   const [newMessage, setNewMessage] = useState('');
   const [timestamp, setTimestamp] = useState('');
   const [charCounter, setCounter] = useState(0);
+  const [emojiPicker, handlePickerOpen] = useState(false);
 
   const sendNewMessage = e => {
     e.preventDefault();
@@ -79,7 +82,7 @@ const MessageForm = ({
 
   return (
     <>
-      <Footer>
+      <div className="sticky-footer">
         <Form onSubmit={sendNewMessage}>
           <FormGroup id="messageForm" row>
             <Label for="chatInput" className="text-center" md={2} sm={2}>
@@ -105,6 +108,18 @@ const MessageForm = ({
                 <InputGroupAddon onClick={widget} addonType="prepend">
                   <InputGroupText>
                     <i className="fas fa-camera" />
+                  </InputGroupText>
+                </InputGroupAddon>
+                <InputGroupAddon
+                  onClick={() => handlePickerOpen(!emojiPicker)}
+                  addonType="prepend"
+                >
+                  <InputGroupText id="emojiBtnInput">
+                    <EmojiContainer
+                      setNewMessage={setNewMessage}
+                      handlePickerOpen={handlePickerOpen}
+                      emojiPicker={emojiPicker}
+                    />
                   </InputGroupText>
                 </InputGroupAddon>
                 <Input
@@ -138,7 +153,7 @@ const MessageForm = ({
             </Col>
           </FormGroup>
         </Form>
-      </Footer>
+      </div>
     </>
   );
 };

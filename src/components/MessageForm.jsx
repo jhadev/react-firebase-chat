@@ -115,14 +115,13 @@ const MessageForm = ({
                   onClick={() => handlePickerOpen(!emojiPicker)}
                   addonType="prepend"
                 >
+                  <EmojiContainer
+                    setNewMessage={setNewMessage}
+                    handlePickerOpen={handlePickerOpen}
+                    emojiPicker={emojiPicker}
+                  />
                   <InputGroupText>
                     <i className="far fa-grin-tongue-squint" />
-
-                    <EmojiContainer
-                      setNewMessage={setNewMessage}
-                      handlePickerOpen={handlePickerOpen}
-                      emojiPicker={emojiPicker}
-                    />
                   </InputGroupText>
                 </InputGroupAddon>
                 <Input

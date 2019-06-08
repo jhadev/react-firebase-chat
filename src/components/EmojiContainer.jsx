@@ -1,29 +1,28 @@
 import React from 'react';
-import { Popover, PopoverBody } from 'reactstrap';
+import { PopoverBody, UncontrolledPopover } from 'reactstrap';
 import 'emoji-mart/css/emoji-mart.css';
 import { NimblePicker } from 'emoji-mart';
 import data from 'emoji-mart/data/apple.json';
 
-const EmojiContainer = ({ emojiPicker, handlePickerOpen, setNewMessage }) => {
+const EmojiContainer = ({ setNewMessage }) => {
   return (
-    <Popover
-      placement="top"
-      isOpen={emojiPicker}
-      target="Popover1"
-      toggle={handlePickerOpen}
-    >
+    <UncontrolledPopover placement="top" target="Popover1" trigger="legacy">
       <PopoverBody style={{ maxWidth: '100%' }}>
         <NimblePicker
+          container="inline"
           style={{ width: '100%' }}
           set="apple"
           data={data}
-          onSelect={emoji =>
-            setNewMessage(prevMessage => prevMessage.concat(emoji.native))
-          }
+          search={false}
+          showSkinTones={false}
+          onSelect={emoji => {
+            setNewMessage(prevMessage => prevMessage.concat(emoji.native));
+          }}
           title={'emojis'}
+          emoji={'grinning'}
         />
       </PopoverBody>
-    </Popover>
+    </UncontrolledPopover>
   );
 };
 

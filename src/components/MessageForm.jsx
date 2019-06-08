@@ -11,10 +11,8 @@ import {
   InputGroupAddon
 } from 'reactstrap';
 import moment from 'moment';
-import PropTypes from 'prop-types';
 
 const MessageForm = ({
-  message,
   handleDropdown,
   isOpen,
   rooms,
@@ -66,8 +64,8 @@ const MessageForm = ({
       (error, result) => {
         if (!error && result && result.event === 'success') {
           console.log(result);
-          if (message !== '') {
-            handleCloudinary(`${message} ${result.info.secure_url}`);
+          if (newMessage !== '') {
+            handleCloudinary(`${newMessage} ${result.info.secure_url}`);
           } else {
             handleCloudinary(result.info.secure_url);
           }
@@ -142,17 +140,6 @@ const MessageForm = ({
       </div>
     </>
   );
-};
-
-MessageForm.propTypes = {
-  message: PropTypes.string,
-  handleCloudinary: PropTypes.func,
-  charCounter: PropTypes.number,
-  handleDropdown: PropTypes.func,
-  isOpen: PropTypes.bool,
-  rooms: PropTypes.array,
-  setChatRoom: PropTypes.func,
-  currentRoom: PropTypes.string
 };
 
 export default MessageForm;

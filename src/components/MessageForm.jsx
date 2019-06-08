@@ -117,8 +117,7 @@ const MessageForm = ({
                 >
                   <EmojiContainer
                     setNewMessage={setNewMessage}
-                    handlePickerOpen={handlePickerOpen}
-                    emojiPicker={emojiPicker}
+                    setTimestamp={setTimestamp}
                   />
                   <InputGroupText>
                     <i className="far fa-grin-tongue-squint" />

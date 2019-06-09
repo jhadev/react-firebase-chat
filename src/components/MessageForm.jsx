@@ -98,7 +98,7 @@ const MessageForm = ({
                 </InputGroupAddon>
                 <InputGroupAddon onClick={widget} addonType="prepend">
                   <InputGroupText>
-                    <i className="fas fa-camera" />
+                    <i className="fas fa-camera text-dark" />
                   </InputGroupText>
                 </InputGroupAddon>
                 <InputGroupAddon
@@ -108,7 +108,7 @@ const MessageForm = ({
                 >
                   <EmojiContainer setNewMessage={setNewMessage} />
                   <InputGroupText>
-                    <i className="far fa-grin-tongue-squint" />
+                    <i className="far fa-grin-tongue-squint text-dark" />
                   </InputGroupText>
                 </InputGroupAddon>
                 <Input

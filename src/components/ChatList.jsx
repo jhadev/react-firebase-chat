@@ -25,8 +25,8 @@ const ChatList = ({
       isOpen={isOpen}
       toggle={handleDropdown}
     >
-      <DropdownToggle className="text-dark" color="link">
-        <i className="fas fa-comments" />
+      <DropdownToggle color="link">
+        <i className="fas fa-comments text-dark" />
       </DropdownToggle>
       <DropdownMenu>
         {rooms.map(room => (

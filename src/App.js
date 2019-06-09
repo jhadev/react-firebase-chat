@@ -14,31 +14,19 @@ import * as ROUTES from './constants/routes';
 import './App.css';
 
 class App extends Component {
-  state = {
-    isOpen: false
-  };
-
-  toggle = () => {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  };
-
   render() {
     return (
       <Router>
-        <div>
-          <Navigation isOpen={this.state.isOpen} toggle={this.toggle} />
-          <Container>
-            <Route exact path={ROUTES.LANDING} component={Landing} />
-            <Route path={ROUTES.SIGN_UP} component={SignUp} />
-            <Route path={ROUTES.SIGN_IN} component={SignIn} />
-            <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
-            <Route path={ROUTES.HOME} component={Home} />
-            <Route path={ROUTES.ACCOUNT} component={Account} />
-            <Route path={ROUTES.ADMIN} component={Admin} />
-          </Container>
-        </div>
+        <Navigation />
+        <Container>
+          <Route exact path={ROUTES.LANDING} component={Landing} />
+          <Route path={ROUTES.SIGN_UP} component={SignUp} />
+          <Route path={ROUTES.SIGN_IN} component={SignIn} />
+          <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
+          <Route path={ROUTES.HOME} component={Home} />
+          <Route path={ROUTES.ACCOUNT} component={Account} />
+          <Route path={ROUTES.ADMIN} component={Admin} />
+        </Container>
       </Router>
     );
   }

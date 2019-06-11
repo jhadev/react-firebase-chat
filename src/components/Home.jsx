@@ -64,7 +64,7 @@ const Home = props => {
       return (
         <div className="d-flex flex-column align-items-end my-1" key={message}>
           <Message
-            color="primary"
+            color="user"
             message={chat[message]['message']}
             user={chat[message]['user']}
             timestamp={chat[message]['timestamp']}
@@ -78,7 +78,7 @@ const Home = props => {
           key={message}
         >
           <Message
-            color="secondary"
+            color="receiver"
             message={chat[message]['message']}
             user={chat[message]['user']}
             timestamp={chat[message]['timestamp']}
@@ -95,7 +95,7 @@ const Home = props => {
         <div className="text-center">
           <h1 className=" welcome my-4">Welcome, {authUser.email}</h1>
           <button
-            className="btn btn-primary btn-lg"
+            className={`btn btn-${showChat} btn-lg`}
             onClick={() => {
               handleChange(!showChat);
             }}

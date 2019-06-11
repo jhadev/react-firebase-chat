@@ -11,7 +11,7 @@ import Admin from './components/Admin';
 import Container from './components/common/Container';
 import { withAuthentication } from './components/Session/index';
 import * as ROUTES from './constants/routes';
-import './App.css';
+import './App.scss';
 
 class App extends Component {
   render() {

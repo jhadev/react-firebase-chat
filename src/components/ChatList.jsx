@@ -8,6 +8,7 @@ import {
   DropdownItem
 } from 'reactstrap';
 import PropTypes from 'prop-types';
+import './ChatList.scss';
 
 const ChatList = ({
   rooms,

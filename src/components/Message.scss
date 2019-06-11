@@ -1,0 +1,24 @@
+$tablet: "only screen and (max-width : 999px)";
+$mobile: "only screen and (max-width: 500px)";
+
+.time {
+  font-style: italic;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+@media #{$tablet} {
+  .time {
+    font-style: italic;
+    font-size: 0.9rem;
+  }
+
+  .user-name {
+    font-size: 1rem;
+  }
+
+}
+
+@media #{$mobile} {}

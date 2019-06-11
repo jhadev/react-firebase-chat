@@ -1,6 +1,7 @@
 import React from 'react';
 import * as REGEX from '../constants/regex';
 import PropTypes from 'prop-types';
+import './MessageBody.scss';
 
 const MessageBody = ({ body, color }) => {
   let msgBody = (

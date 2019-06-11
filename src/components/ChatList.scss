@@ -1,0 +1,12 @@
+$user-color: #5D576B;
+$receiver-color: #ED6A5A;
+$text-color: #fff;
+
+.list-group-item.active {
+  background-color: $user-color !important;
+  border-color: $user-color !important;
+}
+
+.dropdown-item.active {
+  background-color: $user-color !important;
+}

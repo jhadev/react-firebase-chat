@@ -1,3 +1,4 @@
+$tablet: "only screen and (max-width : 999px)";
 $user-color: #0F1626;
 $receiver-color: #FF533D;
 $text-color: #F5F5F5;
@@ -12,12 +13,40 @@ $text-color: #F5F5F5;
   padding: 0 0 !important;
 }
 
+.input-group-prepend {
+  .input-group-text {
+    padding: 0.8rem 0.8rem !important;
+  }
+}
+
+.dropup {
+  button {
+    padding: 0.8rem 0.8rem !important;
+  }
+}
+
 .sticky-footer {
   // box-shadow: 0 -0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-  background: $text-color;
+  background: #fff;
   position: sticky !important;
   position: -webkit-sticky;
   bottom: 0px;
   z-index: 0;
 
+}
+
+
+
+@media #{$tablet} {
+  .dropup {
+    button {
+      padding: 0.4rem 0.4rem !important;
+    }
+  }
+
+  .input-group-prepend {
+    .input-group-text {
+      padding: 0.4rem 0.4rem !important;
+    }
+  }
 }

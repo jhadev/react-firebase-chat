@@ -22,7 +22,12 @@ const Navigation = () => {
     <div>
       {/* consume context provided in session index based on if user is authed */}
       <>
-        <Navbar className="shadow fixed-top navStyle" fixed="fixed" expand="md">
+        <Navbar
+          className="shadow fixed-top navStyle"
+          dark
+          fixed="fixed"
+          expand="md"
+        >
           <NavbarBrand href={ROUTES.LANDING}>React Firebase Chat</NavbarBrand>
           <NavbarToggler onClick={() => toggle(!isOpen)} />
           <Collapse isOpen={isOpen} navbar>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import ChatList from './ChatList';
 // import Footer from './common/Footer';
@@ -38,7 +39,7 @@ const MessageForm = ({
     } else {
       scrollToBottom();
     }
-  }, [scrollTop, scrollToBottom, scrollToTop]);
+  }, [scrollTop]);
 
   const sendNewMessage = e => {
     e.preventDefault();

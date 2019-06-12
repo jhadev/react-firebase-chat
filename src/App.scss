@@ -3,6 +3,10 @@ $user-color: #0F1626;
 $receiver-color: #FF533D;
 $text-color: #F5F5F5;
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   padding-top: 70px;
 }

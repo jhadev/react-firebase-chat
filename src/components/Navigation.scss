@@ -1,0 +1,25 @@
+$user-color: #0F1626;
+$receiver-color: #FF533D;
+$text-color: #F5F5F5;
+$hover-color: rgb(148, 148, 148);
+
+.navStyle {
+  background-color: $user-color;
+  color: $text-color;
+
+  &:hover {
+    color: $hover-color;
+  }
+
+  &.active {
+    color: $hover-color;
+  }
+
+  .navbar-brand {
+    color: $text-color;
+  }
+}
+
+.signOut {
+  cursor: pointer;
+}

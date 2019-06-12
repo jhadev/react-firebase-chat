@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
-import Container from './common/Container';
 import Row from './common/Row';
 import Column from './common/Column';
 import Message from './Message';
@@ -50,6 +49,10 @@ const Home = props => {
     scrollingElement.scrollTop = scrollingElement.scrollHeight;
   };
 
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   const handleDropdown = () => {
     setDropdown(!dropdownOpen);
   };
@@ -91,52 +94,57 @@ const Home = props => {
 
   return (
     <>
-      <Container fluid>
-        <div className="text-center">
-          <h1 className=" welcome my-4">Welcome, {authUser.email}</h1>
-          <button
-            className={`btn btn-${showChat} btn-lg`}
-            onClick={() => {
-              handleChange(!showChat);
-            }}
-          >
-            {!showChat ? 'Show Chat' : 'Hide Chat'}
-          </button>
-        </div>
-        {showChat && (
-          <>
-            <Row helper="mt-4">
-              <Column size="12 md-2">
+      {/* <Container fluid> */}
+      <div className="text-center">
+        <h1 className=" welcome my-4">Welcome, {authUser.email}</h1>
+        <button
+          className={`btn btn-${showChat} btn-lg`}
+          onClick={() => {
+            handleChange(!showChat);
+          }}
+        >
+          {!showChat ? 'Show Chat' : 'Hide Chat'}
+        </button>
+      </div>
+      {showChat && (
+        <>
+          <Row helper="mt-4">
+            <Column size="12 md-2">
+              <div className="sticky-top">
+                <div id="spacer" />
                 <h6>Current Room: {room}</h6>
                 <ChatList
                   rooms={roomList}
                   setChatRoom={setChatRoom}
                   currentRoom={room}
                 />
-              </Column>
-              <Column size="12 md-10">
-                <div className="wrapper">
-                  <>
-                    {chat !== null &&
-                      Object.keys(chat).map(message =>
-                        handleLayout(chat, message)
-                      )}
-                  </>
-                </div>
-              </Column>
-            </Row>
-            <MessageForm
-              username={authUser.email}
-              handleDropdown={handleDropdown}
-              isOpen={dropdownOpen}
-              rooms={roomList}
-              setChatRoom={setChatRoom}
-              currentRoom={room}
-              firebase={props.firebase}
-            />
-          </>
-        )}
-      </Container>
+              </div>
+            </Column>
+            <Column size="12 md-10">
+              <div className="wrapper">
+                <>
+                  {chat !== null &&
+                    Object.keys(chat).map(message =>
+                      handleLayout(chat, message)
+                    )}
+                </>
+              </div>
+            </Column>
+          </Row>
+          <MessageForm
+            username={authUser.email}
+            handleDropdown={handleDropdown}
+            isOpen={dropdownOpen}
+            rooms={roomList}
+            setChatRoom={setChatRoom}
+            currentRoom={room}
+            firebase={props.firebase}
+            scrollToTop={scrollToTop}
+            scrollToBottom={scrollToBottom}
+          />
+        </>
+      )}
+      {/* </Container> */}
     </>
   );
 };

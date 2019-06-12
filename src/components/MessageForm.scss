@@ -1,3 +1,7 @@
+$user-color: #0F1626;
+$receiver-color: #FF533D;
+$text-color: #F5F5F5;
+
 #messageForm {
   margin-bottom: 0rem !important;
 }
@@ -6,4 +10,14 @@
 #emojiBtnInput,
 #sendBtnInput {
   padding: 0 0 !important;
+}
+
+.sticky-footer {
+  // box-shadow: 0 -0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  background: $text-color;
+  position: sticky !important;
+  position: -webkit-sticky;
+  bottom: 0px;
+  z-index: 0;
+
 }

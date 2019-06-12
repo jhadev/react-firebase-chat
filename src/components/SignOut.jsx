@@ -1,9 +1,9 @@
-import React from "react";
-import { withFirebase } from "./Firebase/index";
+import React from 'react';
+import { withFirebase } from './Firebase/index';
 
 const SignOut = ({ firebase }) => {
   return (
-    <div className="nav-link signOut" onClick={firebase.doSignOutUser}>
+    <div className="nav-link navStyle signOut" onClick={firebase.doSignOutUser}>
       Sign Out
     </div>
   );

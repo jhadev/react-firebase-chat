@@ -1,7 +1,7 @@
 $tablet: "only screen and (max-width : 999px)";
-$user-color: #5D576B;
-$receiver-color: #ED6A5A;
-$text-color: #fff;
+$user-color: #0F1626;
+$receiver-color: #FF533D;
+$text-color: #F5F5F5;
 
 body {
   padding-top: 70px;
@@ -9,6 +9,10 @@ body {
 
 .sticky-top {
   position: -webkit-sticky !important
+}
+
+#spacer {
+  height: 8vh;
 }
 
 .wrapper {
@@ -27,15 +31,6 @@ body {
   color: $text-color;
 }
 
-.sticky-footer {
-  /* box-shadow: 0 -0.5rem 1rem rgba(0, 0, 0, 0.15) !important; */
-  background: #fff;
-  position: sticky !important;
-  position: -webkit-sticky;
-  bottom: 0px;
-  z-index: 0;
-}
-
 @media #{$tablet} {
 
   .welcome {
@@ -49,5 +44,9 @@ body {
   .sticky-footer {
     position: sticky !important;
     position: -webkit-sticky;
+  }
+
+  #spacer {
+    height: 0vh;
   }
 }

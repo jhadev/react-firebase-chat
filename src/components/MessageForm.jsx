@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ChatList from './ChatList';
 // import Footer from './common/Footer';
 import {
@@ -23,11 +23,22 @@ const MessageForm = ({
   setChatRoom,
   currentRoom,
   firebase,
-  username
+  username,
+  scrollToTop,
+  scrollToBottom
 }) => {
   const [newMessage, setNewMessage] = useState('');
   const [charCounter, setCounter] = useState(0);
   const [emojiPicker, handlePickerOpen] = useState(false);
+  const [scrollTop, setScrollDirection] = useState(true);
+
+  useEffect(() => {
+    if (scrollTop) {
+      scrollToTop();
+    } else {
+      scrollToBottom();
+    }
+  }, [scrollTop, scrollToBottom, scrollToTop]);
 
   const sendNewMessage = e => {
     e.preventDefault();
@@ -85,6 +96,18 @@ const MessageForm = ({
             </Label>
             <Col md={10} sm={12}>
               <InputGroup className="mt-2 mb-3" size="md">
+                <InputGroupAddon
+                  onClick={() => setScrollDirection(!scrollTop)}
+                  addonType="prepend"
+                >
+                  <InputGroupText id="scrollToTop">
+                    {!scrollTop ? (
+                      <i className="fas fa-arrow-circle-up text-dark" />
+                    ) : (
+                      <i className="fas fa-arrow-circle-down text-dark" />
+                    )}
+                  </InputGroupText>
+                </InputGroupAddon>
                 <InputGroupAddon onClick={handleDropdown} addonType="prepend">
                   <InputGroupText id="roomBtnInput">
                     <ChatList

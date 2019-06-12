@@ -13,6 +13,7 @@ import SignOut from './SignOut';
 import * as ROLES from '../constants/roles';
 import * as ROUTES from '../constants/routes';
 import PropTypes from 'prop-types';
+import './Navigation.scss';
 
 const Navigation = () => {
   const authUser = useContext(AuthUserContext);
@@ -21,13 +22,7 @@ const Navigation = () => {
     <div>
       {/* consume context provided in session index based on if user is authed */}
       <>
-        <Navbar
-          className="shadow fixed-top"
-          color="light"
-          light
-          fixed="fixed"
-          expand="md"
-        >
+        <Navbar className="shadow fixed-top navStyle" fixed="fixed" expand="md">
           <NavbarBrand href={ROUTES.LANDING}>React Firebase Chat</NavbarBrand>
           <NavbarToggler onClick={() => toggle(!isOpen)} />
           <Collapse isOpen={isOpen} navbar>

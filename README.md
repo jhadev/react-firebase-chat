@@ -1,6 +1,6 @@
 # react-firebase-chat
 
-### A barebones chat built with React and Firebase.
+### A real time chat built with React and Firebase.
 
 #### Testing out the React Hook and Context APIs
 

@@ -140,20 +140,16 @@ const Home = props => {
             </Container>
           </div>
           <div className="sticky-footer">
-            <Container fluid>
-              <Row helper="justify-content-center">
-                <Column size="12 md-10">
-                  <MessageForm
-                    username={authUser.email}
-                    rooms={roomList}
-                    setChatRoom={setChatRoom}
-                    currentRoom={room}
-                    firebase={props.firebase}
-                    scrollToTop={scrollToTop}
-                    scrollToBottom={scrollToBottom}
-                  />
-                </Column>
-              </Row>
+            <Container>
+              <MessageForm
+                username={authUser.email}
+                rooms={roomList}
+                setChatRoom={setChatRoom}
+                currentRoom={room}
+                firebase={props.firebase}
+                scrollToTop={scrollToTop}
+                scrollToBottom={scrollToBottom}
+              />
             </Container>
           </div>
         </>

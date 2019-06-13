@@ -118,9 +118,8 @@ const DirectMessages = props => {
             <Column size="12 md-3">
               <div className="sticky-top">
                 <div id="spacer" />
-                <h6>Users to DM</h6>
                 <h6>
-                  Current User To Message:{' '}
+                  You are chatting with:{' '}
                   <p>{userToDm !== '' ? userToDm : 'Select A User'}</p>
                 </h6>
                 <ChatList
@@ -135,17 +134,17 @@ const DirectMessages = props => {
             <Column size="12 md-9">
               <div className="wrapper">
                 <div id="spacer" />
-                <>
+                <div className="mt-5">
                   {chat.length !== 0 ? (
                     chat.map((message, index) => handleLayout(message, index))
                   ) : (
                     <h3 className="text-center">
                       {userToDm !== ''
-                        ? 'No messages with this user yet'
+                        ? 'No messages with this user yet.'
                         : 'Select a user to chat with.'}
                     </h3>
                   )}
-                </>
+                </div>
               </div>
             </Column>
           </Row>

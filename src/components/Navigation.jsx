@@ -50,7 +50,7 @@ const Navigation = () => {
                       className="navStyle nav-link"
                       to={ROUTES.DMS}
                     >
-                      Direct Messages
+                      DMs
                     </NavLink>
                   </NavItem>
                   <NavItem>

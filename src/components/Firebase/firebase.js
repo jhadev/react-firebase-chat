@@ -42,13 +42,19 @@ class Firebase {
       .ref()
       .once('value')
       .then(snapshot => {
-        return Object.keys(snapshot.val()).filter(room => room !== 'users');
+        return Object.keys(snapshot.val()).filter(
+          room => room !== 'users' && room !== 'dms'
+        );
       });
 
   //allows rooms to be set using state in home
   chat = room => this.db.ref(room);
   //match the location where users are stored based on their uid
   user = uid => this.db.ref(`users/${uid}`);
+
+  dms = () => this.db.ref('dms');
+
+  sendDm = message => this.db.ref('dms').push(message);
 
   //ref to the users db
   users = () => this.db.ref('users');

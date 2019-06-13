@@ -24,7 +24,9 @@ const MessageForm = ({
   firebase,
   username,
   scrollToTop,
-  scrollToBottom
+  scrollToBottom,
+  receiver,
+  dms
 }) => {
   const [newMessage, setNewMessage] = useState('');
   const [charCounter, setCounter] = useState(0);
@@ -45,13 +47,14 @@ const MessageForm = ({
       let messageObj = {
         user: username,
         timestamp: moment().format('LLLL'),
-        message: newMessage
+        message: newMessage,
+        receiver: receiver ? receiver : ''
       };
       firebase.send(currentRoom, messageObj);
-    }
 
-    setNewMessage('');
-    setCounter(0);
+      setNewMessage('');
+      setCounter(0);
+    }
   };
 
   const widget = () => {

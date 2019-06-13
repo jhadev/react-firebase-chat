@@ -6,6 +6,7 @@ import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import PasswordForget from './components/PasswordForget';
 import Home from './components/Home';
+import DirectMessages from './components/DirectMessages';
 import Account from './components/Account';
 import Admin from './components/Admin';
 import Container from './components/common/Container';
@@ -19,6 +20,7 @@ class App extends Component {
       <Router>
         <Navigation />
         <Route path={ROUTES.HOME} component={Home} />
+        <Route path={ROUTES.DMS} component={DirectMessages} />
         <Container>
           <Route exact path={ROUTES.LANDING} component={Landing} />
           <Route path={ROUTES.SIGN_UP} component={SignUp} />

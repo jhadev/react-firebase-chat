@@ -1,14 +1,17 @@
-$tablet: "only screen and (max-width : 999px)";
-$user-color: #0F1626;
-$receiver-color: #FF533D;
-$text-color: #F5F5F5;
+@import '../src/components/styles/colors';
+@import '../src/components/styles/media';
 
 html {
   scroll-behavior: smooth;
+  min-height: 100vh;
 }
 
 body {
   padding-top: 70px;
+  min-height: 100vh !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .sticky-top {
@@ -17,6 +20,10 @@ body {
 
 #spacer {
   height: 8vh;
+}
+
+.white-space {
+  min-height: calc(100vh - 86px);
 }
 
 .wrapper {

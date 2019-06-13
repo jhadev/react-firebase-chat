@@ -1,6 +1,18 @@
-$user-color: #0F1626;
-$receiver-color: #FF533D;
-$text-color: #F5F5F5;
+@import 'styles/colors';
+
+.list-group-item {
+  &:focus {
+    outline: 0;
+    border-color: $user-color;
+  }
+}
+
+.dropdown-item {
+  &:focus {
+    outline: 0;
+    border-color: $receiver-color;
+  }
+}
 
 .list-group-item.active {
   background-color: $user-color !important;

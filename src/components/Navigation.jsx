@@ -23,7 +23,7 @@ const Navigation = () => {
       {/* consume context provided in session index based on if user is authed */}
       <>
         <Navbar
-          className="shadow fixed-top navStyle"
+          className="navShadow fixed-top navStyle"
           dark
           fixed="fixed"
           expand="md"

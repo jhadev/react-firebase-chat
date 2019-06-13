@@ -1,7 +1,4 @@
-$user-color: #0F1626;
-$receiver-color: #FF533D;
-$text-color: #F5F5F5;
-$hover-color: rgb(148, 148, 148);
+@import 'styles/colors';
 
 .navStyle {
   background-color: $user-color;
@@ -18,6 +15,10 @@ $hover-color: rgb(148, 148, 148);
   .navbar-brand {
     color: $text-color;
   }
+}
+
+.navShadow {
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .25) !important
 }
 
 .signOut {

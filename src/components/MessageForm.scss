@@ -1,11 +1,12 @@
-$tablet: "only screen and (max-width : 999px)";
-$user-color: #0F1626;
-$receiver-color: #FF533D;
-$text-color: #F5F5F5;
+@import 'styles/colors';
+@import 'styles/media';
 
 #messageForm {
-  margin-bottom: 0rem !important;
+  margin-bottom: 0 !important;
+  // margin-top: 0.3rem;
 }
+
+
 
 #roomBtnInput,
 #emojiBtnInput,
@@ -33,8 +34,8 @@ $text-color: #F5F5F5;
 }
 
 .sticky-footer {
-  // box-shadow: 0 -0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-  background: #fff;
+  box-shadow: 0 -0.5rem 1rem rgba(0, 0, 0, 0.25) !important;
+  background: $user-color;
   position: sticky !important;
   position: -webkit-sticky;
   bottom: 0px;
@@ -48,8 +49,6 @@ $text-color: #F5F5F5;
   .dropup {
     button {
       padding: 0.6rem 0.6rem !important;
-
-
     }
   }
 

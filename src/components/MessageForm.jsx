@@ -87,7 +87,12 @@ const MessageForm = ({
       <div className="sticky-footer">
         <Form onSubmit={sendNewMessage}>
           <FormGroup id="messageForm" row>
-            <Label for="chatInput" className="text-center" md={2} sm={2}>
+            <Label
+              for="chatInput"
+              className="text-center text-light"
+              md={2}
+              sm={2}
+            >
               {charCounter < maxCount
                 ? (charCounter - maxCount).toString().slice(1)
                 : 0}{' '}

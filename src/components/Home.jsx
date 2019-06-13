@@ -7,6 +7,7 @@ import Column from './common/Column';
 import Message from './Message';
 import MessageForm from './MessageForm';
 import ChatList from './ChatList';
+import Container from './common/Container';
 
 const Home = props => {
   const authUser = useContext(AuthUserContext);
@@ -51,6 +52,15 @@ const Home = props => {
   const scrollToTop = () => {
     window.scrollTo(0, 0);
   };
+
+  // const scroll = down => {
+  //   if (down) {
+  //     const scrollingElement = document.scrollingElement || document.body;
+  //     scrollingElement.scrollTop = scrollingElement.scrollHeight;
+  //   } else {
+  //     window.scrollTo(0, 0)
+  //   }
+  // }
 
   const setChatRoom = event => {
     const { value } = event.target;
@@ -102,38 +112,50 @@ const Home = props => {
       </div>
       {showChat && (
         <>
-          <Row helper="mt-4">
-            <Column size="12 md-2">
-              <div className="sticky-top">
-                <div id="spacer" />
-                <h6>Current Room: {room}</h6>
-                <ChatList
-                  rooms={roomList}
-                  setChatRoom={setChatRoom}
-                  currentRoom={room}
-                />
-              </div>
-            </Column>
-            <Column size="12 md-10">
-              <div className="wrapper">
-                <>
-                  {chat !== null &&
-                    Object.keys(chat).map(message =>
-                      handleLayout(chat, message)
-                    )}
-                </>
-              </div>
-            </Column>
-          </Row>
-          <MessageForm
-            username={authUser.email}
-            rooms={roomList}
-            setChatRoom={setChatRoom}
-            currentRoom={room}
-            firebase={props.firebase}
-            scrollToTop={scrollToTop}
-            scrollToBottom={scrollToBottom}
-          />
+          <div className="white-space">
+            <Container>
+              <Row helper="mt-4">
+                <Column size="12 md-2">
+                  <div className="sticky-top">
+                    <div id="spacer" />
+                    <h6>Current Room: {room}</h6>
+                    <ChatList
+                      rooms={roomList}
+                      setChatRoom={setChatRoom}
+                      currentRoom={room}
+                    />
+                  </div>
+                </Column>
+                <Column size="12 md-10">
+                  <div className="wrapper">
+                    <>
+                      {chat !== null &&
+                        Object.keys(chat).map(message =>
+                          handleLayout(chat, message)
+                        )}
+                    </>
+                  </div>
+                </Column>
+              </Row>
+            </Container>
+          </div>
+          <div className="sticky-footer">
+            <Container fluid>
+              <Row helper="justify-content-center">
+                <Column size="12 md-10">
+                  <MessageForm
+                    username={authUser.email}
+                    rooms={roomList}
+                    setChatRoom={setChatRoom}
+                    currentRoom={room}
+                    firebase={props.firebase}
+                    scrollToTop={scrollToTop}
+                    scrollToBottom={scrollToBottom}
+                  />
+                </Column>
+              </Row>
+            </Container>
+          </div>
         </>
       )}
     </>

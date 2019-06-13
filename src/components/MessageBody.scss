@@ -1,8 +1,5 @@
-$tablet: "only screen and (max-width : 999px)";
-$mobile: "only screen and (max-width: 500px)";
-$user-color: #0F1626;
-$receiver-color: #FF533D;
-$text-color: #F5F5F5;
+@import 'styles/colors';
+@import 'styles/media';
 
 .msgText {
   font-size: 16px;

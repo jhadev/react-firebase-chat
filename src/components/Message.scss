@@ -1,5 +1,4 @@
-$tablet: "only screen and (max-width : 999px)";
-$mobile: "only screen and (max-width: 500px)";
+@import 'styles/media';
 
 .time {
   font-style: italic;

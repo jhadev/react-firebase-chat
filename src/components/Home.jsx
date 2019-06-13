@@ -15,7 +15,6 @@ const Home = props => {
   const [chat, setChat] = useState(null);
   const [room, setRoom] = useState('chat');
   const [roomList, setRoomList] = useState([]);
-  const [dropdownOpen, setDropdown] = useState(false);
 
   //refers to current room string in state
   //returns all array of all rooms
@@ -51,10 +50,6 @@ const Home = props => {
 
   const scrollToTop = () => {
     window.scrollTo(0, 0);
-  };
-
-  const handleDropdown = () => {
-    setDropdown(!dropdownOpen);
   };
 
   const setChatRoom = event => {
@@ -94,7 +89,6 @@ const Home = props => {
 
   return (
     <>
-      {/* <Container fluid> */}
       <div className="text-center">
         <h1 className=" welcome my-4">Welcome, {authUser.email}</h1>
         <button
@@ -133,8 +127,6 @@ const Home = props => {
           </Row>
           <MessageForm
             username={authUser.email}
-            handleDropdown={handleDropdown}
-            isOpen={dropdownOpen}
             rooms={roomList}
             setChatRoom={setChatRoom}
             currentRoom={room}
@@ -144,7 +136,6 @@ const Home = props => {
           />
         </>
       )}
-      {/* </Container> */}
     </>
   );
 };

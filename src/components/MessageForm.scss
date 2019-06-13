@@ -23,6 +23,13 @@ $text-color: #F5F5F5;
   button {
     padding: 0.8rem 0.8rem !important;
   }
+
+  .dropdown-item {
+    &:focus {
+      background-color: $receiver-color;
+      border-color: $receiver-color !important;
+    }
+  }
 }
 
 .sticky-footer {
@@ -41,6 +48,8 @@ $text-color: #F5F5F5;
   .dropup {
     button {
       padding: 0.6rem 0.6rem !important;
+
+
     }
   }
 

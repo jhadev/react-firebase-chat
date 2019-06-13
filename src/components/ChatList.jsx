@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ListGroup,
   ListGroupItem,
@@ -10,21 +10,16 @@ import {
 import PropTypes from 'prop-types';
 import './ChatList.scss';
 
-const ChatList = ({
-  rooms,
-  setChatRoom,
-  currentRoom,
-  dropdown,
-  isOpen,
-  handleDropdown
-}) =>
-  dropdown ? (
+const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown }) => {
+  const [dropdownOpen, setDropdown] = useState(false);
+
+  return dropdown ? (
     <Dropdown
       direction="up"
       size="sm"
       group
-      isOpen={isOpen}
-      toggle={handleDropdown}
+      isOpen={dropdownOpen}
+      toggle={() => setDropdown(!dropdownOpen)}
     >
       <DropdownToggle color="link">
         <i className="fas fa-comments text-dark" />
@@ -62,14 +57,13 @@ const ChatList = ({
       ))}
     </ListGroup>
   );
+};
 
 ChatList.propTypes = {
   rooms: PropTypes.array,
   setChatRoom: PropTypes.func,
   currentRoom: PropTypes.string,
-  dropdown: PropTypes.bool,
-  isOpen: PropTypes.bool,
-  handleDropdown: PropTypes.func
+  dropdown: PropTypes.bool
 };
 
 export default ChatList;

@@ -18,8 +18,6 @@ import EmojiContainer from './EmojiContainer';
 import './MessageForm.scss';
 
 const MessageForm = ({
-  handleDropdown,
-  isOpen,
   rooms,
   setChatRoom,
   currentRoom,
@@ -109,14 +107,12 @@ const MessageForm = ({
                     )}
                   </InputGroupText>
                 </InputGroupAddon>
-                <InputGroupAddon onClick={handleDropdown} addonType="prepend">
+                <InputGroupAddon addonType="prepend">
                   <InputGroupText id="roomBtnInput">
                     <ChatList
                       rooms={rooms}
                       setChatRoom={setChatRoom}
                       currentRoom={currentRoom}
-                      isOpen={isOpen}
-                      handleDropdown={handleDropdown}
                       dropdown
                     />
                   </InputGroupText>

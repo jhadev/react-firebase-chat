@@ -10,7 +10,7 @@ import {
 import PropTypes from 'prop-types';
 import './ChatList.scss';
 
-const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown }) => {
+const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
   const [dropdownOpen, setDropdown] = useState(false);
 
   return dropdown ? (
@@ -49,7 +49,7 @@ const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown }) => {
           key={room}
           value={room}
           name={room}
-          onClick={setChatRoom}
+          onClick={dms ? e => setChatRoom(e.target.value) : setChatRoom}
           className="text-center"
         >
           {room}

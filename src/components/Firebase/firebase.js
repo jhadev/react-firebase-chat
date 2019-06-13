@@ -50,6 +50,10 @@ class Firebase {
   //match the location where users are stored based on their uid
   user = uid => this.db.ref(`users/${uid}`);
 
+  dms = () => this.db.ref('dms');
+
+  sendDm = message => this.db.ref('dms').push(message);
+
   //ref to the users db
   users = () => this.db.ref('users');
 }

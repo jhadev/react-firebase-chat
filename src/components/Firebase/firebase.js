@@ -42,7 +42,9 @@ class Firebase {
       .ref()
       .once('value')
       .then(snapshot => {
-        return Object.keys(snapshot.val()).filter(room => room !== 'users');
+        return Object.keys(snapshot.val()).filter(
+          room => room !== 'users' && room !== 'dms'
+        );
       });
 
   //allows rooms to be set using state in home

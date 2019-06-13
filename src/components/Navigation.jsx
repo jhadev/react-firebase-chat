@@ -48,6 +48,15 @@ const Navigation = () => {
                     <NavLink
                       onClick={() => toggle(!isOpen)}
                       className="navStyle nav-link"
+                      to={ROUTES.DMS}
+                    >
+                      Direct Messages
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      onClick={() => toggle(!isOpen)}
+                      className="navStyle nav-link"
                       to={ROUTES.ACCOUNT}
                     >
                       Account

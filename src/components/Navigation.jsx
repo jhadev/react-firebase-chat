@@ -13,7 +13,7 @@ import SignOut from './SignOut';
 import * as ROLES from '../constants/roles';
 import * as ROUTES from '../constants/routes';
 import PropTypes from 'prop-types';
-import './Navigation.scss';
+import './styles/components/navigation.scss';
 
 const Navigation = () => {
   const authUser = useContext(AuthUserContext);

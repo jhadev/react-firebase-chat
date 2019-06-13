@@ -1,7 +1,7 @@
 import React from 'react';
 import MessageBody from './MessageBody';
 import PropTypes from 'prop-types';
-import './Message.scss';
+import './styles/components/message.scss';
 
 const User = ({ user }) => <div className="mb-1 user-name">{user}</div>;
 const Time = ({ timestamp }) => <div className="mb-1 time">{timestamp}</div>;

@@ -8,7 +8,7 @@ import {
   DropdownItem
 } from 'reactstrap';
 import PropTypes from 'prop-types';
-import './ChatList.scss';
+import './styles/components/chat-list.scss';
 
 const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
   const [dropdownOpen, setDropdown] = useState(false);

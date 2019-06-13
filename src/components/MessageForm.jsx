@@ -15,7 +15,7 @@ import {
 import moment from 'moment';
 import 'emoji-mart/css/emoji-mart.css';
 import EmojiContainer from './EmojiContainer';
-import './MessageForm.scss';
+import './styles/components/message-form.scss';
 
 const MessageForm = ({
   rooms,

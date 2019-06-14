@@ -80,6 +80,16 @@ const Navigation = () => {
                   <NavItem>
                     <SignOut />
                   </NavItem>
+                  <NavItem>
+                    <a
+                      href="https://github.com/jhadev/react-firebase-chat"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="nav-link navStyle"
+                    >
+                      GitHub
+                    </a>
+                  </NavItem>
                 </React.Fragment>
               ) : (
                 <React.Fragment>
@@ -100,6 +110,16 @@ const Navigation = () => {
                     >
                       Sign In
                     </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <a
+                      href="https://github.com/jhadev/react-firebase-chat"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="nav-link navStyle"
+                    >
+                      GitHub
+                    </a>
                   </NavItem>
                 </React.Fragment>
               )}

@@ -6,6 +6,7 @@ import ChatList from '../components/ChatList';
 import { Table } from 'reactstrap';
 import { InputGroup, InputGroupAddon, Input, Button } from 'reactstrap';
 import * as ROLES from '../constants/roles';
+import swal from '@sweetalert/with-react';
 
 //only shown if authed
 //admin page adds ability to see all users
@@ -58,9 +59,25 @@ class Admin extends Component {
   submitRoom = () => {
     const { roomToAdd, rooms } = this.state;
     if (rooms.includes(roomToAdd) || roomToAdd === '') {
-      alert('room already exists or room name not defined');
+      swal({
+        content: <h4>Room already exists or room name is not defined</h4>,
+        button: {
+          text: 'Close',
+          closeModal: true
+        }
+      });
     } else {
-      this.props.firebase.send(roomToAdd.split(' ').join(''), roomToAdd);
+      this.props.firebase
+        .send(roomToAdd.split(' ').join(''), roomToAdd)
+        .then(() => {
+          swal({
+            content: <h4>Success! {roomToAdd} has been added</h4>,
+            button: {
+              text: 'Close',
+              closeModal: true
+            }
+          });
+        });
     }
     this.props.firebase
       .allRooms()
@@ -80,11 +97,23 @@ class Admin extends Component {
         .chat(roomToRemove)
         .remove()
         .then(() => {
-          alert(`${roomToRemove} has been removed`);
+          swal({
+            content: <h4>Success! {roomToRemove} has been removed</h4>,
+            button: {
+              text: 'Close',
+              closeModal: true
+            }
+          });
         })
         .catch(err => console.log(err.message));
     } else {
-      alert('room not found');
+      swal({
+        content: <h4>Room not found...</h4>,
+        button: {
+          text: 'Close',
+          closeModal: true
+        }
+      });
     }
     this.props.firebase
       .allRooms()

@@ -13,6 +13,12 @@
   padding: 0 0 !important;
 }
 
+.counter {
+  font-size: 0.9rem;
+  margin-top: 1.4rem;
+  color: $text-color;
+}
+
 .input-group-prepend {
   .input-group-text {
     padding: 0.8rem 0.8rem !important;
@@ -85,6 +91,11 @@
     button {
       padding: 0.6rem 0.6rem !important;
     }
+  }
+
+  .counter {
+    margin-top: 0rem !important;
+    margin-bottom: -0.5rem;
   }
 
   .input-group-prepend {

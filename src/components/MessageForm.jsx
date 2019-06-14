@@ -92,7 +92,7 @@ const MessageForm = ({
           <FormGroup id="messageForm" row>
             <Label
               for="chatInput"
-              className="text-center text-light"
+              className="text-center counter"
               md={2}
               sm={2}
             >
@@ -102,7 +102,7 @@ const MessageForm = ({
               chars remaining
             </Label>
             <Col md={10} sm={12}>
-              <InputGroup className="mt-2 mb-3" size="md">
+              <InputGroup className="my-2" size="md">
                 <InputGroupAddon
                   onClick={() => setScrollDirection(!scrollTop)}
                   addonType="prepend"

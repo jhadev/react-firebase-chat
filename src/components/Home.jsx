@@ -35,8 +35,10 @@ const Home = props => {
 
   useEffect(() => {
     const handleNewMessages = snapshot => {
-      if (snapshot.val()) setChat(snapshot.val());
-      alertSound.play();
+      if (snapshot.val()) {
+        setChat(snapshot.val());
+        alertSound.play();
+      }
     };
     chatroom.on('value', handleNewMessages);
     return () => {

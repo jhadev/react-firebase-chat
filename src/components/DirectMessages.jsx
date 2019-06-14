@@ -72,17 +72,6 @@ const DirectMessages = props => {
     window.scrollTo(0, 0);
   };
 
-  // const sendDm = () => {
-  //   let messageObj = {
-  //     user: userToDm,
-  //     receiver: authUser.email,
-  //     timestamp: moment().format('LLLL'),
-  //     message: 'This is a test'
-  //   };
-
-  //   props.firebase.sendDm(messageObj);
-  // };
-
   const handleLayout = (chat, index) => {
     if (authUser.email === chat.user) {
       return (

@@ -1,12 +1,11 @@
 @import '../colors';
 @import '../media';
+@import '../fonts';
 
 #messageForm {
   margin-bottom: 0 !important;
   // margin-top: 0.3rem;
 }
-
-
 
 #roomBtnInput,
 #emojiBtnInput,
@@ -17,6 +16,44 @@
 .input-group-prepend {
   .input-group-text {
     padding: 0.8rem 0.8rem !important;
+    cursor: pointer;
+
+    i {
+
+      position: relative !important;
+      display: inline-block;
+
+      .tooltip-text {
+        visibility: hidden;
+        width: 120px;
+        background-color: $receiver-color;
+        color: $text-color;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 6px;
+        position: absolute;
+        z-index: 1;
+        width: 120px;
+        bottom: 325%;
+        left: 50%;
+        margin-left: -60px;
+      }
+
+      &:hover {
+        color: $receiver-color !important;
+
+        .tooltip-text {
+          visibility: visible;
+          font-family: 'Poppins', sans-serif;
+          font-size: 0.9rem;
+          font-weight: normal;
+
+          @media #{$tablet} {
+            visibility: hidden;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -42,8 +79,6 @@
   z-index: 0;
 
 }
-
-
 
 @media #{$tablet} {
   .dropup {

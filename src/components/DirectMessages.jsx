@@ -8,6 +8,7 @@ import Column from '../components/common/Column';
 import Container from '../components/common/Container';
 import Message from './Message';
 import MessageForm from './MessageForm';
+import alert from '../sounds/sent.mp3';
 
 const DirectMessages = props => {
   const authUser = useContext(AuthUserContext);
@@ -18,6 +19,8 @@ const DirectMessages = props => {
   const [userToDm, setUserToDm] = useState('');
   const chatroom = props.firebase.dms();
   // get all users other than authUser
+
+  const alertSound = new Audio(alert);
 
   useEffect(() => {
     props.firebase.users().on('value', snapshot => {
@@ -47,6 +50,7 @@ const DirectMessages = props => {
             (message.user === userToDm && message.receiver === authUser.email)
         );
         setChat(filterByPersonToDm);
+        alertSound.play();
       }
     };
     chatroom.on('value', handleNewMessages);
@@ -82,7 +86,7 @@ const DirectMessages = props => {
   const handleLayout = (chat, index) => {
     if (authUser.email === chat.user) {
       return (
-        <div className="d-flex flex-column align-items-end my-1" key={index}>
+        <div className="d-flex flex-column align-items-end my-2" key={index}>
           <Message
             color="user"
             message={chat.message}
@@ -93,7 +97,7 @@ const DirectMessages = props => {
       );
     } else {
       return (
-        <div className="d-flex flex-column align-items-start my-1" key={index}>
+        <div className="d-flex flex-column align-items-start my-2" key={index}>
           <Message
             color="receiver"
             message={chat.message}

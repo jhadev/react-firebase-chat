@@ -3,21 +3,22 @@
 .time {
   font-style: italic;
   font-size: 0.9rem;
+  // margin: 2px 0px;
 }
 
 .user-name {
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 @media #{$tablet} {
   .time {
     font-style: italic;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 
   .user-name {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
 }

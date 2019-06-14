@@ -2,7 +2,7 @@ import React from 'react';
 import { PopoverBody, UncontrolledPopover } from 'reactstrap';
 import 'emoji-mart/css/emoji-mart.css';
 import { NimblePicker } from 'emoji-mart';
-import data from 'emoji-mart/data/apple.json';
+import data from 'emoji-mart/data/messenger.json';
 
 const EmojiContainer = ({ setNewMessage }) => {
   return (
@@ -11,7 +11,7 @@ const EmojiContainer = ({ setNewMessage }) => {
         <NimblePicker
           container="inline"
           style={{ width: '100%' }}
-          set="apple"
+          set="messenger"
           data={data}
           search={false}
           showSkinTones={false}

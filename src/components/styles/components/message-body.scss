@@ -2,8 +2,10 @@
 @import '../media';
 @import '../fonts';
 
+$height: 80vh;
+
 .msgText {
-  font-size: 16px;
+  font-size: 1rem !important;
   word-break: normal;
   word-wrap: break-word;
   /* overflow-wrap: break-word; */
@@ -15,10 +17,7 @@
   padding-right: 10px;
   max-width: 30%;
   color: $text-color;
-
   font-family: 'Open Sans', sans-serif;
-  letter-spacing: 0.05rem;
-
 }
 
 .badge-user {
@@ -47,39 +46,60 @@
   -webkit-hyphens: auto;
   hyphens: auto;
   color: #fa9440;
+
 }
 
 .msg-img {
   width: 100%;
   margin: 2% auto;
+  max-height: 60vh;
+  object-fit: contain;
 }
 
 .msgImg {
-  width: 50%;
+  max-width: 40%;
+
+  div {
+    audio {
+      max-width: 100%;
+      margin: 2% auto;
+    }
+
+    video {
+      max-width: 100%;
+      margin: 2% auto;
+    }
+  }
 }
 
-audio {
-  width: 100%;
-  margin: 2% auto;
-}
 
-video {
-  width: 100%;
-  margin: 2% auto;
-}
 
 @media #{$tablet} {
   .msgImg {
-    width: 100%;
+    min-width: 50%;
+    max-width: 100%;
+
+    .msg-link {
+
+      img {
+        max-height: 25vh;
+        object-fit: contain;
+        max-width: 100%;
+      }
+
+      video {
+        max-width: 100%;
+      }
+    }
   }
 
   .msgText {
-    font-size: 1rem;
+    font-size: 0.9rem !important;
     max-width: 90%;
   }
 
   .msg-link {
-    font-size: 1rem;
+    font-size: 0.9rem !important;
   }
 
 }

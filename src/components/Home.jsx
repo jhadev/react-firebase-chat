@@ -8,6 +8,7 @@ import Message from './Message';
 import MessageForm from './MessageForm';
 import ChatList from './ChatList';
 import Container from './common/Container';
+import alert from '../sounds/sent.mp3';
 
 const Home = props => {
   const authUser = useContext(AuthUserContext);
@@ -16,6 +17,8 @@ const Home = props => {
   const [chat, setChat] = useState(null);
   const [room, setRoom] = useState('chat');
   const [roomList, setRoomList] = useState([]);
+
+  const alertSound = new Audio(alert);
 
   //refers to current room string in state
   //returns all array of all rooms
@@ -33,6 +36,7 @@ const Home = props => {
   useEffect(() => {
     const handleNewMessages = snapshot => {
       if (snapshot.val()) setChat(snapshot.val());
+      alertSound.play();
     };
     chatroom.on('value', handleNewMessages);
     return () => {

@@ -22,7 +22,9 @@ const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
       toggle={() => setDropdown(!dropdownOpen)}
     >
       <DropdownToggle color="link">
-        <i className="fas fa-comments text-dark" />
+        <i className="fas fa-comments text-dark">
+          <span className="tooltip-text mb-1">Switch Chat</span>
+        </i>
       </DropdownToggle>
       <DropdownMenu>
         {rooms.map(room => (

@@ -109,10 +109,33 @@ const MessageForm = ({
                 >
                   <InputGroupText id="scrollToTop">
                     {!scrollTop ? (
-                      <i className="fas fa-arrow-circle-up text-dark" />
+                      <i className="fas fa-arrow-circle-up text-dark">
+                        <span className="tooltip-text">Scroll Up</span>
+                      </i>
                     ) : (
-                      <i className="fas fa-arrow-circle-down text-dark" />
+                      <i className="fas fa-arrow-circle-down text-dark">
+                        <span className="tooltip-text">Scroll Down</span>
+                      </i>
                     )}
+                  </InputGroupText>
+                </InputGroupAddon>
+                <InputGroupAddon onClick={widget} addonType="prepend">
+                  <InputGroupText>
+                    <i className="fas fa-camera text-dark">
+                      <span className="tooltip-text">Upload Images</span>
+                    </i>
+                  </InputGroupText>
+                </InputGroupAddon>
+                <InputGroupAddon
+                  id="Popover1"
+                  onClick={() => handlePickerOpen(!emojiPicker)}
+                  addonType="prepend"
+                >
+                  <EmojiContainer setNewMessage={setNewMessage} />
+                  <InputGroupText>
+                    <i className="far fa-grin-tongue-squint text-dark">
+                      <span className="tooltip-text">Emojis</span>
+                    </i>
                   </InputGroupText>
                 </InputGroupAddon>
                 <InputGroupAddon addonType="prepend">
@@ -123,21 +146,6 @@ const MessageForm = ({
                       currentRoom={currentRoom}
                       dropdown
                     />
-                  </InputGroupText>
-                </InputGroupAddon>
-                <InputGroupAddon onClick={widget} addonType="prepend">
-                  <InputGroupText>
-                    <i className="fas fa-camera text-dark" />
-                  </InputGroupText>
-                </InputGroupAddon>
-                <InputGroupAddon
-                  id="Popover1"
-                  onClick={() => handlePickerOpen(!emojiPicker)}
-                  addonType="prepend"
-                >
-                  <EmojiContainer setNewMessage={setNewMessage} />
-                  <InputGroupText>
-                    <i className="far fa-grin-tongue-squint text-dark" />
                   </InputGroupText>
                 </InputGroupAddon>
                 <Input

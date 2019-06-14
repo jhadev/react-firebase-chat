@@ -1,4 +1,5 @@
 @import '../colors';
+@import '../media';
 
 .list-group-item {
   &:focus {
@@ -7,10 +8,24 @@
   }
 }
 
+.dropdown-menu {
+  top: -15px !important;
+}
+
 .dropdown-item {
+  font-size: 0.85rem;
+
   &:focus {
     outline: 0;
     border-color: $receiver-color;
+  }
+}
+
+.list-group {
+  button {
+    font-size: 0.85rem;
+    word-break: normal;
+    word-wrap: break-word;
   }
 }
 

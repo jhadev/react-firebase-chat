@@ -118,7 +118,7 @@ const DirectMessages = props => {
             <Column size="12 md-3">
               <div className="sticky-top">
                 <div id="spacer" />
-                <h6>
+                <h6 className="text-center">
                   You are chatting with:{' '}
                   <p>{userToDm !== '' ? userToDm : 'Select A User'}</p>
                 </h6>

@@ -1,5 +1,6 @@
 @import '../src/components/styles/colors';
 @import '../src/components/styles/media';
+@import '../src//components/styles/fonts';
 
 html {
   scroll-behavior: smooth;
@@ -12,6 +13,8 @@ body {
   margin: 0 !important;
   display: flex !important;
   flex-direction: column !important;
+  font-family: 'Poppins', sans-serif;
+  ;
 }
 
 .sticky-top {

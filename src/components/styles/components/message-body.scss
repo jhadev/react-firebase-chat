@@ -1,5 +1,6 @@
 @import '../colors';
 @import '../media';
+@import '../fonts';
 
 .msgText {
   font-size: 16px;
@@ -14,14 +15,20 @@
   padding-right: 10px;
   max-width: 30%;
   color: $text-color;
+
+  font-family: 'Open Sans', sans-serif;
+  letter-spacing: 0.05rem;
+
 }
 
 .badge-user {
-  background-color: $user-color
+  background-color: $user-color;
+  margin-bottom: 1rem;
 }
 
 .badge-receiver {
-  background-color: $receiver-color
+  background-color: $receiver-color;
+  margin-bottom: 1rem;
 }
 
 .msg-link {

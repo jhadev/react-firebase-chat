@@ -28,7 +28,10 @@ const Navigation = () => {
           fixed="fixed"
           expand="md"
         >
-          <NavbarBrand href={ROUTES.LANDING}>React Firebase Chat</NavbarBrand>
+          <NavbarBrand href={ROUTES.LANDING}>
+            {'Just Another Chat'}
+            <i className="far fa-comments ml-2" />
+          </NavbarBrand>
           <NavbarToggler onClick={() => toggle(!isOpen)} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto" navbar>

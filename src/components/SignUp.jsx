@@ -114,7 +114,11 @@ class SignUpFormBase extends Component {
                 placeholder="Confirm Password"
               />
             </div>
-            <button className="btn btn-true" disabled={isInvalid} type="submit">
+            <button
+              className="btn btn-false"
+              disabled={isInvalid}
+              type="submit"
+            >
               Sign Up
             </button>
 

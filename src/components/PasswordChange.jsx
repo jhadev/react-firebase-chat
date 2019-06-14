@@ -61,10 +61,10 @@ class PasswordChangeForm extends Component {
             </div>
             <button
               disabled={isInvalid}
-              className="btn btn-primary"
+              className="btn btn-false"
               type="submit"
             >
-              Change My Password
+              Change Password
             </button>
 
             {error && <p>{error.message}</p>}

@@ -82,7 +82,7 @@ class SignInFormBase extends Component {
               />
             </div>
             <button
-              className="btn btn-true mb-2"
+              className="btn btn-false mb-2"
               disabled={isInvalid}
               type="submit"
             >

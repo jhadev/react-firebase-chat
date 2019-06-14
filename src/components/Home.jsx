@@ -8,6 +8,7 @@ import Message from './Message';
 import MessageForm from './MessageForm';
 import ChatList from './ChatList';
 import Container from './common/Container';
+import { Animated } from 'react-animated-css';
 import alert from '../sounds/sent.mp3';
 
 const Home = props => {
@@ -76,29 +77,36 @@ const Home = props => {
   const handleLayout = (chat, message) => {
     if (authUser.email === chat[message]['user']) {
       return (
-        <div className="d-flex flex-column align-items-end my-2" key={message}>
-          <Message
-            color="user"
-            message={chat[message]['message']}
-            user={chat[message]['user']}
-            timestamp={chat[message]['timestamp']}
-          />
-        </div>
+        <Animated animationIn="zoomIn">
+          <div
+            className="d-flex flex-column align-items-end my-2"
+            key={message}
+          >
+            <Message
+              color="user"
+              message={chat[message]['message']}
+              user={chat[message]['user']}
+              timestamp={chat[message]['timestamp']}
+            />
+          </div>
+        </Animated>
       );
     } else {
       return (
-        <div
-          className="d-flex flex-column align-items-start my-2"
-          key={message}
-        >
-          <Message
-            color="receiver"
-            message={chat[message]['message']}
-            user={chat[message]['user']}
-            timestamp={chat[message]['timestamp']}
-            displayName={authUser.username}
-          />
-        </div>
+        <Animated animationIn="zoomIn">
+          <div
+            className="d-flex flex-column align-items-start my-2"
+            key={message}
+          >
+            <Message
+              color="receiver"
+              message={chat[message]['message']}
+              user={chat[message]['user']}
+              timestamp={chat[message]['timestamp']}
+              displayName={authUser.username}
+            />
+          </div>
+        </Animated>
       );
     }
   };

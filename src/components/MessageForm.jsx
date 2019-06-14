@@ -31,7 +31,7 @@ const MessageForm = ({
   const [newMessage, setNewMessage] = useState('');
   const [charCounter, setCounter] = useState(0);
   const [emojiPicker, handlePickerOpen] = useState(false);
-  const [scrollTop, setScrollDirection] = useState(true);
+  const [scrollTop, setScrollDirection] = useState(false);
 
   useEffect(() => {
     if (scrollTop) {

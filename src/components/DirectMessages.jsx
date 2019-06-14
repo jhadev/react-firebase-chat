@@ -9,6 +9,7 @@ import Container from '../components/common/Container';
 import Message from './Message';
 import MessageForm from './MessageForm';
 import alert from '../sounds/sent.mp3';
+import { Animated } from 'react-animated-css';
 
 const DirectMessages = props => {
   const authUser = useContext(AuthUserContext);
@@ -75,25 +76,32 @@ const DirectMessages = props => {
   const handleLayout = (chat, index) => {
     if (authUser.email === chat.user) {
       return (
-        <div className="d-flex flex-column align-items-end my-2" key={index}>
-          <Message
-            color="user"
-            message={chat.message}
-            user={chat.user}
-            timestamp={chat.timestamp}
-          />
-        </div>
+        <Animated animationIn="zoomIn">
+          <div className="d-flex flex-column align-items-end my-2" key={index}>
+            <Message
+              color="user"
+              message={chat.message}
+              user={chat.user}
+              timestamp={chat.timestamp}
+            />
+          </div>
+        </Animated>
       );
     } else {
       return (
-        <div className="d-flex flex-column align-items-start my-2" key={index}>
-          <Message
-            color="receiver"
-            message={chat.message}
-            user={chat.user}
-            timestamp={chat.timestamp}
-          />
-        </div>
+        <Animated animationIn="zoomIn">
+          <div
+            className="d-flex flex-column align-items-start my-2"
+            key={index}
+          >
+            <Message
+              color="receiver"
+              message={chat.message}
+              user={chat.user}
+              timestamp={chat.timestamp}
+            />
+          </div>
+        </Animated>
       );
     }
   };

@@ -10,12 +10,13 @@ import ChatList from './ChatList';
 import Container from './common/Container';
 import { Animated } from 'react-animated-css';
 import alert from '../sounds/sent.mp3';
+import uuid from 'uuidv4';
 
 const Home = props => {
   const authUser = useContext(AuthUserContext);
 
   const [showChat, handleChange] = useState(true);
-  const [chat, setChat] = useState(null);
+  const [chat, setChat] = useState([]);
   const [room, setRoom] = useState('chat');
   const [roomList, setRoomList] = useState([]);
 
@@ -37,7 +38,8 @@ const Home = props => {
   useEffect(() => {
     const handleNewMessages = snapshot => {
       if (snapshot.val()) {
-        setChat(snapshot.val());
+        const messages = Object.values(snapshot.val());
+        setChat(messages);
         alertSound.play();
       }
     };
@@ -60,50 +62,34 @@ const Home = props => {
     window.scrollTo(0, 0);
   };
 
-  // const scroll = down => {
-  //   if (down) {
-  //     const scrollingElement = document.scrollingElement || document.body;
-  //     scrollingElement.scrollTop = scrollingElement.scrollHeight;
-  //   } else {
-  //     window.scrollTo(0, 0)
-  //   }
-  // }
-
   const setChatRoom = event => {
     const { value } = event.target;
     setRoom(value);
   };
 
-  const handleLayout = (chat, message) => {
-    if (authUser.email === chat[message]['user']) {
+  const handleLayout = message => {
+    if (authUser.email === message.user) {
       return (
-        <Animated animationIn="zoomIn">
-          <div
-            className="d-flex flex-column align-items-end my-2"
-            key={message}
-          >
+        <Animated key={uuid()} animationIn="zoomIn">
+          <div className="d-flex flex-column align-items-end my-2">
             <Message
               color="user"
-              message={chat[message]['message']}
-              user={chat[message]['user']}
-              timestamp={chat[message]['timestamp']}
+              message={message.message}
+              user={message.user}
+              timestamp={message.timestamp}
             />
           </div>
         </Animated>
       );
     } else {
       return (
-        <Animated animationIn="zoomIn">
-          <div
-            className="d-flex flex-column align-items-start my-2"
-            key={message}
-          >
+        <Animated key={uuid()} animationIn="zoomIn">
+          <div className="d-flex flex-column align-items-start my-2">
             <Message
               color="receiver"
-              message={chat[message]['message']}
-              user={chat[message]['user']}
-              timestamp={chat[message]['timestamp']}
-              displayName={authUser.username}
+              message={message.message}
+              user={message.user}
+              timestamp={message.timestamp}
             />
           </div>
         </Animated>
@@ -143,10 +129,8 @@ const Home = props => {
                 <Column size="12 md-10">
                   <div className="wrapper">
                     <>
-                      {chat !== null &&
-                        Object.keys(chat).map(message =>
-                          handleLayout(chat, message)
-                        )}
+                      {chat.length > 0 &&
+                        chat.map(message => handleLayout(message))}
                     </>
                   </div>
                 </Column>

@@ -74,16 +74,16 @@ const DirectMessages = props => {
     window.scrollTo(0, 0);
   };
 
-  const handleLayout = chat => {
-    if (authUser.email === chat.user) {
+  const handleLayout = ({ user, message, timestamp }) => {
+    if (authUser.email === user) {
       return (
         <Animated key={uuid()} animationIn="zoomIn">
           <div className="d-flex flex-column align-items-end my-2">
             <Message
               color="user"
-              message={chat.message}
-              user={chat.user}
-              timestamp={chat.timestamp}
+              message={message}
+              user={user}
+              timestamp={timestamp}
             />
           </div>
         </Animated>
@@ -94,9 +94,9 @@ const DirectMessages = props => {
           <div className="d-flex flex-column align-items-start my-2">
             <Message
               color="receiver"
-              message={chat.message}
-              user={chat.user}
-              timestamp={chat.timestamp}
+              message={message}
+              user={user}
+              timestamp={timestamp}
             />
           </div>
         </Animated>
@@ -135,7 +135,7 @@ const DirectMessages = props => {
                 <div id="spacer" />
                 <div className="mt-5">
                   {chat.length !== 0 ? (
-                    chat.map((message, index) => handleLayout(message, index))
+                    chat.map(message => handleLayout(message))
                   ) : (
                     <h3 className="text-center">
                       {userToDm !== ''

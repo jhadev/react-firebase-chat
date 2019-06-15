@@ -67,16 +67,16 @@ const Home = props => {
     setRoom(value);
   };
 
-  const handleLayout = message => {
-    if (authUser.email === message.user) {
+  const handleLayout = ({ user, timestamp, message }) => {
+    if (authUser.email === user) {
       return (
         <Animated key={uuid()} animationIn="zoomIn">
           <div className="d-flex flex-column align-items-end my-2">
             <Message
               color="user"
-              message={message.message}
-              user={message.user}
-              timestamp={message.timestamp}
+              message={message}
+              user={user}
+              timestamp={timestamp}
             />
           </div>
         </Animated>
@@ -87,9 +87,9 @@ const Home = props => {
           <div className="d-flex flex-column align-items-start my-2">
             <Message
               color="receiver"
-              message={message.message}
-              user={message.user}
-              timestamp={message.timestamp}
+              message={message}
+              user={user}
+              timestamp={timestamp}
             />
           </div>
         </Animated>
@@ -128,9 +128,15 @@ const Home = props => {
                 </Column>
                 <Column size="12 md-10">
                   <div className="wrapper">
+                    <div id="spacer" />
                     <>
-                      {chat.length > 0 &&
-                        chat.map(message => handleLayout(message))}
+                      {chat.length > 1 ? (
+                        chat.map(message => handleLayout(message))
+                      ) : (
+                        <h3 className="text-center text-dark">
+                          No messages in this room yet. Get the party started.
+                        </h3>
+                      )}
                     </>
                   </div>
                 </Column>

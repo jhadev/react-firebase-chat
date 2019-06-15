@@ -10,6 +10,7 @@ import Message from './Message';
 import MessageForm from './MessageForm';
 import alert from '../sounds/sent.mp3';
 import { Animated } from 'react-animated-css';
+import uuid from 'uuidv4';
 
 const DirectMessages = props => {
   const authUser = useContext(AuthUserContext);
@@ -73,11 +74,11 @@ const DirectMessages = props => {
     window.scrollTo(0, 0);
   };
 
-  const handleLayout = (chat, index) => {
+  const handleLayout = chat => {
     if (authUser.email === chat.user) {
       return (
-        <Animated animationIn="zoomIn">
-          <div className="d-flex flex-column align-items-end my-2" key={index}>
+        <Animated key={uuid()} animationIn="zoomIn">
+          <div className="d-flex flex-column align-items-end my-2">
             <Message
               color="user"
               message={chat.message}
@@ -89,11 +90,8 @@ const DirectMessages = props => {
       );
     } else {
       return (
-        <Animated animationIn="zoomIn">
-          <div
-            className="d-flex flex-column align-items-start my-2"
-            key={index}
-          >
+        <Animated key={uuid()} animationIn="zoomIn">
+          <div className="d-flex flex-column align-items-start my-2">
             <Message
               color="receiver"
               message={chat.message}

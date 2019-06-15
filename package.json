@@ -17,7 +17,8 @@
     "reactstrap": "^8.0.0",
     "recompose": "^0.30.0",
     "styled-components": "^4.3.1",
-    "sweetalert": "^2.1.2"
+    "sweetalert": "^2.1.2",
+    "uuidv4": "^4.0.0"
   },
   "scripts": {
     "predeploy": "npm run build",

@@ -14,7 +14,8 @@ body {
   display: flex !important;
   flex-direction: column !important;
   font-family: 'Poppins', sans-serif;
-  ;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .sticky-top {

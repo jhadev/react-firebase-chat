@@ -76,7 +76,9 @@ const MessageForm = ({
         if (!error && result && result.event === 'success') {
           console.log(result);
           setNewMessage(prevMessage =>
-            prevMessage.concat(` ${result.info.secure_url}`)
+            prevMessage.length > 0
+              ? prevMessage.concat(` ${result.info.secure_url}`)
+              : `${result.info.secure_url}`
           );
         }
       }

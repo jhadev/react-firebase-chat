@@ -12,7 +12,7 @@ import { Animated } from 'react-animated-css';
 import alert from '../sounds/sent.mp3';
 import uuid from 'uuidv4';
 
-const Home = props => {
+const Home = ({ firebase }) => {
   const authUser = useContext(AuthUserContext);
 
   const [showChat, handleChange] = useState(true);
@@ -24,8 +24,8 @@ const Home = props => {
 
   //refers to current room string in state
   //returns all array of all rooms
-  const allRooms = props.firebase.allRooms();
-  const chatroom = props.firebase.chat(room);
+  const allRooms = firebase.allRooms();
+  const chatroom = firebase.chat(room);
 
   useEffect(() => {
     allRooms
@@ -150,7 +150,7 @@ const Home = props => {
                 rooms={roomList}
                 setChatRoom={setChatRoom}
                 currentRoom={room}
-                firebase={props.firebase}
+                firebase={firebase}
                 scrollToTop={scrollToTop}
                 scrollToBottom={scrollToBottom}
               />

@@ -7,6 +7,7 @@ const MessageBody = ({ body, color }) => {
   let msgBody = (
     <div className={`badge badge-${color} msgText mb-2`}>{body}</div>
   );
+
   //extremely hacky
   let msgCopy = `${body}`;
 

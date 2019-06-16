@@ -128,8 +128,6 @@ class Admin extends Component {
   render() {
     const { loading, users, rooms, roomToAdd, roomToRemove } = this.state;
 
-    console.log(rooms);
-
     return (
       <div>
         <h1 className="admin my-4 text-center">Admin Panel</h1>

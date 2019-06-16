@@ -12,20 +12,20 @@ import alert from '../sounds/sent.mp3';
 import { Animated } from 'react-animated-css';
 import uuid from 'uuidv4';
 
-const DirectMessages = props => {
+const DirectMessages = ({ firebase }) => {
   const authUser = useContext(AuthUserContext);
   // all users in state
   const [users, setUsers] = useState([]);
   const [chat, setChat] = useState([]);
   // user to DM
   const [userToDm, setUserToDm] = useState('');
-  const chatroom = props.firebase.dms();
+  const chatroom = firebase.dms();
   // get all users other than authUser
 
   const alertSound = new Audio(alert);
 
   useEffect(() => {
-    props.firebase.users().on('value', snapshot => {
+    firebase.users().on('value', snapshot => {
       const usersObj = snapshot.val();
 
       const usersArr = Object.keys(usersObj).map(key => ({
@@ -157,7 +157,7 @@ const DirectMessages = props => {
             receiver={userToDm}
             setChatRoom={setChatRoom}
             currentRoom={'dms'}
-            firebase={props.firebase}
+            firebase={firebase}
             scrollToTop={scrollToTop}
             scrollToBottom={scrollToBottom}
             dms

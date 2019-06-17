@@ -8,7 +8,7 @@ import Message from './Message';
 import MessageForm from './MessageForm';
 import ChatList from './ChatList';
 import Container from './common/Container';
-import { Animated } from 'react-animated-css';
+// import { Animated } from 'react-animated-css';
 import alert from '../sounds/sent.mp3';
 import uuid from 'uuidv4';
 
@@ -70,29 +70,25 @@ const Home = ({ firebase }) => {
   const handleLayout = ({ user, timestamp, message }) => {
     if (authUser.email === user) {
       return (
-        <Animated key={uuid()} animationIn="zoomIn">
-          <div className="d-flex flex-column align-items-end my-2">
-            <Message
-              color="user"
-              message={message}
-              user={user}
-              timestamp={timestamp}
-            />
-          </div>
-        </Animated>
+        <div key={uuid()} className="d-flex flex-column align-items-end my-2">
+          <Message
+            color="user"
+            message={message}
+            user={user}
+            timestamp={timestamp}
+          />
+        </div>
       );
     } else {
       return (
-        <Animated key={uuid()} animationIn="zoomIn">
-          <div className="d-flex flex-column align-items-start my-2">
-            <Message
-              color="receiver"
-              message={message}
-              user={user}
-              timestamp={timestamp}
-            />
-          </div>
-        </Animated>
+        <div key={uuid()} className="d-flex flex-column align-items-start my-2">
+          <Message
+            color="receiver"
+            message={message}
+            user={user}
+            timestamp={timestamp}
+          />
+        </div>
       );
     }
   };

@@ -9,7 +9,6 @@ import Container from '../components/common/Container';
 import Message from './Message';
 import MessageForm from './MessageForm';
 import alert from '../sounds/sent.mp3';
-// import { Animated } from 'react-animated-css';
 import uuid from 'uuidv4';
 
 const DirectMessages = ({ firebase }) => {

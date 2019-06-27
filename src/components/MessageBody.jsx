@@ -11,6 +11,8 @@ const MessageBody = ({ body, color }) => {
   //extremely hacky
   let msgCopy = `${body}`;
 
+  let urls = [];
+
   // if message contains spaces split at the space if it doesn't create an array with the single string
   const destructuredMsg =
     msgCopy.indexOf(' ') >= 0 ? msgCopy.split(' ') : [msgCopy];
@@ -22,6 +24,10 @@ const MessageBody = ({ body, color }) => {
 
   // this will only work for one match and return the entire component. still need to figure out how to handle multiple matches.
   destructuredMsg.forEach(word => {
+    if (REGEX.urlPattern.test(word)) {
+      urls.push(word);
+      console.log(urls);
+    }
     switch (true) {
       case REGEX.urlPattern.test(word):
         msgBody = (
@@ -33,7 +39,7 @@ const MessageBody = ({ body, color }) => {
               target="_blank"
             >
               {word}
-            </a>
+            </a>{' '}
             {textWithoutLink(destructuredMsg, word)}
           </div>
         );

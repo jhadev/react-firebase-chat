@@ -8,7 +8,6 @@ import Message from './Message';
 import MessageForm from './MessageForm';
 import ChatList from './ChatList';
 import Container from './common/Container';
-// import { Animated } from 'react-animated-css';
 import alert from '../sounds/sent.mp3';
 import uuid from 'uuidv4';
 

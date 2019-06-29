@@ -25,7 +25,7 @@ const MessageBody = ({ body, color }) => {
   // this will only work for one match and return the entire component. still need to figure out how to handle multiple matches.
   const checkForLinks = () => {
     let messageWithoutLink = [];
-
+    // conditions are killing this bc when they hit one it does't match the other.
     destructuredMsg.forEach(word => {
       if (REGEX.urlPattern.test(word)) {
         matches.push({ url: word });
@@ -48,11 +48,11 @@ const MessageBody = ({ body, color }) => {
     return messageWithoutLink;
   };
 
-  console.log(checkForLinks());
+  console.log(checkForLinks()[0]);
 
   const doMatches = () => {
     let innerHTML = [];
-    matches.map(match => {
+    matches.forEach(match => {
       if (match.url) {
         innerHTML.push(
           <a
@@ -107,48 +107,12 @@ const MessageBody = ({ body, color }) => {
     return innerHTML;
   };
 
-  // const messageWithoutLink = () => {
-  //   return destructuredMsg
-  //     .filter(word => word !== word.match(REGEX.urlPattern))
-  //     .join(' ');
-  //   // let url = '';
-  //   // let img = '';
-  //   // let audio = '';
-  //   // let video = '';
-  //   // if (mappedMatches[0].url) {
-  //   //   url = mappedMatches[0].url;
-  //   // }
-  //   // console.log(url);
-  //   // // return destructuredMsg.filter(word => word !== )
-  //   // const filteredMsg = destructuredMsg.filter(
-  //   //   word => word !== matches.map(match => match.url)
-  //   // );
-  //   // if (mappedMatches.length !== 0) {
-  //   //   mappedMatches.forEach(({ url, img, audio, video }) => {
-  //   //     let textOnly;
-  //   //     if (
-  //   //       url !== undefined ||
-  //   //       img !== undefined ||
-  //   //       audio !== undefined ||
-  //   //       video !== undefined
-  //   //     ) {
-  //   //       textOnly = destructuredMsg.filter(
-  //   //         word =>
-  //   //           word !== url || word !== img || word !== audio || word !== video
-  //   //       );
-  //   //     }
-  //   //     return textOnly;
-  //   //   });
-  //   // }
-  // };
-  // will overwrite message if links are detected
-  // console.log(messageWithoutLink());
   return (
     <div className={`badge badge-${color} msgText mb-2`}>
       {doMatches().length > 0
         ? doMatches().map(match => (
             <div>
-              {match} {checkForLinks()}
+              {match} {checkForLinks()[0]}
             </div>
           ))
         : body}{' '}

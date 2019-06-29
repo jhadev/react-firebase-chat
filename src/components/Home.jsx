@@ -38,6 +38,7 @@ const Home = ({ firebase }) => {
     const handleNewMessages = snapshot => {
       if (snapshot.val()) {
         const messages = Object.values(snapshot.val());
+        // remove first msg bc it is a placeholder to create a new room
         messages.shift();
         setChat(messages);
         alertSound.play();

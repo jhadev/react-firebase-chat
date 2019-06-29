@@ -17,16 +17,16 @@ const MessageBody = ({ body, color }) => {
   // find relevant matches and add them accordlingly i worked this out terrible but it is ok
   const checkForLinks = () => {
     destructuredMsg.forEach(word => {
-      if (REGEX.urlPattern.test(word)) {
+      if (word.match(REGEX.urlPattern)) {
         matches.push({ url: word });
       }
-      if (REGEX.imgUrlPattern.test(word)) {
+      if (word.match(REGEX.imgUrlPattern)) {
         matches.push({ img: word });
       }
-      if (REGEX.audioUrlPattern.test(word)) {
+      if (word.match(REGEX.audioUrlPattern)) {
         matches.push({ audio: word });
       }
-      if (REGEX.videoUrlPattern.test(word)) {
+      if (word.match(REGEX.videoUrlPattern)) {
         matches.push({ video: word });
       }
     });

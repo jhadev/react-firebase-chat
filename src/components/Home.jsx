@@ -8,7 +8,6 @@ import Message from './Message';
 import MessageForm from './MessageForm';
 import ChatList from './ChatList';
 import Container from './common/Container';
-// import { Animated } from 'react-animated-css';
 import alert from '../sounds/sent.mp3';
 import uuid from 'uuidv4';
 
@@ -39,6 +38,7 @@ const Home = ({ firebase }) => {
     const handleNewMessages = snapshot => {
       if (snapshot.val()) {
         const messages = Object.values(snapshot.val());
+        messages.shift();
         setChat(messages);
         alertSound.play();
       }
@@ -126,7 +126,7 @@ const Home = ({ firebase }) => {
                   <div className="wrapper">
                     <div id="spacer" />
                     <>
-                      {chat.length > 1 ? (
+                      {chat.length > 0 ? (
                         chat.map(message => handleLayout(message))
                       ) : (
                         <h3 className="text-center text-dark">

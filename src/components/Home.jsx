@@ -38,6 +38,7 @@ const Home = ({ firebase }) => {
     const handleNewMessages = snapshot => {
       if (snapshot.val()) {
         const messages = Object.values(snapshot.val());
+        messages.shift();
         setChat(messages);
         alertSound.play();
       }

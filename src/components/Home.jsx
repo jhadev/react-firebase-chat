@@ -126,7 +126,7 @@ const Home = ({ firebase }) => {
                   <div className="wrapper">
                     <div id="spacer" />
                     <>
-                      {chat.length > 1 ? (
+                      {chat.length > 0 ? (
                         chat.map(message => handleLayout(message))
                       ) : (
                         <h3 className="text-center text-dark">

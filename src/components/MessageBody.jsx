@@ -2,27 +2,18 @@ import React from 'react';
 import * as REGEX from '../constants/regex';
 import PropTypes from 'prop-types';
 import './styles/components/message-body.scss';
+import uuid from 'uuidv4';
 
 const MessageBody = ({ body, color }) => {
-  // let msgBody = (
-  //   <div className={`badge badge-${color} msgText mb-2`}>{body}</div>
-  // );
-
-  //extremely hacky
+  // extremely hacky
   let msgCopy = `${body}`;
-
-  // will hold all the matched link, image, video, audio urls
-  let matches = [];
 
   // if message contains spaces split at the space if it doesn't create an array with the single string
   const destructuredMsg =
     msgCopy.indexOf(' ') >= 0 ? msgCopy.split(' ') : [msgCopy];
 
-  // easier to read takes in array of words and filters the array so it returns a new array without the matched regex link and turns it back into a string at the space
-  // const textWithoutLink = (arr, input) => {
-  //   return arr.filter(string => string !== input).join(' ');
-  // };
-
+  // will hold all the matched link, image, video, audio urls
+  const matches = [];
   // find relevant matches and add them accordlingly i worked this out terrible but it is ok
   const checkForLinks = () => {
     destructuredMsg.forEach(word => {
@@ -39,7 +30,6 @@ const MessageBody = ({ body, color }) => {
         matches.push({ video: word });
       }
     });
-    // console.log(messageWithoutLink);
   };
 
   // run it
@@ -47,7 +37,8 @@ const MessageBody = ({ body, color }) => {
 
   // turn matches into JSX
   const doMatches = () => {
-    let innerHTML = [];
+    const innerHTML = [];
+
     matches.forEach(match => {
       if (match.url) {
         innerHTML.push(
@@ -105,20 +96,14 @@ const MessageBody = ({ body, color }) => {
 
   // create an array of only links
   const onlyLinks = () => {
-    let mappedLinks = matches.map(match => {
-      return [...Object.values(match)];
-    });
-
+    let mappedLinks = matches.map(match => [...Object.values(match)]);
     mappedLinks = mappedLinks.reduce((a, b) => a.concat(b), []);
     return mappedLinks;
   };
 
   const messageWithoutLink = () => {
     const links = onlyLinks();
-    const message = destructuredMsg.filter(word => {
-      return !links.includes(word);
-    });
-
+    const message = destructuredMsg.filter(word => !links.includes(word));
     return message;
   };
   // store in variables
@@ -129,7 +114,7 @@ const MessageBody = ({ body, color }) => {
   return (
     <div className={`badge badge-${color} msgText mb-2`}>
       {matchesDone.length > 0
-        ? matchesDone.map(match => <div>{match}</div>)
+        ? matchesDone.map(match => <div key={uuid()}>{match}</div>)
         : null}
       {noLinks.length !== 0 && noLinks.join(' ')}
     </div>

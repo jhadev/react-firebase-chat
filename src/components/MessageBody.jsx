@@ -23,21 +23,32 @@ const MessageBody = ({ body, color }) => {
   };
 
   // this will only work for one match and return the entire component. still need to figure out how to handle multiple matches.
-  destructuredMsg.forEach(word => {
-    if (REGEX.urlPattern.test(word)) {
-      matches.push({ url: word });
-    }
-    if (REGEX.imgUrlPattern.test(word)) {
-      matches.push({ img: word });
-    }
-    if (REGEX.audioUrlPattern.test(word)) {
-      matches.push({ audio: word });
-    }
-    if (REGEX.videoUrlPattern.test(word)) {
-      matches.push({ video: word });
-    }
-    console.log(matches);
-  });
+  const checkForLinks = () => {
+    let messageWithoutLink = [];
+
+    destructuredMsg.forEach(word => {
+      if (REGEX.urlPattern.test(word)) {
+        matches.push({ url: word });
+        messageWithoutLink.push(textWithoutLink(destructuredMsg, word));
+      }
+      if (REGEX.imgUrlPattern.test(word)) {
+        matches.push({ img: word });
+        messageWithoutLink.push(textWithoutLink(destructuredMsg, word));
+      }
+      if (REGEX.audioUrlPattern.test(word)) {
+        matches.push({ audio: word });
+        messageWithoutLink.push(textWithoutLink(destructuredMsg, word));
+      }
+      if (REGEX.videoUrlPattern.test(word)) {
+        matches.push({ video: word });
+        messageWithoutLink.push(textWithoutLink(destructuredMsg, word));
+      }
+    });
+
+    return messageWithoutLink;
+  };
+
+  console.log(checkForLinks());
 
   const doMatches = () => {
     let innerHTML = [];
@@ -96,57 +107,51 @@ const MessageBody = ({ body, color }) => {
     return innerHTML;
   };
 
-  const mappedMatches = matches.map(match => ({
-    url: match.url,
-    img: match.img,
-    audio: match.audio,
-    video: match.video
-  }));
-
-  console.log(mappedMatches);
-
-  const messageWithoutLink = () => {
-    return destructuredMsg
-      .filter(word => word !== word.match(REGEX.urlPattern))
-      .join(' ');
-    // let url = '';
-    // let img = '';
-    // let audio = '';
-    // let video = '';
-    // if (mappedMatches[0].url) {
-    //   url = mappedMatches[0].url;
-    // }
-    // console.log(url);
-    // // return destructuredMsg.filter(word => word !== )
-    // const filteredMsg = destructuredMsg.filter(
-    //   word => word !== matches.map(match => match.url)
-    // );
-    // if (mappedMatches.length !== 0) {
-    //   mappedMatches.forEach(({ url, img, audio, video }) => {
-    //     let textOnly;
-    //     if (
-    //       url !== undefined ||
-    //       img !== undefined ||
-    //       audio !== undefined ||
-    //       video !== undefined
-    //     ) {
-    //       textOnly = destructuredMsg.filter(
-    //         word =>
-    //           word !== url || word !== img || word !== audio || word !== video
-    //       );
-    //     }
-    //     return textOnly;
-    //   });
-    // }
-  };
+  // const messageWithoutLink = () => {
+  //   return destructuredMsg
+  //     .filter(word => word !== word.match(REGEX.urlPattern))
+  //     .join(' ');
+  //   // let url = '';
+  //   // let img = '';
+  //   // let audio = '';
+  //   // let video = '';
+  //   // if (mappedMatches[0].url) {
+  //   //   url = mappedMatches[0].url;
+  //   // }
+  //   // console.log(url);
+  //   // // return destructuredMsg.filter(word => word !== )
+  //   // const filteredMsg = destructuredMsg.filter(
+  //   //   word => word !== matches.map(match => match.url)
+  //   // );
+  //   // if (mappedMatches.length !== 0) {
+  //   //   mappedMatches.forEach(({ url, img, audio, video }) => {
+  //   //     let textOnly;
+  //   //     if (
+  //   //       url !== undefined ||
+  //   //       img !== undefined ||
+  //   //       audio !== undefined ||
+  //   //       video !== undefined
+  //   //     ) {
+  //   //       textOnly = destructuredMsg.filter(
+  //   //         word =>
+  //   //           word !== url || word !== img || word !== audio || word !== video
+  //   //       );
+  //   //     }
+  //   //     return textOnly;
+  //   //   });
+  //   // }
+  // };
   // will overwrite message if links are detected
-  console.log(messageWithoutLink());
+  // console.log(messageWithoutLink());
   return (
     <div className={`badge badge-${color} msgText mb-2`}>
       {doMatches().length > 0
-        ? doMatches().map(match => <div>{match}</div>)
+        ? doMatches().map(match => (
+            <div>
+              {match} {checkForLinks()}
+            </div>
+          ))
         : body}{' '}
-      {/* {messageWithoutLink().join(' ')} */}
     </div>
   );
 };

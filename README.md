@@ -13,6 +13,7 @@
 - Sass
 - Reactstrap
 - Recompose
+- Cloudinary
 - Animate.css
 - Moment.js
 - Emoji-Mart

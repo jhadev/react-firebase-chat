@@ -1,6 +1,10 @@
 import React from 'react';
 import * as REGEX from '../constants/regex';
 import PropTypes from 'prop-types';
+import Link from './common/Link';
+import Image from './common/Image';
+import Audio from './common/Audio';
+import Video from './common/Video';
 import './styles/components/message-body.scss';
 import uuid from 'uuidv4';
 
@@ -39,55 +43,25 @@ const MessageBody = ({ body, color }) => {
   const doMatches = () => {
     const linksAsJSX = [];
 
-    matches.forEach(match => {
-      if (match.url) {
+    matches.forEach(({ url, img, audio, video }) => {
+      if (url) {
+        linksAsJSX.push(<Link url={url}>{url}</Link>);
+      }
+
+      if (img) {
         linksAsJSX.push(
-          <a
-            className="msg-link text-light"
-            href={match.url}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            {match.url}
-          </a>
+          <Link url={img}>
+            <Image url={img} />
+          </Link>
         );
       }
 
-      if (match.img) {
-        linksAsJSX.push(
-          <a
-            className="msg-link text-light"
-            href={match.img}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <img
-              className="msg-img img-fluid rounded img-thumbnail"
-              src={match.img}
-              alt="Message"
-            />
-          </a>
-        );
+      if (audio) {
+        linksAsJSX.push(<Audio url={audio} />);
       }
 
-      if (match.audio) {
-        linksAsJSX.push(
-          <div>
-            <audio controls>
-              <source src={match.audio} type="audio/mpeg" />
-            </audio>
-          </div>
-        );
-      }
-
-      if (match.video) {
-        linksAsJSX.push(
-          <div>
-            <video className="msg-video img-thumbnail" controls>
-              <source src={match.video} type="video/mp4" />
-            </video>
-          </div>
-        );
+      if (video) {
+        linksAsJSX.push(<Video url={video} />);
       }
     });
 

@@ -55,8 +55,8 @@ const Home = ({ firebase }) => {
   }, [chat, room]);
 
   const scrollToBottom = () => {
-    const scrollingElement = document.scrollingElement || document.body;
-    scrollingElement.scrollTop = scrollingElement.scrollHeight;
+    document.getElementById('bottom').scrollIntoView(false);
+    // window.scrollTo(0, document.body.scrollHeight);
   };
 
   const scrollToTop = () => {
@@ -153,6 +153,7 @@ const Home = ({ firebase }) => {
               />
             </Container>
           </div>
+          <div id="bottom" />
         </>
       )}
     </>

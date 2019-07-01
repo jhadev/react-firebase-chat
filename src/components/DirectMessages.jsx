@@ -65,8 +65,7 @@ const DirectMessages = ({ firebase }) => {
   }, [chat, userToDm]);
 
   const scrollToBottom = () => {
-    const scrollingElement = document.scrollingElement || document.body;
-    scrollingElement.scrollTop = scrollingElement.scrollHeight;
+    document.getElementById('bottom').scrollIntoView(false);
   };
 
   const scrollToTop = () => {
@@ -159,6 +158,7 @@ const DirectMessages = ({ firebase }) => {
           />
         </Container>
       </div>
+      <div id="bottom" />
     </>
   );
 };

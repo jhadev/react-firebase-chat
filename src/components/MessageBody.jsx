@@ -1,10 +1,7 @@
 import React from 'react';
 import * as REGEX from '../constants/regex';
 import PropTypes from 'prop-types';
-import Link from './common/Link';
-import Image from './common/Image';
-import Audio from './common/Audio';
-import Video from './common/Video';
+import { Audio, Image, Link, Video } from './Matching';
 import './styles/components/message-body.scss';
 import uuid from 'uuidv4';
 

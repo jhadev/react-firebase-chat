@@ -100,9 +100,7 @@ const Home = ({ firebase }) => {
         <h1 className=" welcome my-4">Welcome, {authUser.email}</h1>
         <button
           className={`btn btn-${showChat} btn-lg`}
-          onClick={() => {
-            handleChange(!showChat);
-          }}
+          onClick={() => handleChange(!showChat)}
         >
           {!showChat ? 'Show Chat' : 'Hide Chat'}
         </button>

@@ -6,15 +6,13 @@ import './styles/components/message.scss';
 const User = ({ user }) => <div className="mb-1 user-name">{user}</div>;
 const Time = ({ timestamp }) => <div className="mb-1 time">{timestamp}</div>;
 
-const Message = ({ user, timestamp, message, color }) => {
-  return (
-    <>
-      <User user={user} />
-      <Time timestamp={timestamp} />
-      <MessageBody body={message} color={color} />
-    </>
-  );
-};
+const Message = ({ user, timestamp, message, color }) => (
+  <>
+    <User user={user} />
+    <Time timestamp={timestamp} />
+    <MessageBody body={message} color={color} />
+  </>
+);
 
 Message.propTypes = {
   user: PropTypes.string,

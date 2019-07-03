@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useContext, useEffect } from 'react';
+import uuid from 'uuidv4';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
 import ChatList from './ChatList';
@@ -9,7 +10,6 @@ import Container from '../components/common/Container';
 import Message from './Message';
 import MessageForm from './MessageForm';
 import alert from '../sounds/sent.mp3';
-import uuid from 'uuidv4';
 
 const DirectMessages = ({ firebase }) => {
   const authUser = useContext(AuthUserContext);

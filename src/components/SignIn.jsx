@@ -8,20 +8,18 @@ import * as ROUTES from '../constants/routes';
 import Row from './common/Row';
 import Column from './common/Column';
 
-const SignIn = () => {
-  return (
-    <div>
-      <h1 className="text-center my-4">Sign In</h1>
-      <SignInForm />
-      <Row helper="justify-content-center">
-        <Column size="md-6 12">
-          <PasswordForgetLink />
-          <SignUpLink />
-        </Column>
-      </Row>
-    </div>
-  );
-};
+const SignIn = () => (
+  <div>
+    <h1 className="text-center my-4">Sign In</h1>
+    <SignInForm />
+    <Row helper="justify-content-center">
+      <Column size="md-6 12">
+        <PasswordForgetLink />
+        <SignUpLink />
+      </Column>
+    </Row>
+  </div>
+);
 
 class SignInFormBase extends Component {
   state = {

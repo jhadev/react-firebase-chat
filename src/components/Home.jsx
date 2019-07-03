@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext } from 'react';
+import uuid from 'uuidv4';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
 import Row from './common/Row';
@@ -9,7 +10,6 @@ import MessageForm from './MessageForm';
 import ChatList from './ChatList';
 import Container from './common/Container';
 import alert from '../sounds/sent.mp3';
-import uuid from 'uuidv4';
 
 const Home = ({ firebase }) => {
   const authUser = useContext(AuthUserContext);

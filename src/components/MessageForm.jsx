@@ -33,6 +33,8 @@ const MessageForm = ({
   const [emojiPicker, handlePickerOpen] = useState(false);
   const [scrollTop, setScrollDirection] = useState(false);
 
+  const maxCount = 200;
+
   useEffect(() => {
     if (scrollTop) {
       scrollToTop();
@@ -84,8 +86,6 @@ const MessageForm = ({
       }
     );
   };
-
-  const maxCount = 200;
 
   return (
     <>

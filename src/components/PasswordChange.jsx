@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withFirebase } from '../components/Firebase/index';
+import { withFirebase } from './Firebase/index';
 import Row from './common/Row';
 import Column from './common/Column';
 

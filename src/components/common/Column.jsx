@@ -3,7 +3,7 @@ import React from 'react';
 const Column = props => {
   const size = props.size
     .split(' ')
-    .map(size => `col-${size}`)
+    .map(colSize => `col-${colSize}`)
     .join(' ');
 
   return <div className={size} {...props} />;

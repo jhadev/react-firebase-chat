@@ -1,9 +1,7 @@
 import React from 'react';
 
-const Container = props => (
-  <div className={`container${props.fluid ? '-fluid' : ''}`}>
-    {props.children}
-  </div>
+const Container = ({ fluid, children }) => (
+  <div className={`container${fluid || ''}`}>{children}</div>
 );
 
 export default Container;

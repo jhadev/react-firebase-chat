@@ -7,7 +7,7 @@ import uuid from 'uuidv4';
 
 const MessageBody = ({ body, color }) => {
   // extremely hacky
-  let msgCopy = `${body}`;
+  const msgCopy = `${body}`;
 
   // if message contains spaces split at the space if it doesn't create an array with the single string
   const destructuredMsg =

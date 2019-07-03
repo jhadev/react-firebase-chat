@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { AuthUserContext } from './Session/index';
 import { NavLink } from 'react-router-dom';
 import {
   Collapse,
@@ -9,10 +8,10 @@ import {
   Nav,
   NavItem
 } from 'reactstrap';
+import { AuthUserContext } from './Session/index';
 import SignOut from './SignOut';
 import * as ROLES from '../constants/roles';
 import * as ROUTES from '../constants/routes';
-import PropTypes from 'prop-types';
 import './styles/components/navigation.scss';
 
 const Navigation = () => {
@@ -129,11 +128,6 @@ const Navigation = () => {
       </>
     </div>
   );
-};
-
-Navigation.propTypes = {
-  isOpen: PropTypes.bool,
-  toggle: PropTypes.func
 };
 
 export default Navigation;

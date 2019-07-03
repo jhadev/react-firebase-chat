@@ -4,8 +4,7 @@ import 'emoji-mart/css/emoji-mart.css';
 import { NimblePicker } from 'emoji-mart';
 import data from 'emoji-mart/data/messenger.json';
 
-const EmojiContainer = ({ setNewMessage }) => {
-  return (
+const EmojiContainer = ({ setNewMessage }) => (
     <UncontrolledPopover placement="top" target="Popover1" trigger="legacy">
       <PopoverBody style={{ maxWidth: '100%' }}>
         <NimblePicker
@@ -24,6 +23,5 @@ const EmojiContainer = ({ setNewMessage }) => {
       </PopoverBody>
     </UncontrolledPopover>
   );
-};
 
 export default EmojiContainer;

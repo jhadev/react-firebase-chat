@@ -15,6 +15,7 @@ import {
 import moment from 'moment';
 import 'emoji-mart/css/emoji-mart.css';
 import EmojiContainer from './EmojiContainer';
+import swal from '@sweetalert/with-react';
 import './styles/components/message-form.scss';
 
 const MessageForm = ({
@@ -77,11 +78,49 @@ const MessageForm = ({
       (error, result) => {
         if (!error && result && result.event === 'success') {
           console.log(result);
-          setNewMessage(prevMessage =>
-            prevMessage.length > 0
-              ? prevMessage.concat(` ${result.info.secure_url}`)
-              : `${result.info.secure_url}`
+          const url = result.info.secure_url;
+
+          navigator.clipboard.writeText(url).then(
+            () => {
+              /* clipboard successfully set */
+              swal({
+                content: (
+                  <div>
+                    <h6>
+                      <strong>Success!</strong>{' '}
+                      <p className="swalText">{url}</p> has been added to your
+                      clipboard.
+                    </h6>
+                  </div>
+                ),
+                button: {
+                  text: 'Close',
+                  closeModal: true
+                }
+              });
+            },
+            () => {
+              swal({
+                content: (
+                  <div>
+                    <h6>
+                      <strong>Fail!</strong> <p className="swalText">{url}</p>{' '}
+                      has been added to your clipboard.
+                    </h6>
+                  </div>
+                ),
+                button: {
+                  text: 'Close',
+                  closeModal: true
+                }
+              });
+            }
           );
+          // setNewMessage(prevMessage =>
+          //   prevMessage.length > 0
+          //     ? prevMessage.concat(` ${result.info.secure_url}`)
+          //     : `${result.info.secure_url}`
+          // );
         }
       }
     );

@@ -88,8 +88,8 @@ const MessageForm = ({
                   <div>
                     <h6>
                       <strong>Success!</strong>{' '}
-                      <p className="swalText">{url}</p> has been added to your
-                      clipboard.
+                      <p className="swalText mt-2">{url}</p>
+                      <p>has been added to your clipboard.</p>
                     </h6>
                   </div>
                 ),
@@ -104,8 +104,12 @@ const MessageForm = ({
                 content: (
                   <div>
                     <h6>
-                      <strong>Fail!</strong> <p className="swalText">{url}</p>{' '}
-                      has been added to your clipboard.
+                      <strong>Fail!</strong>{' '}
+                      <p className="swalText mt-2">{url}</p>
+                      <p>
+                        has not been copied to your clipboard. Copy it from this
+                        modal.
+                      </p>
                     </h6>
                   </div>
                 ),

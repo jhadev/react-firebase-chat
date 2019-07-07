@@ -15,6 +15,7 @@ import {
 import moment from 'moment';
 import 'emoji-mart/css/emoji-mart.css';
 import EmojiContainer from './EmojiContainer';
+import swal from '@sweetalert/with-react';
 import './styles/components/message-form.scss';
 
 const MessageForm = ({
@@ -77,11 +78,38 @@ const MessageForm = ({
       (error, result) => {
         if (!error && result && result.event === 'success') {
           console.log(result);
-          setNewMessage(prevMessage =>
-            prevMessage.length > 0
-              ? prevMessage.concat(` ${result.info.secure_url}`)
-              : `${result.info.secure_url}`
+          const url = result.info.secure_url;
+
+          navigator.clipboard.writeText(url).then(
+            () => {
+              /* clipboard successfully set */
+              swal({
+                button: {
+                  text: 'Close',
+                  closeModal: true
+                },
+                icon: 'success',
+                title: 'Success!',
+                text: `${url} has been copied to the clipboard.`
+              });
+            },
+            () => {
+              swal({
+                button: {
+                  text: 'Close',
+                  closeModal: true
+                },
+                icon: 'error',
+                title: 'Oops...',
+                text: `${url} has not been copied to the clipboard. Copy it from this modal.`
+              });
+            }
           );
+          // setNewMessage(prevMessage =>
+          //   prevMessage.length > 0
+          //     ? prevMessage.concat(` ${result.info.secure_url}`)
+          //     : `${result.info.secure_url}`
+          // );
         }
       }
     );

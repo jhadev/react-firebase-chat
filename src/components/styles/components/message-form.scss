@@ -19,6 +19,12 @@
   color: $text-color;
 }
 
+.swalText {
+  word-break: normal;
+  word-wrap: break-word;
+  font-size: 0.8rem;
+}
+
 .input-group-prepend {
   .input-group-text {
     padding: 0.8rem 0.8rem !important;

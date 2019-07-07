@@ -13,7 +13,7 @@ import alert from '../sounds/sent.mp3';
 
 const Home = ({ firebase }) => {
   const authUser = useContext(AuthUserContext);
-  
+
   const [showChat, handleChange] = useState(true);
   const [chat, setChat] = useState([]);
   const [room, setRoom] = useState('chat');

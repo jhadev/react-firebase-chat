@@ -84,39 +84,24 @@ const MessageForm = ({
             () => {
               /* clipboard successfully set */
               swal({
-                content: (
-                  <div>
-                    <h6>
-                      <strong>Success!</strong>{' '}
-                      <p className="swalText mt-2">{url}</p>
-                      <p>has been added to your clipboard.</p>
-                    </h6>
-                  </div>
-                ),
                 button: {
                   text: 'Close',
                   closeModal: true
-                }
+                },
+                icon: 'success',
+                title: 'Success!',
+                text: `${url} has been copied to the clipboard.`
               });
             },
             () => {
               swal({
-                content: (
-                  <div>
-                    <h6>
-                      <strong>Fail!</strong>{' '}
-                      <p className="swalText mt-2">{url}</p>
-                      <p>
-                        has not been copied to your clipboard. Copy it from this
-                        modal.
-                      </p>
-                    </h6>
-                  </div>
-                ),
                 button: {
                   text: 'Close',
                   closeModal: true
-                }
+                },
+                icon: 'error',
+                title: 'Oops...',
+                text: `${url} has not been copied to the clipboard. Copy it from this modal.`
               });
             }
           );

@@ -39,6 +39,8 @@ class SignInFormBase extends Component {
     const { email, password } = this.state;
     localStorage.setItem('email', email);
 
+    speechSynthesis.speak(new SpeechSynthesisUtterance(`Welcome, ${email}`));
+
     this.props.firebase
       .doSignInUser(email, password)
       .then(() => {

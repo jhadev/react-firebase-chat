@@ -12,6 +12,7 @@ import {
   InputGroupText,
   InputGroupAddon
 } from 'reactstrap';
+import uuid from 'uuidv4'
 import moment from 'moment';
 import 'emoji-mart/css/emoji-mart.css';
 import EmojiContainer from './EmojiContainer';
@@ -48,6 +49,7 @@ const MessageForm = ({
     e.preventDefault();
     if (newMessage !== '' && newMessage.length > 1 && charCounter <= maxCount) {
       let messageObj = {
+        id: uuid(),
         user: username,
         timestamp: moment().format('LLLL'),
         message: newMessage,

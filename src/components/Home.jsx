@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext } from 'react';
-import uuid from 'uuidv4';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
 import Row from './common/Row';
@@ -68,10 +67,12 @@ const Home = ({ firebase }) => {
     setRoom(value);
   };
 
-  const handleLayout = ({ user, timestamp, message }) => {
+  const handleLayout = ({ user, timestamp, message, id }, idx) => {
     if (authUser.email === user) {
       return (
-        <div key={uuid()} className="d-flex flex-column align-items-end my-2">
+        <div
+          key={id || idx}
+          className="animated zoomIn d-flex flex-column align-items-end my-2">
           <Message
             color="user"
             message={message}
@@ -82,7 +83,9 @@ const Home = ({ firebase }) => {
       );
     } else {
       return (
-        <div key={uuid()} className="d-flex flex-column align-items-start my-2">
+        <div
+          key={id || idx}
+          className="animated zoomIn d-flex flex-column align-items-start my-2">
           <Message
             color="receiver"
             message={message}
@@ -100,8 +103,7 @@ const Home = ({ firebase }) => {
         <h1 className=" welcome my-4">Welcome, {authUser.email}</h1>
         <button
           className={`btn btn-${showChat} btn-lg`}
-          onClick={() => handleChange(!showChat)}
-        >
+          onClick={() => handleChange(!showChat)}>
           {!showChat ? 'Show Chat' : 'Hide Chat'}
         </button>
       </div>
@@ -126,7 +128,7 @@ const Home = ({ firebase }) => {
                     <div id="spacer" />
                     <>
                       {chat.length > 0 ? (
-                        chat.map(message => handleLayout(message))
+                        chat.map((message, idx) => handleLayout(message, idx))
                       ) : (
                         <h3 className="text-center text-dark">
                           No messages in this room yet. Get the party started.

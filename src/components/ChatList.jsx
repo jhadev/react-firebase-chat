@@ -19,8 +19,7 @@ const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
       size="sm"
       group
       isOpen={dropdownOpen}
-      toggle={() => setDropdown(!dropdownOpen)}
-    >
+      toggle={() => setDropdown(!dropdownOpen)}>
       <DropdownToggle color="link">
         <i className="fas fa-comments text-dark">
           <span className="tooltip-text mb-1">Switch Chat</span>
@@ -34,8 +33,7 @@ const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
             key={room}
             value={room}
             name={room}
-            onClick={setChatRoom}
-          >
+            onClick={setChatRoom}>
             {room}
           </DropdownItem>
         ))}
@@ -51,9 +49,8 @@ const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
           key={room}
           value={room}
           name={room}
-          onClick={dms ? e => setChatRoom(e.target.value) : setChatRoom}
-          className="text-center"
-        >
+          onClick={dms ? e => setChatRoom(e) : setChatRoom}
+          className="text-center">
           {room}
         </ListGroupItem>
       ))}

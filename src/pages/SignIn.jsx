@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
+import * as ROUTES from '../constants/routes';
 import { SignUpLink } from './SignUp';
 import { PasswordForgetLink } from './PasswordForget';
-import { withFirebase } from './Firebase/index';
-import * as ROUTES from '../constants/routes';
-import Row from './common/Row';
-import Column from './common/Column';
+import { withFirebase } from '../components/Firebase/index';
+import Row from '../components/common/Row';
+import Column from '../components/common/Column';
 
 const SignIn = () => (
   <div>
@@ -39,11 +39,10 @@ class SignInFormBase extends Component {
     const { email, password } = this.state;
     localStorage.setItem('email', email);
 
-    speechSynthesis.speak(new SpeechSynthesisUtterance(`Welcome, ${email}`));
-
     this.props.firebase
       .doSignInUser(email, password)
       .then(() => {
+        speechSynthesis.speak(new SpeechSynthesisUtterance(`Welcome, ${email}`));
         this.setState({ email: '', password: '', error: null });
         this.props.history.push(ROUTES.HOME);
       })

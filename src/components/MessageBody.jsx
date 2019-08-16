@@ -38,28 +38,28 @@ const MessageBody = ({ body, color }) => {
 
   // turn matches into JSX
   const doMatches = () => {
-    const linksAsJSX = [];
-
-    matches.forEach(({ url, img, audio, video }) => {
-      if (url) {
-        linksAsJSX.push(<Link url={url}>{url}</Link>);
+    const linksAsJSX = matches.map(match => {
+      if (match.url) {
+        return <Link url={match.url}>{match.url}</Link>;
       }
 
-      if (img) {
-        linksAsJSX.push(
-          <Link url={img}>
-            <Image url={img} />
+      if (match.img) {
+        return (
+          <Link url={match.img}>
+            <Image url={match.img} />
           </Link>
         );
       }
 
-      if (audio) {
-        linksAsJSX.push(<Audio url={audio} />);
+      if (match.audio) {
+        return <Audio url={match.audio} />;
       }
 
-      if (video) {
-        linksAsJSX.push(<Video url={video} />);
+      if (match.video) {
+        return <Video url={match.video} />;
       }
+
+      return match;
     });
 
     return linksAsJSX;
@@ -68,10 +68,9 @@ const MessageBody = ({ body, color }) => {
   // create an array of only links
   const onlyLinks = () => {
     // returns array of arrays of links regardless of what kind to filter.
-    let mappedLinks = matches.map(match => [...Object.values(match)]);
+    const mappedLinks = matches.map(match => [...Object.values(match)]);
     // flatten array into one so it can be filtered against the other words in the message
-    mappedLinks = mappedLinks.reduce((a, b) => [...a, ...b], []);
-    return mappedLinks;
+    return mappedLinks.reduce((a, b) => [...a, ...b], []);
   };
 
   const messageWithoutLink = () => {
@@ -90,7 +89,7 @@ const MessageBody = ({ body, color }) => {
   // media will stack on top of the words in the message.
   return (
     <div className={`badge badge-${color} msgText mb-2`}>
-      {matchesDone.length > 0
+      {matchesDone.length
         ? matchesDone.map(match => <div key={uuid()}>{match}</div>)
         : null}
       {noLinks.length !== 0 && noLinks.join(' ')}

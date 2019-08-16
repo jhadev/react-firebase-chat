@@ -1,25 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useReducer, useContext, useEffect } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
-import ChatList from './ChatList';
+import { INITIAL_STATE, reducer } from '../reducers/dmReducer';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
 import Container from '../components/common/Container';
-import Message from './Message';
-import MessageForm from './MessageForm';
+import ChatList from '../components/ChatList';
+import Message from '../components/Message';
+import MessageForm from '../components/MessageForm';
 import alert from '../sounds/sent.mp3';
 
 const DirectMessages = ({ firebase }) => {
   const authUser = useContext(AuthUserContext);
-  // all users in state
-  const [users, setUsers] = useState([]);
-  const [chat, setChat] = useState([]);
-  // user to DM
-  const [userToDm, setUserToDm] = useState('');
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+
+  const { users, chat, userToDm } = state;
+
   const chatroom = firebase.dms();
   // get all users other than authUser
-
   const alertSound = new Audio(alert);
 
   useEffect(() => {
@@ -34,7 +33,7 @@ const DirectMessages = ({ firebase }) => {
       const allUsers = usersArr
         .map(user => user.email)
         .filter(user => user !== authUser.email);
-      setUsers(allUsers);
+      dispatch({ type: 'SET_USERS', users: allUsers });
     });
   }, []);
 
@@ -49,7 +48,7 @@ const DirectMessages = ({ firebase }) => {
               message.receiver === userToDm) ||
             (message.user === userToDm && message.receiver === authUser.email)
         );
-        setChat(filterByPersonToDm);
+        dispatch({ type: 'SET_CHAT', chat: filterByPersonToDm });
         alertSound.play();
       }
     };
@@ -103,7 +102,7 @@ const DirectMessages = ({ firebase }) => {
 
   const setChatRoom = event => {
     const { value } = event.target;
-    setUserToDm(value);
+    dispatch({ type: 'SET_USER_TO_DM', userToDm: value });
   };
 
   return (
@@ -120,12 +119,11 @@ const DirectMessages = ({ firebase }) => {
                 </h6>
                 <ChatList
                   rooms={users}
-                  setChatRoom={setUserToDm}
+                  setChatRoom={setChatRoom}
                   currentRoom={userToDm}
                   dms
                 />
               </div>
-              {/* <button onClick={sendDm}>Test send</button> */}
             </Column>
             <Column size="12 md-9">
               <div className="wrapper">

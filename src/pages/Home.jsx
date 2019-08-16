@@ -1,22 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useReducer } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
-import Row from './common/Row';
-import Column from './common/Column';
-import Message from './Message';
-import MessageForm from './MessageForm';
-import ChatList from './ChatList';
-import Container from './common/Container';
+import { INITIAL_STATE, reducer } from '../reducers/chatReducer';
+import Row from '../components/common/Row';
+import Column from '../components/common/Column';
+import Message from '../components/Message';
+import MessageForm from '../components/MessageForm';
+import ChatList from '../components/ChatList';
+import Container from '../components/common/Container';
 import alert from '../sounds/sent.mp3';
 
 const Home = ({ firebase }) => {
   const authUser = useContext(AuthUserContext);
-
-  const [showChat, handleChange] = useState(true);
-  const [chat, setChat] = useState([]);
-  const [room, setRoom] = useState('chat');
-  const [roomList, setRoomList] = useState([]);
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+  // don't want to keep writing state :)
+  const { showChat, chat, room, roomList } = state;
 
   const alertSound = new Audio(alert);
 
@@ -28,7 +27,7 @@ const Home = ({ firebase }) => {
   useEffect(() => {
     allRooms
       .then(res => {
-        setRoomList(res);
+        dispatch({ type: 'SET_ROOM_LIST', roomList: res });
       })
       .catch(err => console.log(err));
   }, []);
@@ -39,7 +38,7 @@ const Home = ({ firebase }) => {
         const messages = Object.values(snapshot.val());
         // remove first msg bc it is a placeholder to create a new room
         messages.shift();
-        setChat(messages);
+        dispatch({ type: 'SET_MESSAGES', chat: messages });
         alertSound.play();
       }
     };
@@ -64,7 +63,7 @@ const Home = ({ firebase }) => {
 
   const setChatRoom = event => {
     const { value } = event.target;
-    setRoom(value);
+    dispatch({ type: 'SET_ROOM', room: value });
   };
 
   const handleLayout = ({ user, timestamp, message, id }, idx) => {
@@ -103,7 +102,7 @@ const Home = ({ firebase }) => {
         <h1 className=" welcome my-4">Welcome, {authUser.email}</h1>
         <button
           className={`btn btn-${showChat} btn-lg`}
-          onClick={() => handleChange(!showChat)}>
+          onClick={() => dispatch({ type: 'TOGGLE_CHAT' })}>
           {!showChat ? 'Show Chat' : 'Hide Chat'}
         </button>
       </div>
@@ -144,9 +143,9 @@ const Home = ({ firebase }) => {
             <Container>
               <MessageForm
                 username={authUser.email}
-                rooms={roomList}
+                rooms={state.roomList}
                 setChatRoom={setChatRoom}
-                currentRoom={room}
+                currentRoom={state.room}
                 firebase={firebase}
                 scrollToTop={scrollToTop}
                 scrollToBottom={scrollToBottom}

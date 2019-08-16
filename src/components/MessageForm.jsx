@@ -12,7 +12,7 @@ import {
   InputGroupText,
   InputGroupAddon
 } from 'reactstrap';
-import uuid from 'uuidv4'
+import uuid from 'uuidv4';
 import moment from 'moment';
 import 'emoji-mart/css/emoji-mart.css';
 import EmojiContainer from './EmojiContainer';
@@ -126,8 +126,7 @@ const MessageForm = ({
               for="chatInput"
               className="text-center counter"
               md={2}
-              sm={2}
-            >
+              sm={2}>
               {charCounter < maxCount
                 ? (charCounter - maxCount).toString().slice(1)
                 : 0}{' '}
@@ -137,8 +136,7 @@ const MessageForm = ({
               <InputGroup className="my-2" size="md">
                 <InputGroupAddon
                   onClick={() => setScrollDirection(!scrollTop)}
-                  addonType="prepend"
-                >
+                  addonType="prepend">
                   <InputGroupText id="scrollToTop">
                     {!scrollTop ? (
                       <i className="fas fa-arrow-circle-up text-dark">
@@ -161,8 +159,7 @@ const MessageForm = ({
                 <InputGroupAddon
                   id="Popover1"
                   onClick={() => handlePickerOpen(!emojiPicker)}
-                  addonType="prepend"
-                >
+                  addonType="prepend">
                   <EmojiContainer setNewMessage={setNewMessage} />
                   <InputGroupText>
                     <i className="far fa-grin-tongue-squint text-dark">
@@ -200,8 +197,7 @@ const MessageForm = ({
                         charCounter > maxCount || newMessage.length === 0
                       }
                       className="btn font-weight-bold text-dark btn-link"
-                      type="submit"
-                    >
+                      type="submit">
                       Send
                     </button>
                   </InputGroupText>

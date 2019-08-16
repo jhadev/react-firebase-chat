@@ -2,13 +2,13 @@
 import React, { useReducer, useContext, useEffect } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
-import { INITIAL_STATE, reducer } from '../constants/reducers/dmReducer';
-import ChatList from './ChatList';
+import { INITIAL_STATE, reducer } from '../reducers/dmReducer';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
 import Container from '../components/common/Container';
-import Message from './Message';
-import MessageForm from './MessageForm';
+import ChatList from '../components/ChatList';
+import Message from '../components/Message';
+import MessageForm from '../components/MessageForm';
 import alert from '../sounds/sent.mp3';
 
 const DirectMessages = ({ firebase }) => {

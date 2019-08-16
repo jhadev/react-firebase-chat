@@ -2,13 +2,13 @@
 import React, { useEffect, useContext, useReducer } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
-import { INITIAL_STATE, reducer } from '../constants/reducers/chatReducer';
-import Row from './common/Row';
-import Column from './common/Column';
-import Message from './Message';
-import MessageForm from './MessageForm';
-import ChatList from './ChatList';
-import Container from './common/Container';
+import { INITIAL_STATE, reducer } from '../reducers/chatReducer';
+import Row from '../components/common/Row';
+import Column from '../components/common/Column';
+import Message from '../components/Message';
+import MessageForm from '../components/MessageForm';
+import ChatList from '../components/ChatList';
+import Container from '../components/common/Container';
 import alert from '../sounds/sent.mp3';
 
 const Home = ({ firebase }) => {

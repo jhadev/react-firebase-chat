@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
+import * as ROUTES from '../constants/routes';
 import { SignUpLink } from './SignUp';
 import { PasswordForgetLink } from './PasswordForget';
-import { withFirebase } from './Firebase/index';
-import * as ROUTES from '../constants/routes';
-import Row from './common/Row';
-import Column from './common/Column';
+import { withFirebase } from '../components/Firebase/index';
+import Row from '../components/common/Row';
+import Column from '../components/common/Column';
 
 const SignIn = () => (
   <div>

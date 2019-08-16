@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import Row from './common/Row';
-import Column from './common/Column';
-import AuthUserContext from './Session/context';
 import { Redirect } from 'react-router-dom';
 import * as ROUTES from '../constants/routes';
+import AuthUserContext from '../components/Session/context';
 import SignIn from './SignIn';
+import Row from '../components/common/Row';
+import Column from '../components/common/Column';
 
 const Landing = () => {
   const authUser = useContext(AuthUserContext);

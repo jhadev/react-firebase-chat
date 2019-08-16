@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import { withFirebase } from './Firebase/index';
+import { withFirebase } from '../components/Firebase/index';
 import * as ROUTES from '../constants/routes';
-import Row from './common/Row';
-import Column from './common/Column';
+import Row from '../components/common/Row';
+import Column from '../components/common/Column';
 
 const SignUp = () => {
   return (

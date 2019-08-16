@@ -38,28 +38,28 @@ const MessageBody = ({ body, color }) => {
 
   // turn matches into JSX
   const doMatches = () => {
-    const linksAsJSX = matches.map(({ url, img, audio, video }) => {
-      if (url) {
-        return <Link url={url}>{url}</Link>;
+    const linksAsJSX = matches.map(match => {
+      if (match.url) {
+        return <Link url={match.url}>{match.url}</Link>;
       }
 
-      if (img) {
+      if (match.img) {
         return (
-          <Link url={img}>
-            <Image url={img} />
+          <Link url={match.img}>
+            <Image url={match.img} />
           </Link>
         );
       }
 
-      if (audio) {
-        return <Audio url={audio} />;
+      if (match.audio) {
+        return <Audio url={match.audio} />;
       }
 
-      if (video) {
-        return <Video url={video} />;
+      if (match.video) {
+        return <Video url={match.video} />;
       }
 
-      return matches;
+      return match;
     });
 
     return linksAsJSX;

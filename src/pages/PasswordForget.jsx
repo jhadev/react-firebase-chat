@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../constants/routes';
 import { withFirebase } from '../components/Firebase/index';
@@ -13,66 +13,68 @@ const PasswordForget = () => (
   </div>
 );
 
-class PasswordForgetFormBase extends Component {
-  state = {
+const PasswordForgetFormBase = ({ firebase }) => {
+  const [formState, setFormState] = useState({
     email: '',
-    error: null
-  };
+    error: null,
+    success: false
+  });
 
-  onSubmit = event => {
+  const onSubmit = event => {
     event.preventDefault();
-    const { email } = this.state;
 
-    this.props.firebase
+    const { email } = formState;
+
+    firebase
       .doPasswordReset(email)
       .then(() => {
-        this.setState({ email: '', error: null });
+        setFormState({ email: '', error: null, success: true });
       })
       .catch(error => {
-        this.setState({ error });
+        setFormState({ ...formState, error });
       });
   };
 
-  onChange = event => {
+  const onChange = event => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    setFormState({ ...formState, success: false, [name]: value });
   };
 
-  render() {
-    const { email, error } = this.state;
+  const { email, error, success } = formState;
 
-    const isInvalid = email === '';
+  const isInvalid = email === '';
 
-    return (
-      <Row helper="justify-content-center">
-        <Column size="md-6 12">
-          <h4 className="text-center mb-4">Forgot your password?</h4>
-          <form onSubmit={this.onSubmit}>
-            <div className="form-group">
-              <input
-                name="email"
-                value={this.state.email}
-                onChange={this.onChange}
-                type="text"
-                placeholder="Email Address"
-                className="form-control"
-              />
-            </div>
-            <button
-              disabled={isInvalid}
-              className="btn btn-false mb-2"
-              type="submit"
-            >
-              Reset Password
-            </button>
+  return (
+    <Row helper="justify-content-center">
+      <Column size="md-6 12">
+        <h4 className="text-center mb-4">Forgot your password?</h4>
+        <form onSubmit={onSubmit}>
+          <div className="form-group">
+            <input
+              name="email"
+              value={email}
+              onChange={onChange}
+              type="text"
+              placeholder="Email Address"
+              className="form-control"
+            />
+          </div>
+          <button
+            disabled={isInvalid}
+            className="btn btn-false mb-2"
+            type="submit">
+            Reset Password
+          </button>
 
-            {error && <p>{error.message}</p>}
-          </form>
-        </Column>
-      </Row>
-    );
-  }
-}
+          {error && <p>{error.message}</p>}
+          {success && (
+            <p>Check your email for a link to change your password.</p>
+          )}
+        </form>
+      </Column>
+    </Row>
+  );
+};
 
 const PasswordForgetLink = () => (
   <p>

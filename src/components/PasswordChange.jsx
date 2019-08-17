@@ -1,78 +1,80 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { withFirebase } from './Firebase/index';
 import Row from './common/Row';
 import Column from './common/Column';
 
-class PasswordChangeForm extends Component {
-  state = {
+const PasswordChangeForm = ({ firebase }) => {
+  const [formState, setFormState] = useState({
     passwordOne: '',
     passwordTwo: '',
-    error: null
-  };
+    error: null,
+    success: false
+  });
 
-  onSubmit = event => {
+  const onSubmit = event => {
     event.preventDefault();
-    const { passwordOne } = this.state;
+    const { passwordOne } = formState;
 
-    this.props.firebase
+    firebase
       .doPasswordUpdate(passwordOne)
       .then(() => {
-        this.setState({ passwordOne: '', passwordTwo: '', error: null });
+        // alert user here
+        setFormState({
+          passwordOne: '',
+          passwordTwo: '',
+          error: null,
+          success: true
+        });
       })
       .catch(error => {
-        this.setState({ error });
+        setFormState({ ...formState, error });
       });
   };
 
-  onChange = event => {
+  const onChange = event => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    setFormState({ ...formState, success: false, [name]: value });
   };
 
-  render() {
-    const { passwordOne, passwordTwo, error } = this.state;
+  const { passwordOne, passwordTwo, error, success } = formState;
 
-    const isInvalid = passwordOne !== passwordTwo || passwordOne === '';
+  const isInvalid = passwordOne !== passwordTwo || passwordOne === '';
 
-    return (
-      <Row helper="justify-content-center">
-        <Column size="md-6 12">
-          <h4 className="text-center my-4">Change your password.</h4>
-          <form onSubmit={this.onSubmit}>
-            <div className="form-group">
-              <input
-                name="passwordOne"
-                value={passwordOne}
-                onChange={this.onChange}
-                type="password"
-                placeholder="New Password"
-                className="form-control"
-              />
-            </div>
-            <div className="form-group">
-              <input
-                name="passwordTwo"
-                value={passwordTwo}
-                onChange={this.onChange}
-                type="password"
-                placeholder="Confirm Password"
-                className="form-control"
-              />
-            </div>
-            <button
-              disabled={isInvalid}
-              className="btn btn-false"
-              type="submit"
-            >
-              Change Password
-            </button>
+  return (
+    <Row helper="justify-content-center">
+      <Column size="md-6 12">
+        <h4 className="text-center my-4">Change your password.</h4>
+        <form onSubmit={onSubmit}>
+          <div className="form-group">
+            <input
+              name="passwordOne"
+              value={passwordOne}
+              onChange={onChange}
+              type="password"
+              placeholder="New Password"
+              className="form-control"
+            />
+          </div>
+          <div className="form-group">
+            <input
+              name="passwordTwo"
+              value={passwordTwo}
+              onChange={onChange}
+              type="password"
+              placeholder="Confirm Password"
+              className="form-control"
+            />
+          </div>
+          <button disabled={isInvalid} className="btn btn-false" type="submit">
+            Change Password
+          </button>
 
-            {error && <p>{error.message}</p>}
-          </form>
-        </Column>
-      </Row>
-    );
-  }
-}
+          {error && <p>{error.message}</p>}
+          {success && <p>Password successfully changed.</p>}
+        </form>
+      </Column>
+    </Row>
+  );
+};
 
 export default withFirebase(PasswordChangeForm);

@@ -31,8 +31,6 @@ class Firebase {
 
   doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
 
-  //firebase api for users
-
   //allows sending to each room
   send = (room, message) => this.db.ref(room).push(message);
 

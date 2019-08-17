@@ -66,36 +66,6 @@ const Home = ({ firebase }) => {
     dispatch({ type: 'SET_ROOM', room: value });
   };
 
-  const handleLayout = ({ user, timestamp, message, id }, idx) => {
-    if (authUser.email === user) {
-      return (
-        <div
-          key={id || idx}
-          className="animated zoomIn d-flex flex-column align-items-end my-2">
-          <Message
-            color="user"
-            message={message}
-            user={user}
-            timestamp={timestamp}
-          />
-        </div>
-      );
-    } else {
-      return (
-        <div
-          key={id || idx}
-          className="animated zoomIn d-flex flex-column align-items-start my-2">
-          <Message
-            color="receiver"
-            message={message}
-            user={user}
-            timestamp={timestamp}
-          />
-        </div>
-      );
-    }
-  };
-
   return (
     <>
       <div className="text-center">
@@ -127,7 +97,22 @@ const Home = ({ firebase }) => {
                     <div id="spacer" />
                     <>
                       {chat.length > 0 ? (
-                        chat.map((message, idx) => handleLayout(message, idx))
+                        chat.map(({ user, timestamp, message, id }, idx) => (
+                          <div
+                            key={id || idx}
+                            className={`animated zoomIn d-flex flex-column my-2 align-items-${
+                              authUser.email === user ? 'end' : 'start'
+                            }`}>
+                            <Message
+                              color={
+                                authUser.email === user ? 'user' : 'receiver'
+                              }
+                              message={message}
+                              user={user}
+                              timestamp={timestamp}
+                            />
+                          </div>
+                        ))
                       ) : (
                         <h3 className="text-center text-dark">
                           No messages in this room yet. Get the party started.

@@ -1,17 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Navigation from './components/Navigation';
-import Landing from './pages/Landing';
-import SignUp from './pages/SignUp';
-import SignIn from './pages/SignIn';
-import PasswordForget from './pages/PasswordForget';
-import Home from './pages/Home';
-import DirectMessages from './pages/DirectMessages';
-import Account from './pages/Account';
-import Admin from './pages/Admin';
-import Container from './components/common/Container';
 import { withAuthentication } from './components/Session/index';
 import * as ROUTES from './constants/routes';
+import Navigation from './components/Navigation';
+import Container from './components/common/Container';
+import Admin from './pages/Admin';
+import DirectMessages from './pages/DirectMessages';
+import Account from './pages/Account';
+import Home from './pages/Home';
+import Landing from './pages/Landing';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import PasswordForget from './pages/PasswordForget';
 import './App.scss';
 
 const App = () => (

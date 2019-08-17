@@ -16,12 +16,12 @@ const DirectMessages = ({ firebase }) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
   const { users, chat, userToDm } = state;
-
+  // ref for dms collection in fb
   const chatroom = firebase.dms();
-  // get all users other than authUser
   const alertSound = new Audio(alert);
-
+  
   useEffect(() => {
+    // get all users other than authUser
     firebase.users().on('value', snapshot => {
       const usersObj = snapshot.val();
 

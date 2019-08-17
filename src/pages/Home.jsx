@@ -19,9 +19,9 @@ const Home = ({ firebase }) => {
 
   const alertSound = new Audio(alert);
 
-  //refers to current room string in state
-  //returns all array of all rooms
+  // returns all array of all rooms
   const allRooms = firebase.allRooms();
+  // tells firebase to reference current room -- in state default is 'chat'
   const chatroom = firebase.chat(room);
 
   useEffect(() => {
@@ -143,9 +143,9 @@ const Home = ({ firebase }) => {
             <Container>
               <MessageForm
                 username={authUser.email}
-                rooms={state.roomList}
+                rooms={roomList}
                 setChatRoom={setChatRoom}
-                currentRoom={state.room}
+                currentRoom={room}
                 firebase={firebase}
                 scrollToTop={scrollToTop}
                 scrollToBottom={scrollToBottom}

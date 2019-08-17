@@ -151,7 +151,7 @@ const MessageForm = ({
                 </InputGroupAddon>
                 <InputGroupAddon onClick={widget} addonType="prepend">
                   <InputGroupText>
-                    <i class="fas fa-paperclip">
+                    <i className="fas fa-paperclip">
                       <span className="tooltip-text">Upload Images</span>
                     </i>
                   </InputGroupText>

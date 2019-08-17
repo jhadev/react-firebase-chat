@@ -66,6 +66,23 @@ const Home = ({ firebase }) => {
     dispatch({ type: 'SET_ROOM', room: value });
   };
 
+  const handleLayout = ({ user, timestamp, message, id }, idx) => {
+    return (
+      <div
+        key={id || idx}
+        className={`animated zoomIn d-flex flex-column my-2 align-items-${
+          authUser.email === user ? 'end' : 'start'
+        }`}>
+        <Message
+          color={authUser.email === user ? 'user' : 'receiver'}
+          message={message}
+          user={user}
+          timestamp={timestamp}
+        />
+      </div>
+    );
+  };
+
   return (
     <>
       <div className="text-center">
@@ -97,22 +114,7 @@ const Home = ({ firebase }) => {
                     <div id="spacer" />
                     <>
                       {chat.length > 0 ? (
-                        chat.map(({ user, timestamp, message, id }, idx) => (
-                          <div
-                            key={id || idx}
-                            className={`animated zoomIn d-flex flex-column my-2 align-items-${
-                              authUser.email === user ? 'end' : 'start'
-                            }`}>
-                            <Message
-                              color={
-                                authUser.email === user ? 'user' : 'receiver'
-                              }
-                              message={message}
-                              user={user}
-                              timestamp={timestamp}
-                            />
-                          </div>
-                        ))
+                        chat.map((message, idx) => handleLayout(message, idx))
                       ) : (
                         <h3 className="text-center text-dark">
                           No messages in this room yet. Get the party started.

@@ -75,6 +75,23 @@ const DirectMessages = ({ firebase }) => {
     dispatch({ type: 'SET_USER_TO_DM', userToDm: value });
   };
 
+  const handleLayout = ({ user, timestamp, message, id }, idx) => {
+    return (
+      <div
+        key={id || idx}
+        className={`animated zoomIn d-flex flex-column my-2 align-items-${
+          authUser.email === user ? 'end' : 'start'
+        }`}>
+        <Message
+          color={authUser.email === user ? 'user' : 'receiver'}
+          message={message}
+          user={user}
+          timestamp={timestamp}
+        />
+      </div>
+    );
+  };
+
   return (
     <>
       <div className="white-space">
@@ -99,21 +116,8 @@ const DirectMessages = ({ firebase }) => {
               <div className="wrapper">
                 <div id="spacer" />
                 <div className="mt-5">
-                  {chat.length !== 0 ? (
-                    chat.map(({ user, timestamp, message, id }, idx) => (
-                      <div
-                        key={id || idx}
-                        className={`animated zoomIn d-flex flex-column my-2 align-items-${
-                          authUser.email === user ? 'end' : 'start'
-                        }`}>
-                        <Message
-                          color={authUser.email === user ? 'user' : 'receiver'}
-                          message={message}
-                          user={user}
-                          timestamp={timestamp}
-                        />
-                      </div>
-                    ))
+                  {chat.length > 0 ? (
+                    chat.map((message, idx) => handleLayout(message, idx))
                   ) : (
                     <h3 className="text-center">
                       {userToDm !== ''

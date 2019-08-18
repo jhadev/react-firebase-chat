@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { useReducer } from 'react';
+
+const reducer = (currentState, newState) => {
+  return { ...currentState, ...newState };
+};
 
 const useForm = initialState => {
-  const [formState, setFormState] = useState(initialState);
+  const [formState, setFormState] = useReducer(reducer, initialState);
 
   const onChange = event => {
     const { name, value } = event.target;
-    setFormState({ ...formState, success: false, [name]: value });
+    setFormState({ success: false, [name]: value });
   };
 
   return { formState, setFormState, onChange };

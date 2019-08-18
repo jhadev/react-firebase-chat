@@ -28,7 +28,7 @@ const PasswordChangeForm = ({ firebase }) => {
         });
       })
       .catch(error => {
-        setFormState({ ...formState, error });
+        setFormState({ error });
       });
   };
 

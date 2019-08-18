@@ -32,7 +32,7 @@ const PasswordForgetFormBase = ({ firebase }) => {
         setFormState({ email: '', error: null, success: true });
       })
       .catch(error => {
-        setFormState({ ...formState, error });
+        setFormState({ error });
       });
   };
 

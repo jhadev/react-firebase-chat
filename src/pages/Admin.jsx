@@ -1,63 +1,54 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { withAuthorization } from '../components/Session/index';
-import Row from '../components/common/Row';
-import Column from '../components/common/Column';
-import ChatList from '../components/ChatList';
-import { Table } from 'reactstrap';
 import { InputGroup, InputGroupAddon, Input, Button } from 'reactstrap';
+import { useForm } from '../hooks/formHook';
+import AllUsers from '../components/AllUsers';
+import ChatList from '../components/ChatList';
+import Column from '../components/common/Column';
+import Row from '../components/common/Row';
 import * as ROLES from '../constants/roles';
 import swal from '@sweetalert/with-react';
 
-//only shown if authed
-//admin page adds ability to see all users
+// only shown if authed
+// admin page adds ability to see all users
 
-class Admin extends Component {
-  state = {
-    //set loading flag
+const Admin = ({ firebase }) => {
+  // this isn't only a form but why not use it anyway.
+  const { formState, setFormState, onChange } = useForm({
+    // set loading flag
     loading: false,
-    //users set to empty array
+    // users set to empty array
     users: [],
     rooms: [],
     roomToAdd: '',
-    roomToRemove: ''
-  };
+    roomToRemove: '',
+    success: false
+  });
 
-  // need to add a way to update admin for new rooms without refresh
-  //call firebase on mount
-  componentDidMount() {
-    //set loading to true
-    this.setState({ loading: true });
-    //call firebase
-    this.props.firebase.allRooms().then(res => {
-      this.setState({ rooms: res });
+  useEffect(() => {
+    setFormState({ loading: true });
+    // call firebase
+    firebase.allRooms().then(res => {
+      setFormState({ rooms: res });
     });
 
-    this.props.firebase.users().on('value', snapshot => {
+    firebase.users().on('value', snapshot => {
       const usersObj = snapshot.val();
 
       const usersArr = Object.keys(usersObj).map(key => ({
         ...usersObj[key],
         uid: key
       }));
-      this.setState({
+      setFormState({
         users: usersArr,
         loading: false
       });
     });
-  }
+    return () => firebase.users().off();
+  }, [firebase, setFormState]);
 
-  //remove listener on unmount
-  componentWillUnmount() {
-    this.props.firebase.users().off();
-  }
-
-  handleInputChange = event => {
-    const { value, name } = event.target;
-    this.setState({ [name]: value });
-  };
-
-  submitRoom = () => {
-    const { roomToAdd, rooms } = this.state;
+  const submitRoom = () => {
+    const { roomToAdd, rooms } = formState;
     if (rooms.includes(roomToAdd) || roomToAdd === '') {
       swal({
         content: <h4>Room already exists or room name is not defined</h4>,
@@ -67,33 +58,31 @@ class Admin extends Component {
         }
       });
     } else {
-      this.props.firebase
-        .send(roomToAdd.split(' ').join(''), roomToAdd)
-        .then(() => {
-          swal({
-            content: <h4>Success! {roomToAdd} has been added</h4>,
-            button: {
-              text: 'Close',
-              closeModal: true
-            }
-          });
+      firebase.send(roomToAdd.split(' ').join(''), roomToAdd).then(() => {
+        swal({
+          content: <h4>Success! {roomToAdd} has been added</h4>,
+          button: {
+            text: 'Close',
+            closeModal: true
+          }
         });
+      });
     }
-    this.props.firebase
+    firebase
       .allRooms()
       .then(res => {
-        this.setState({ rooms: res });
+        setFormState({ rooms: res });
       })
       .catch(err => console.log(err.message));
 
-    this.setState({ roomToAdd: '' });
+    setFormState({ roomToAdd: '' });
   };
 
-  removeRoom = () => {
-    const { roomToRemove, rooms } = this.state;
+  const removeRoom = () => {
+    const { roomToRemove, rooms } = formState;
 
     if (rooms.includes(roomToRemove)) {
-      this.props.firebase
+      firebase
         .chat(roomToRemove)
         .remove()
         .then(() => {
@@ -115,102 +104,74 @@ class Admin extends Component {
         }
       });
     }
-    this.props.firebase
+    firebase
       .allRooms()
       .then(res => {
-        this.setState({ rooms: res });
+        setFormState({ rooms: res });
       })
       .catch(err => console.log(err.message));
 
-    this.setState({ roomToRemove: '' });
+    setFormState({ roomToRemove: '' });
   };
 
-  render() {
-    const { loading, users, rooms, roomToAdd, roomToRemove } = this.state;
+  const { loading, users, rooms, roomToAdd, roomToRemove } = formState;
 
-    return (
-      <div>
-        <h1 className="admin my-4 text-center">Admin Panel</h1>
-        {loading && <div>Loading...</div>}
-        <Row>
-          <Column size="12">
-            <AllUsers users={users} />
-          </Column>
-        </Row>
-        <Row helper="my-3">
-          <Column size="12 md-2">
-            <p className="text-center">Chatrooms</p>
-            <ChatList rooms={rooms} />
-          </Column>
-          <Column size="12 md-5">
-            {/* ADD ROOM */}
-            <>
-              <h3 className="text-center my-3">Add Room</h3>
-              <InputGroup>
-                <Input
-                  placeholder="add a room"
-                  name="roomToAdd"
-                  value={roomToAdd}
-                  onChange={this.handleInputChange}
-                />
-                <InputGroupAddon addonType="append">
-                  <Button color="success" onClick={this.submitRoom}>
-                    Add
-                  </Button>
-                </InputGroupAddon>
-              </InputGroup>
-            </>
-          </Column>
-          <Column size="12 md-5">
-            {/* REMOVE ROOM */}
-            <>
-              <h3 className="text-center my-3">Remove Room</h3>
-              <InputGroup>
-                <Input
-                  placeholder="remove a room"
-                  name="roomToRemove"
-                  value={roomToRemove}
-                  onChange={this.handleInputChange}
-                />
-                <InputGroupAddon addonType="append">
-                  <Button color="danger" onClick={this.removeRoom}>
-                    Remove
-                  </Button>
-                </InputGroupAddon>
-              </InputGroup>
-            </>
-          </Column>
-        </Row>
-      </div>
-    );
-  }
-}
-
-const AllUsers = ({ users }) => {
   return (
-    <Table className="mb-3" striped responsive bordered>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>UID</th>
-          <th>Username</th>
-          <th>Email</th>
-        </tr>
-      </thead>
-      <tbody>
-        {users.map((user, index) => (
-          <tr key={user.uid}>
-            <th scope="row">{index + 1}</th>
-            <td>{user.uid}</td>
-            <td>{user.username}</td>
-            <td>{user.email}</td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
+    <div>
+      <h1 className="admin my-4 text-center">Admin Panel</h1>
+      {loading && <div>Loading...</div>}
+      <Row>
+        <Column size="12">
+          <AllUsers users={users} />
+        </Column>
+      </Row>
+      <Row helper="my-3">
+        <Column size="12 md-2">
+          <p className="text-center">Chatrooms</p>
+          <ChatList rooms={rooms} />
+        </Column>
+        <Column size="12 md-5">
+          {/* ADD ROOM */}
+          <>
+            <h3 className="text-center my-3">Add Room</h3>
+            <InputGroup>
+              <Input
+                placeholder="add a room"
+                name="roomToAdd"
+                value={roomToAdd}
+                onChange={onChange}
+              />
+              <InputGroupAddon addonType="append">
+                <Button color="success" onClick={submitRoom}>
+                  Add
+                </Button>
+              </InputGroupAddon>
+            </InputGroup>
+          </>
+        </Column>
+        <Column size="12 md-5">
+          {/* REMOVE ROOM */}
+          <>
+            <h3 className="text-center my-3">Remove Room</h3>
+            <InputGroup>
+              <Input
+                placeholder="remove a room"
+                name="roomToRemove"
+                value={roomToRemove}
+                onChange={onChange}
+              />
+              <InputGroupAddon addonType="append">
+                <Button color="danger" onClick={removeRoom}>
+                  Remove
+                </Button>
+              </InputGroupAddon>
+            </InputGroup>
+          </>
+        </Column>
+      </Row>
+    </div>
   );
 };
-
 //restrict route based on if user is authed and if they are identified as an admin
 const condition = authUser =>
   authUser ? ROLES.ADMIN.includes(authUser.email) : false;

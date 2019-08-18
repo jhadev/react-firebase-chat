@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../constants/routes';
 import { withFirebase } from '../components/Firebase/index';
+import { useForm } from '../hooks/formHook';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
 
@@ -14,7 +15,7 @@ const PasswordForget = () => (
 );
 
 const PasswordForgetFormBase = ({ firebase }) => {
-  const [formState, setFormState] = useState({
+  const { formState, setFormState, onChange } = useForm({
     email: '',
     error: null,
     success: false
@@ -33,11 +34,6 @@ const PasswordForgetFormBase = ({ firebase }) => {
       .catch(error => {
         setFormState({ ...formState, error });
       });
-  };
-
-  const onChange = event => {
-    const { name, value } = event.target;
-    setFormState({ ...formState, success: false, [name]: value });
   };
 
   const { email, error, success } = formState;

@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import * as ROUTES from '../constants/routes';
+import { useForm } from '../hooks/formHook';
 import { SignUpLink } from './SignUp';
 import { PasswordForgetLink } from './PasswordForget';
 import { withFirebase } from '../components/Firebase/index';
@@ -21,80 +22,74 @@ const SignIn = () => (
   </div>
 );
 
-class SignInFormBase extends Component {
-  state = {
+const SignInFormBase = props => {
+  const { formState, setFormState, onChange } = useForm({
     email: '',
     password: '',
-    error: null
-  };
+    error: null,
+    success: false
+  });
 
-  onChange = event => {
-    const { name, value } = event.target;
-
-    this.setState({ [name]: value });
-  };
-
-  onSubmit = event => {
+  const onSubmit = event => {
     event.preventDefault();
-    const { email, password } = this.state;
+    const { email, password } = formState;
     localStorage.setItem('email', email);
 
-    this.props.firebase
+    props.firebase
       .doSignInUser(email, password)
       .then(() => {
-        speechSynthesis.speak(new SpeechSynthesisUtterance(`Welcome, ${email}`));
-        this.setState({ email: '', password: '', error: null });
-        this.props.history.push(ROUTES.HOME);
+        speechSynthesis.speak(
+          new SpeechSynthesisUtterance(`Welcome, ${email}`)
+        );
+        setFormState({ email: '', password: '', error: null });
+        props.history.push(ROUTES.HOME);
       })
       .catch(error => {
-        this.setState({ error });
+        setFormState({ error });
       });
   };
 
-  render() {
-    const { email, password, error } = this.state;
+  const { email, password, error } = formState;
 
-    const isInvalid = password === '' || email === '';
+  const isInvalid = password === '' || email === '';
 
-    return (
-      <Row helper="justify-content-center">
-        <Column size="md-6 12">
-          <form onSubmit={this.onSubmit}>
-            <div className="form-group">
-              <input
-                className="form-control"
-                name="email"
-                value={email}
-                onChange={this.onChange}
-                type="text"
-                placeholder="Email Address"
-              />
-            </div>
-            <div className="form-group">
-              <input
-                className="form-control"
-                name="password"
-                value={password}
-                onChange={this.onChange}
-                type="password"
-                placeholder="Password"
-              />
-            </div>
-            <button
-              className="btn btn-false mb-2"
-              disabled={isInvalid}
-              type="submit"
-            >
-              Sign In
-            </button>
+  return (
+    <Row helper="justify-content-center">
+      <Column size="md-6 12">
+        <form onSubmit={onSubmit}>
+          <div className="form-group">
+            <input
+              className="form-control"
+              name="email"
+              value={email}
+              onChange={onChange}
+              type="text"
+              placeholder="Email Address"
+            />
+          </div>
+          <div className="form-group">
+            <input
+              className="form-control"
+              name="password"
+              value={password}
+              onChange={onChange}
+              type="password"
+              placeholder="Password"
+            />
+          </div>
+          <button
+            className="btn btn-false mb-2"
+            disabled={isInvalid}
+            type="submit">
+            Sign In
+          </button>
 
-            {error && <p>{error.message}</p>}
-          </form>
-        </Column>
-      </Row>
-    );
-  }
-}
+          {error && <p>{error.message}</p>}
+        </form>
+      </Column>
+    </Row>
+  );
+};
 
 const SignInForm = compose(
   withRouter,

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { withFirebase } from './Firebase/index';
+import { useForm } from '../hooks/formHook';
 import Row from './common/Row';
 import Column from './common/Column';
 
 const PasswordChangeForm = ({ firebase }) => {
-  const [formState, setFormState] = useState({
+  const { formState, setFormState, onChange } = useForm({
     passwordOne: '',
     passwordTwo: '',
     error: null,
@@ -27,13 +28,8 @@ const PasswordChangeForm = ({ firebase }) => {
         });
       })
       .catch(error => {
-        setFormState({ ...formState, error });
+        setFormState({ error });
       });
-  };
-
-  const onChange = event => {
-    const { name, value } = event.target;
-    setFormState({ ...formState, success: false, [name]: value });
   };
 
   const { passwordOne, passwordTwo, error, success } = formState;

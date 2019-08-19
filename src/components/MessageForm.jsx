@@ -81,37 +81,20 @@ const MessageForm = ({
         if (!error && result && result.event === 'success') {
           console.log(result);
           const url = result.info.secure_url;
-
-          navigator.clipboard.writeText(url).then(
-            () => {
-              /* clipboard successfully set */
-              swal({
-                button: {
-                  text: 'Close',
-                  closeModal: true
-                },
-                icon: 'success',
-                title: 'Success!',
-                text: `${url} has been copied to the clipboard.`
-              });
+          swal({
+            button: {
+              text: 'Close',
+              closeModal: true
             },
-            () => {
-              swal({
-                button: {
-                  text: 'Close',
-                  closeModal: true
-                },
-                icon: 'error',
-                title: 'Oops...',
-                text: `${url} has not been copied to the clipboard. Copy it from this modal.`
-              });
-            }
+            icon: 'success',
+            title: 'Success!',
+            text: `${url} has been inserted into the text box.`
+          });
+          setNewMessage(prevMessage =>
+            prevMessage.length > 0
+              ? prevMessage.concat(` ${result.info.secure_url}`)
+              : `${result.info.secure_url}`
           );
-          // setNewMessage(prevMessage =>
-          //   prevMessage.length > 0
-          //     ? prevMessage.concat(` ${result.info.secure_url}`)
-          //     : `${result.info.secure_url}`
-          // );
         }
       }
     );

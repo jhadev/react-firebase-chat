@@ -18,7 +18,6 @@ const Home = ({ firebase }) => {
   const { showChat, chat, room, roomList } = state;
 
   const alertSound = new Audio(alert);
-
   // returns all array of all rooms
   const allRooms = firebase.allRooms();
   // tells firebase to reference current room -- in state default is 'chat'

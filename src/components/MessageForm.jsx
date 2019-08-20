@@ -95,17 +95,18 @@ const MessageForm = ({
               ? prevMessage.concat(` ${result.info.secure_url}`)
               : `${result.info.secure_url}`
           );
-        } else {
-          swal({
-            button: {
-              text: 'Close',
-              closeModal: true
-            },
-            icon: 'error',
-            title: 'Error',
-            text: `Please try again :(`
-          });
         }
+        // } else {
+        //   swal({
+        //     button: {
+        //       text: 'Close',
+        //       closeModal: true
+        //     },
+        //     icon: 'error',
+        //     title: 'Error',
+        //     text: `Please try again :(`
+        //   });
+        // }
       }
     );
   };

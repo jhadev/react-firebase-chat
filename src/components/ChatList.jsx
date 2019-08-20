@@ -40,7 +40,7 @@ const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
       </DropdownMenu>
     </Dropdown>
   ) : (
-    <ListGroup className="mb-3">
+    <ListGroup className="mb-3 chatList">
       {rooms.map(room => (
         <ListGroupItem
           tag="button"

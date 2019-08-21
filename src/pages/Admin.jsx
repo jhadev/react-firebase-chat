@@ -6,6 +6,7 @@ import AllUsers from '../components/AllUsers';
 import ChatList from '../components/ChatList';
 import Column from '../components/common/Column';
 import Row from '../components/common/Row';
+import Container from '../components/common/Container';
 import * as ROLES from '../constants/roles';
 import swal from '@sweetalert/with-react';
 
@@ -117,7 +118,7 @@ const Admin = ({ firebase }) => {
   const { loading, users, rooms, roomToAdd, roomToRemove } = formState;
 
   return (
-    <div>
+    <Container>
       <h1 className="admin my-4 text-center">Admin Panel</h1>
       {loading && <div>Loading...</div>}
       <Row>
@@ -169,7 +170,7 @@ const Admin = ({ firebase }) => {
           </>
         </Column>
       </Row>
-    </div>
+    </Container>
   );
 };
 //restrict route based on if user is authed and if they are identified as an admin

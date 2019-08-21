@@ -8,18 +8,21 @@ import { PasswordForgetLink } from './PasswordForget';
 import { withFirebase } from '../components/Firebase/index';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
+import Container from '../components/common/Container';
 
 const SignIn = () => (
-  <div>
-    <h1 className="text-center my-4">Sign In</h1>
-    <SignInForm />
-    <Row helper="justify-content-center">
-      <Column size="md-6 12">
-        <PasswordForgetLink />
-        <SignUpLink />
-      </Column>
-    </Row>
-  </div>
+  <Container>
+    <div>
+      <h1 className="text-center my-4">Sign In</h1>
+      <SignInForm />
+      <Row helper="justify-content-center">
+        <Column size="md-6 12">
+          <PasswordForgetLink />
+          <SignUpLink />
+        </Column>
+      </Row>
+    </div>
+  </Container>
 );
 
 const SignInFormBase = props => {

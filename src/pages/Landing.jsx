@@ -5,6 +5,7 @@ import AuthUserContext from '../components/Session/context';
 import SignIn from './SignIn';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
+import Container from '../components/common/Container';
 
 const Landing = () => {
   const authUser = useContext(AuthUserContext);
@@ -14,17 +15,19 @@ const Landing = () => {
   }
 
   return (
-    <div className="text-center my-2">
-      <h1>Welcome</h1>
-      <Row helper="my-4">
-        <Column size="12">
-          <div className="main">
-            <h3>something will go here {':)'}</h3>
-            <SignIn />
-          </div>
-        </Column>
-      </Row>
-    </div>
+    <Container>
+      <div className="text-center my-2">
+        <h1>Welcome</h1>
+        <Row helper="my-4">
+          <Column size="12">
+            <div className="main">
+              <h3>something will go here {':)'}</h3>
+              <SignIn />
+            </div>
+          </Column>
+        </Row>
+      </div>
+    </Container>
   );
 };
 

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useContext, useReducer, useCallback } from 'react';
+import React, { useEffect, useContext, useReducer } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
 import { INITIAL_STATE, reducer } from '../reducers/chatReducer';
@@ -23,10 +23,9 @@ const Home = ({ firebase }) => {
   // tells firebase to reference current room -- in state default is 'chat'
   const chatroom = firebase.chat(room);
 
-  const scrollToBottom = useCallback(
-    () => document.getElementById('bottom').scrollIntoView(false),
-    [chat, room]
-  );
+  const scrollToBottom = () => {
+    document.getElementById('bottom').scrollIntoView(false);
+  };
 
   const scrollToTop = () => {
     window.scrollTo(0, 0);

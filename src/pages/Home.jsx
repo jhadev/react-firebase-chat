@@ -23,13 +23,21 @@ const Home = ({ firebase }) => {
   // tells firebase to reference current room -- in state default is 'chat'
   const chatroom = firebase.chat(room);
 
+  const scrollToBottom = () => {
+    document.getElementById('bottom').scrollIntoView(false);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   useEffect(() => {
     allRooms
       .then(res => {
         dispatch({ type: 'SET_ROOM_LIST', roomList: res });
       })
       .catch(err => console.log(err));
-  }, []);
+  }, [room]);
 
   useEffect(() => {
     const handleNewMessages = snapshot => {
@@ -49,16 +57,7 @@ const Home = ({ firebase }) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [chat, room]);
-
-  const scrollToBottom = () => {
-    document.getElementById('bottom').scrollIntoView(false);
-    // window.scrollTo(0, document.body.scrollHeight);
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo(0, 0);
-  };
+  }, [scrollToBottom]);
 
   const setChatRoom = event => {
     const { value } = event.target;

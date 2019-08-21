@@ -5,13 +5,14 @@ import { withFirebase } from '../components/Firebase/index';
 import { useForm } from '../hooks/formHook';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
+import Container from '../components/common/Container';
 
 const PasswordForget = () => (
-  <div>
+  <Container>
     <div className="my-4">
       <PasswordForgetForm />
     </div>
-  </div>
+  </Container>
 );
 
 const PasswordForgetFormBase = ({ firebase }) => {

@@ -6,13 +6,14 @@ import { useForm } from '../hooks/formHook';
 import * as ROUTES from '../constants/routes';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
+import Container from '../components/common/Container';
 
 const SignUp = () => {
   return (
-    <div>
+    <Container>
       <h1 className="text-center my-4">Sign Up</h1>
       <SignUpForm />
-    </div>
+    </Container>
   );
 };
 

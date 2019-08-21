@@ -20,6 +20,14 @@ const DirectMessages = ({ firebase }) => {
   const chatroom = firebase.dms();
   const alertSound = new Audio(alert);
 
+  const scrollToBottom = () => {
+    document.getElementById('bottom').scrollIntoView(false);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   useEffect(() => {
     // get all users other than authUser
     firebase.users().on('value', snapshot => {
@@ -61,14 +69,6 @@ const DirectMessages = ({ firebase }) => {
   useEffect(() => {
     scrollToBottom();
   }, [chat, userToDm]);
-
-  const scrollToBottom = () => {
-    document.getElementById('bottom').scrollIntoView(false);
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo(0, 0);
-  };
 
   const setChatRoom = event => {
     const { value } = event.target;

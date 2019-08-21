@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import Container from '../components/common/Container';
 import { PasswordForgetForm } from './PasswordForget';
 import PasswordChangeForm from '../components/PasswordChange';
 import { withAuthorization } from '../components/Session/index';
@@ -8,7 +9,7 @@ const Account = () => {
   const authUser = useContext(AuthUserContext);
 
   return (
-    <div>
+    <Container>
       <div className="mb-4">
         <h1 className="my-4 text-center">Account Options</h1>
         <h4 className="text-center">
@@ -17,7 +18,7 @@ const Account = () => {
       </div>
       <PasswordForgetForm />
       <PasswordChangeForm />
-    </div>
+    </Container>
   );
 };
 

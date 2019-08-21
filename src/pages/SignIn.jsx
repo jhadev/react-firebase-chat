@@ -39,7 +39,7 @@ const SignInFormBase = props => {
       .doSignInUser(email, password)
       .then(() => {
         speechSynthesis.speak(
-          new SpeechSynthesisUtterance(`Welcome, ${email}`)
+          new SpeechSynthesisUtterance(`Welcome, ${email}. You've got mail!`)
         );
         setFormState({ email: '', password: '', error: null });
         props.history.push(ROUTES.HOME);

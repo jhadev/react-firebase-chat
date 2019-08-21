@@ -10,6 +10,7 @@ import ChatList from '../components/ChatList';
 import Message from '../components/Message';
 import MessageForm from '../components/MessageForm';
 import alert from '../sounds/sent.mp3';
+const alertSound = new Audio(alert);
 
 const DirectMessages = ({ firebase }) => {
   const authUser = useContext(AuthUserContext);
@@ -18,7 +19,6 @@ const DirectMessages = ({ firebase }) => {
   const { users, chat, userToDm } = state;
   // ref for dms collection in fb
   const chatroom = firebase.dms();
-  const alertSound = new Audio(alert);
 
   const scrollToBottom = () => {
     document.getElementById('bottom').scrollIntoView(false);
@@ -68,7 +68,7 @@ const DirectMessages = ({ firebase }) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [chat, userToDm]);
+  }, [scrollToBottom]);
 
   const setChatRoom = event => {
     const { value } = event.target;

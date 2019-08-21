@@ -10,6 +10,7 @@ import MessageForm from '../components/MessageForm';
 import ChatList from '../components/ChatList';
 import Container from '../components/common/Container';
 import alert from '../sounds/sent.mp3';
+const alertSound = new Audio(alert);
 
 const Home = ({ firebase }) => {
   const authUser = useContext(AuthUserContext);
@@ -17,7 +18,6 @@ const Home = ({ firebase }) => {
   // don't want to keep writing state :)
   const { showChat, chat, room, roomList } = state;
 
-  const alertSound = new Audio(alert);
   // returns all array of all rooms
   const allRooms = firebase.allRooms();
   // tells firebase to reference current room -- in state default is 'chat'
@@ -37,7 +37,7 @@ const Home = ({ firebase }) => {
         dispatch({ type: 'SET_ROOM_LIST', roomList: res });
       })
       .catch(err => console.log(err));
-  }, [room]);
+  }, []);
 
   useEffect(() => {
     const handleNewMessages = snapshot => {

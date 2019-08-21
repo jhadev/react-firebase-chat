@@ -56,8 +56,10 @@ const Home = ({ firebase }) => {
   }, [room]);
 
   useEffect(() => {
-    scrollToBottom();
-  }, [scrollToBottom]);
+    if (showChat) {
+      scrollToBottom();
+    }
+  }, [scrollToBottom, showChat]);
 
   const setChatRoom = event => {
     const { value } = event.target;

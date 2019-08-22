@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useReducer, useContext, useEffect } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
@@ -18,7 +17,6 @@ const DirectMessages = ({ firebase }) => {
 
   const { users, chat, userToDm } = state;
   // ref for dms collection in fb
-  const chatroom = firebase.dms();
 
   const scrollToBottom = () => {
     document.getElementById('bottom').scrollIntoView(false);
@@ -43,7 +41,7 @@ const DirectMessages = ({ firebase }) => {
         .filter(user => user !== authUser.email);
       dispatch({ type: 'SET_USERS', users: allUsers });
     });
-  }, []);
+  }, [authUser.email, firebase]);
 
   useEffect(() => {
     const handleNewMessages = snapshot => {
@@ -60,15 +58,15 @@ const DirectMessages = ({ firebase }) => {
         alertSound.play();
       }
     };
-    chatroom.on('value', handleNewMessages);
+    firebase.dms().on('value', handleNewMessages);
     return () => {
-      chatroom.off('value', handleNewMessages);
+      firebase.dms().off('value', handleNewMessages);
     };
-  }, [userToDm]);
+  }, [authUser.email, firebase, userToDm]);
 
   useEffect(() => {
     scrollToBottom();
-  }, [scrollToBottom]);
+  }, [chat]);
 
   const setChatRoom = event => {
     const { value } = event.target;

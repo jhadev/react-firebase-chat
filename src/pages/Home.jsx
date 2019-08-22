@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useContext, useReducer } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
@@ -19,9 +18,7 @@ const Home = ({ firebase }) => {
   const { showChat, chat, room, roomList } = state;
 
   // returns all array of all rooms
-  const allRooms = firebase.allRooms();
   // tells firebase to reference current room -- in state default is 'chat'
-  const chatroom = firebase.chat(room);
 
   const scrollToBottom = () => {
     document.getElementById('bottom').scrollIntoView(false);
@@ -32,12 +29,13 @@ const Home = ({ firebase }) => {
   };
 
   useEffect(() => {
-    allRooms
+    firebase
+      .allRooms()
       .then(res => {
         dispatch({ type: 'SET_ROOM_LIST', roomList: res });
       })
       .catch(err => console.log(err));
-  }, []);
+  }, [firebase]);
 
   useEffect(() => {
     const handleNewMessages = snapshot => {
@@ -49,17 +47,15 @@ const Home = ({ firebase }) => {
         alertSound.play();
       }
     };
-    chatroom.on('value', handleNewMessages);
+    firebase.chat(room).on('value', handleNewMessages);
     return () => {
-      chatroom.off('value', handleNewMessages);
+      firebase.chat(room).off('value', handleNewMessages);
     };
-  }, [room]);
+  }, [firebase, room]);
 
   useEffect(() => {
-    if (showChat) {
-      scrollToBottom();
-    }
-  }, [scrollToBottom, showChat]);
+    scrollToBottom();
+  }, [chat]);
 
   const setChatRoom = event => {
     const { value } = event.target;

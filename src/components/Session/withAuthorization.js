@@ -9,9 +9,9 @@ const withAuthorization = condition => Component => {
   const WithAuthorization = props => {
     useEffect(() => {
       const listener = props.firebase.auth.onAuthStateChanged(authUser => {
-        //if auth fails send the user to the signin page
+        // if auth fails send the user to the signin page
         if (!condition(authUser)) {
-          //with history object of from react router
+          // with history object of from react router
           props.history.push(ROUTES.SIGN_IN);
         }
       });
@@ -19,8 +19,7 @@ const withAuthorization = condition => Component => {
     }, [props.firebase.auth, props.history]);
 
     return (
-      //consume auth user from the context
-      //avoid showing protected page before the redirect using the higher order component
+      // avoid showing protected page before the redirect using the higher order component
       <AuthUserContext.Consumer>
         {authUser => (condition(authUser) ? <Component {...props} /> : null)}
       </AuthUserContext.Consumer>

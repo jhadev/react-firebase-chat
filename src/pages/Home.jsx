@@ -13,12 +13,10 @@ const alertSound = new Audio(alert);
 
 const Home = ({ firebase }) => {
   const authUser = useContext(AuthUserContext);
-  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-  // don't want to keep writing state :)
-  const { showChat, chat, room, roomList } = state;
-
-  // returns all array of all rooms
-  // tells firebase to reference current room -- in state default is 'chat'
+  const [{ showChat, chat, room, roomList }, dispatch] = useReducer(
+    reducer,
+    INITIAL_STATE
+  );
 
   const scrollToBottom = () => {
     document.getElementById('bottom').scrollIntoView(false);

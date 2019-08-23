@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { withAuthorization } from '../components/Session/index';
-import { InputGroup, InputGroupAddon, Input, Button } from 'reactstrap';
 import { useForm } from '../hooks/formHook';
 import AllUsers from '../components/AllUsers';
 import ChatList from '../components/ChatList';
+import RoomInput from '../components/RoomInput';
 import Column from '../components/common/Column';
 import Row from '../components/common/Row';
 import Container from '../components/common/Container';
@@ -15,7 +15,11 @@ import swal from '@sweetalert/with-react';
 
 const Admin = ({ firebase }) => {
   // this isn't only a form but why not use it anyway.
-  const { formState, setFormState, onChange } = useForm({
+  const {
+    formState: { loading, users, rooms, roomToAdd, roomToRemove },
+    setFormState,
+    onChange
+  } = useForm({
     // set loading flag
     loading: false,
     // users set to empty array
@@ -33,9 +37,8 @@ const Admin = ({ firebase }) => {
       setFormState({ rooms: res });
     });
 
-    firebase.users().on('value', snapshot => {
+    const handleUsers = snapshot => {
       const usersObj = snapshot.val();
-
       const usersArr = Object.keys(usersObj).map(key => ({
         ...usersObj[key],
         uid: key
@@ -44,12 +47,14 @@ const Admin = ({ firebase }) => {
         users: usersArr,
         loading: false
       });
-    });
-    return () => firebase.users().off();
+    };
+    firebase.users().on('value', handleUsers);
+    return () => {
+      firebase.users().off('value', handleUsers);
+    };
   }, [firebase, setFormState]);
 
   const submitRoom = () => {
-    const { roomToAdd, rooms } = formState;
     if (rooms.includes(roomToAdd) || roomToAdd === '') {
       swal({
         content: <h4>Room already exists or room name is not defined</h4>,
@@ -72,16 +77,12 @@ const Admin = ({ firebase }) => {
     firebase
       .allRooms()
       .then(res => {
-        setFormState({ rooms: res });
+        setFormState({ rooms: res, roomToAdd: '' });
       })
       .catch(err => console.log(err.message));
-
-    setFormState({ roomToAdd: '' });
   };
 
   const removeRoom = () => {
-    const { roomToRemove, rooms } = formState;
-
     if (rooms.includes(roomToRemove)) {
       firebase
         .chat(roomToRemove)
@@ -108,14 +109,10 @@ const Admin = ({ firebase }) => {
     firebase
       .allRooms()
       .then(res => {
-        setFormState({ rooms: res });
+        setFormState({ rooms: res, roomToRemove: '' });
       })
       .catch(err => console.log(err.message));
-
-    setFormState({ roomToRemove: '' });
   };
-
-  const { loading, users, rooms, roomToAdd, roomToRemove } = formState;
 
   return (
     <Container>
@@ -132,42 +129,21 @@ const Admin = ({ firebase }) => {
           <ChatList rooms={rooms} />
         </Column>
         <Column size="12 md-5">
-          {/* ADD ROOM */}
-          <>
-            <h3 className="text-center my-3">Add Room</h3>
-            <InputGroup>
-              <Input
-                placeholder="add a room"
-                name="roomToAdd"
-                value={roomToAdd}
-                onChange={onChange}
-              />
-              <InputGroupAddon addonType="append">
-                <Button color="success" onClick={submitRoom}>
-                  Add
-                </Button>
-              </InputGroupAddon>
-            </InputGroup>
-          </>
+          <RoomInput
+            color="success"
+            onChange={onChange}
+            onSubmit={submitRoom}
+            value={roomToAdd}
+            add
+          />
         </Column>
         <Column size="12 md-5">
-          {/* REMOVE ROOM */}
-          <>
-            <h3 className="text-center my-3">Remove Room</h3>
-            <InputGroup>
-              <Input
-                placeholder="remove a room"
-                name="roomToRemove"
-                value={roomToRemove}
-                onChange={onChange}
-              />
-              <InputGroupAddon addonType="append">
-                <Button color="danger" onClick={removeRoom}>
-                  Remove
-                </Button>
-              </InputGroupAddon>
-            </InputGroup>
-          </>
+          <RoomInput
+            color="danger"
+            onChange={onChange}
+            onSubmit={removeRoom}
+            value={roomToRemove}
+          />
         </Column>
       </Row>
     </Container>

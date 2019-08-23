@@ -13,10 +13,11 @@ const alertSound = new Audio(alert);
 
 const DirectMessages = ({ firebase }) => {
   const authUser = useContext(AuthUserContext);
-  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
-  const { users, chat, userToDm } = state;
-  // ref for dms collection in fb
+  const [{ users, chat, userToDm }, dispatch] = useReducer(
+    reducer,
+    INITIAL_STATE
+  );
 
   const scrollToBottom = () => {
     document.getElementById('bottom').scrollIntoView(false);
@@ -27,20 +28,22 @@ const DirectMessages = ({ firebase }) => {
   };
 
   useEffect(() => {
-    // get all users other than authUser
-    firebase.users().on('value', snapshot => {
+    const handleUsers = snapshot => {
       const usersObj = snapshot.val();
-
       const usersArr = Object.keys(usersObj).map(key => ({
         ...usersObj[key],
         uid: key
       }));
-
       const allUsers = usersArr
         .map(user => user.email)
         .filter(user => user !== authUser.email);
       dispatch({ type: 'SET_USERS', users: allUsers });
-    });
+    };
+    // get all users other than authUser
+    firebase.users().on('value', handleUsers);
+    return () => {
+      firebase.users().off('value', handleUsers);
+    };
   }, [authUser.email, firebase]);
 
   useEffect(() => {

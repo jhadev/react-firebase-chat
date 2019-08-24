@@ -20,11 +20,7 @@ const DirectMessages = ({ firebase }) => {
     INITIAL_STATE
   );
 
-  const { scrollToBottom } = useScroll(chat);
-
-  const scrollToTop = () => {
-    window.scrollTo(0, 0);
-  };
+  const { goToBottom } = useScroll(chat);
 
   useEffect(() => {
     const handleUsers = snapshot => {
@@ -58,17 +54,14 @@ const DirectMessages = ({ firebase }) => {
         );
         dispatch({ type: 'SET_CHAT', chat: filterByPersonToDm });
         alertSound.play();
+        goToBottom(true);
       }
     };
     firebase.dms().on('value', handleNewMessages);
     return () => {
       firebase.dms().off('value', handleNewMessages);
     };
-  }, [authUser.email, firebase, userToDm]);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [chat, scrollToBottom]);
+  }, [authUser.email, firebase, goToBottom, userToDm]);
 
   const setChatRoom = event => {
     const { value } = event.target;
@@ -140,8 +133,6 @@ const DirectMessages = ({ firebase }) => {
             setChatRoom={setChatRoom}
             currentRoom={'dms'}
             firebase={firebase}
-            scrollToTop={scrollToTop}
-            scrollToBottom={scrollToBottom}
             dms
           />
         </Container>

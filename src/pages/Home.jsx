@@ -19,17 +19,7 @@ const Home = ({ firebase }) => {
     INITIAL_STATE
   );
 
-  const { scrollToBottom } = useScroll(chat);
-
-  console.log(authUser);
-
-  // const scrollToBottom = () => {
-  //   document.getElementById('bottom').scrollIntoView(false);
-  // };
-
-  const scrollToTop = () => {
-    window.scrollTo(0, 0);
-  };
+  const { isTop, goToBottom } = useScroll(chat);
 
   useEffect(() => {
     firebase
@@ -48,13 +38,14 @@ const Home = ({ firebase }) => {
         messages.shift();
         dispatch({ type: 'SET_MESSAGES', chat: messages });
         alertSound.play();
+        goToBottom(true);
       }
     };
     firebase.chat(room).on('value', handleNewMessages);
     return () => {
       firebase.chat(room).off('value', handleNewMessages);
     };
-  }, [firebase, room]);
+  }, [firebase, goToBottom, room]);
 
   const setChatRoom = event => {
     const { value } = event.target;
@@ -129,8 +120,8 @@ const Home = ({ firebase }) => {
                 setChatRoom={setChatRoom}
                 currentRoom={room}
                 firebase={firebase}
-                scrollToTop={scrollToTop}
-                scrollToBottom={scrollToBottom}
+                isTop={isTop}
+                goToBottom={goToBottom}
               />
             </Container>
           </div>

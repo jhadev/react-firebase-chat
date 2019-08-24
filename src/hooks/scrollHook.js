@@ -1,22 +1,17 @@
-import { useState, useLayoutEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 
 const useScroll = chat => {
-  const [isBottom, goToBottom] = useState(false);
+  const [isTop, goToBottom] = useState(false);
 
-  const scrollToBottom = useCallback(() => {
-    window.scrollTo(0, 10000);
-    goToBottom(false);
-  }, []);
-
-  useLayoutEffect(() => {
-    if (!isBottom) {
-      scrollToBottom();
+  useEffect(() => {
+    if (isTop) {
+      document.getElementById('bottom').scrollIntoView(false);
     } else {
-      goToBottom(true);
+      window.scrollTo(0, 0);
     }
-  }, [chat, isBottom, scrollToBottom]);
+  }, [chat, isTop]);
 
-  return { goToBottom, isBottom, scrollToBottom };
+  return { goToBottom, isTop };
 };
 
 export { useScroll };

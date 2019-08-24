@@ -1,7 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ChatList from './ChatList';
-// import Footer from './common/Footer';
+import { useScroll } from '../hooks/scrollHook';
 import {
   Col,
   Form,
@@ -25,25 +24,16 @@ const MessageForm = ({
   currentRoom,
   firebase,
   username,
-  scrollToTop,
-  scrollToBottom,
   receiver,
   dms
 }) => {
   const [newMessage, setNewMessage] = useState('');
   const [charCounter, setCounter] = useState(0);
   const [emojiPicker, handlePickerOpen] = useState(false);
-  const [scrollTop, setScrollDirection] = useState(false);
 
   const maxCount = 200;
-
-  useEffect(() => {
-    if (scrollTop) {
-      scrollToTop();
-    } else {
-      scrollToBottom();
-    }
-  }, [scrollTop]);
+  // FIXME: needs to be in sync
+  const { isTop, goToBottom } = useScroll();
 
   const sendNewMessage = e => {
     e.preventDefault();
@@ -129,10 +119,10 @@ const MessageForm = ({
             <Col md={10} sm={12}>
               <InputGroup className="my-2" size="md">
                 <InputGroupAddon
-                  onClick={() => setScrollDirection(!scrollTop)}
+                  onClick={() => goToBottom(!isTop)}
                   addonType="prepend">
                   <InputGroupText id="scrollToTop">
-                    {!scrollTop ? (
+                    {isTop ? (
                       <i className="fas fa-arrow-circle-up text-dark">
                         <span className="tooltip-text">Scroll Up</span>
                       </i>

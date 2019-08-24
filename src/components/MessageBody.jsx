@@ -3,7 +3,6 @@ import * as REGEX from '../constants/regex';
 import PropTypes from 'prop-types';
 import { Audio, Image, Link, Video } from './Matching';
 import './styles/components/message-body.scss';
-import uuid from 'uuidv4';
 
 const MessageBody = ({ body, color }) => {
   // extremely hacky
@@ -87,10 +86,13 @@ const MessageBody = ({ body, color }) => {
 
   // can now have multiple links in a message
   // media will stack on top of the words in the message.
+
   return (
     <div className={`badge badge-${color} msgText mb-2`}>
       {matchesDone.length
-        ? matchesDone.map(match => <div key={uuid()}>{match}</div>)
+        ? matchesDone.map((match, index) => (
+            <div key={match.props.url.concat(index + 1)}>{match}</div>
+          ))
         : null}
       {noLinks.length !== 0 && noLinks.join(' ')}
     </div>

@@ -2,6 +2,7 @@ import React, { useReducer, useContext, useEffect } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
 import { INITIAL_STATE, reducer } from '../reducers/dmReducer';
+import { useScroll } from '../hooks/scrollHook';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
 import Container from '../components/common/Container';
@@ -19,9 +20,7 @@ const DirectMessages = ({ firebase }) => {
     INITIAL_STATE
   );
 
-  const scrollToBottom = () => {
-    document.getElementById('bottom').scrollIntoView(false);
-  };
+  const { scrollToBottom } = useScroll(chat);
 
   const scrollToTop = () => {
     window.scrollTo(0, 0);
@@ -69,7 +68,7 @@ const DirectMessages = ({ firebase }) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [chat]);
+  }, [chat, scrollToBottom]);
 
   const setChatRoom = event => {
     const { value } = event.target;

@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useReducer } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
 import { INITIAL_STATE, reducer } from '../reducers/chatReducer';
+import { useScroll } from '../hooks/scrollHook';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
 import Message from '../components/Message';
@@ -18,9 +19,13 @@ const Home = ({ firebase }) => {
     INITIAL_STATE
   );
 
-  const scrollToBottom = () => {
-    document.getElementById('bottom').scrollIntoView(false);
-  };
+  const { scrollToBottom } = useScroll(chat);
+
+  console.log(authUser);
+
+  // const scrollToBottom = () => {
+  //   document.getElementById('bottom').scrollIntoView(false);
+  // };
 
   const scrollToTop = () => {
     window.scrollTo(0, 0);
@@ -50,10 +55,6 @@ const Home = ({ firebase }) => {
       firebase.chat(room).off('value', handleNewMessages);
     };
   }, [firebase, room]);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [chat]);
 
   const setChatRoom = event => {
     const { value } = event.target;

@@ -89,7 +89,7 @@ const MessageBody = ({ body, color }) => {
 
   return (
     <div className={`badge badge-${color} msgText mb-2`}>
-      {matchesDone.length
+      {matchesDone.length > 0
         ? matchesDone.map((match, index) => (
             <div key={match.props.url.concat(index + 1)}>{match}</div>
           ))

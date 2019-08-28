@@ -30,7 +30,6 @@ const useForm = initialState => {
         args = [...args].map(() => ({}));
       }
       return stateArr.map(([key, value], index) => {
-        // index as key is an anti-pattern but it is perfect in this case
         return (
           <React.Fragment key={index}>
             {args[index].label && (

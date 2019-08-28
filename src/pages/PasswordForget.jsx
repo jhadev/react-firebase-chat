@@ -61,7 +61,6 @@ const PasswordForgetFormBase = ({ firebase }) => {
             type="submit">
             Reset Password
           </button>
-
           {error && <p>{error.message}</p>}
           {success && (
             <p>Check your email for a link to change your password.</p>

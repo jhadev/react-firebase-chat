@@ -1,16 +1,36 @@
 import React from 'react';
 import { withFirebase } from './Firebase/index';
-import { useForm } from '../hooks/formHook';
+import { useForm } from '../hooks/useForm';
 import Row from './common/Row';
 import Column from './common/Column';
 
 const PasswordChangeForm = ({ firebase }) => {
-  const { formState, setFormState, onChange } = useForm({
+  const { formState, setFormState, mapInputs } = useForm({
     passwordOne: '',
     passwordTwo: '',
     error: null,
     success: false
   });
+
+  const filterInputsToDisplay = ({ passwordOne, passwordTwo }) => ({
+    passwordOne,
+    passwordTwo
+  });
+
+  const formOptions = [
+    {
+      type: 'password',
+      placeholder: 'New Password'
+    },
+    {
+      type: 'password',
+      placeholder: 'Confirm Password'
+    }
+  ];
+
+  const displayInputs = mapInputs(filterInputsToDisplay(formState))(
+    formOptions
+  );
 
   const onSubmit = event => {
     event.preventDefault();
@@ -41,30 +61,10 @@ const PasswordChangeForm = ({ firebase }) => {
       <Column size="md-6 12">
         <h4 className="text-center my-4">Change your password.</h4>
         <form onSubmit={onSubmit}>
-          <div className="form-group">
-            <input
-              name="passwordOne"
-              value={passwordOne}
-              onChange={onChange}
-              type="password"
-              placeholder="New Password"
-              className="form-control"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              name="passwordTwo"
-              value={passwordTwo}
-              onChange={onChange}
-              type="password"
-              placeholder="Confirm Password"
-              className="form-control"
-            />
-          </div>
+          <div className="form-group">{displayInputs}</div>
           <button disabled={isInvalid} className="btn btn-false" type="submit">
             Change Password
           </button>
-
           {error && <p>{error.message}</p>}
           {success && <p>Password successfully changed.</p>}
         </form>

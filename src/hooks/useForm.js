@@ -23,6 +23,7 @@ const useForm = initialState => {
     const stateArr = Object.entries(state);
     return args => {
       if (args) {
+        // placeholder to do something else.
         args = [...args];
       } else {
         args = [];
@@ -34,7 +35,7 @@ const useForm = initialState => {
           <React.Fragment key={index}>
             {args[index].label && (
               <label htmlFor={args[index].id || `${key}-${index}`}>
-                {args[index].label || `Enter your ${key}`}
+                {args[index].label}
               </label>
             )}
             <input

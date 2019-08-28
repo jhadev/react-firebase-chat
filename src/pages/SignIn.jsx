@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import * as ROUTES from '../constants/routes';
-import { useForm } from '../hooks/formHook';
+import { useForm } from '../hooks/useForm';
 import { SignUpLink } from './SignUp';
 import { PasswordForgetLink } from './PasswordForget';
 import { withFirebase } from '../components/Firebase/index';
@@ -26,12 +26,26 @@ const SignIn = () => (
 );
 
 const SignInFormBase = props => {
-  const { formState, setFormState, onChange } = useForm({
+  const { formState, setFormState, mapInputs } = useForm({
     email: '',
     password: '',
     error: null,
     success: false
   });
+
+  const filterInputsToDisplay = ({ email, password }) => ({ email, password });
+
+  const formOptions = [
+    {
+      placeholder: 'Email Address',
+      type: 'text'
+    },
+    {}
+  ];
+
+  const displayInputs = mapInputs(filterInputsToDisplay(formState))(
+    formOptions
+  );
 
   const onSubmit = event => {
     event.preventDefault();
@@ -60,33 +74,13 @@ const SignInFormBase = props => {
     <Row helper="justify-content-center">
       <Column size="md-6 12">
         <form onSubmit={onSubmit}>
-          <div className="form-group">
-            <input
-              className="form-control"
-              name="email"
-              value={email}
-              onChange={onChange}
-              type="text"
-              placeholder="Email Address"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="form-control"
-              name="password"
-              value={password}
-              onChange={onChange}
-              type="password"
-              placeholder="Password"
-            />
-          </div>
+          <div className="form-group">{displayInputs}</div>
           <button
             className="btn btn-false mb-2"
             disabled={isInvalid}
             type="submit">
             Sign In
           </button>
-
           {error && <p>{error.message}</p>}
         </form>
       </Column>

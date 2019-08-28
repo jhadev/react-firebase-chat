@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../constants/routes';
 import { withFirebase } from '../components/Firebase/index';
-import { useForm } from '../hooks/formHook';
+import { useForm } from '../hooks/useForm';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
 import Container from '../components/common/Container';
@@ -16,11 +16,19 @@ const PasswordForget = () => (
 );
 
 const PasswordForgetFormBase = ({ firebase }) => {
-  const { formState, setFormState, onChange } = useForm({
+  const { formState, setFormState, mapInputs } = useForm({
     email: '',
     error: null,
     success: false
   });
+
+  const filterInputsToDisplay = ({ email }) => ({ email });
+
+  const formOptions = [{ type: 'text', placeholder: 'Email Address' }];
+
+  const displayInputs = mapInputs(filterInputsToDisplay(formState))(
+    formOptions
+  );
 
   const onSubmit = event => {
     event.preventDefault();
@@ -46,16 +54,7 @@ const PasswordForgetFormBase = ({ firebase }) => {
       <Column size="md-6 12">
         <h4 className="text-center mb-4">Forgot your password?</h4>
         <form onSubmit={onSubmit}>
-          <div className="form-group">
-            <input
-              name="email"
-              value={email}
-              onChange={onChange}
-              type="text"
-              placeholder="Email Address"
-              className="form-control"
-            />
-          </div>
+          <div className="form-group">{displayInputs}</div>
           <button
             disabled={isInvalid}
             className="btn btn-false mb-2"

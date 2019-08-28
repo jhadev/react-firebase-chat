@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { withFirebase } from '../components/Firebase/index';
-import { useForm } from '../hooks/formHook';
+import { useForm } from '../hooks/useForm';
 import * as ROUTES from '../constants/routes';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
@@ -18,7 +18,7 @@ const SignUp = () => {
 };
 
 const SignUpFormBase = props => {
-  const { formState, setFormState, onChange } = useForm({
+  const { formState, setFormState, mapInputs } = useForm({
     username: '',
     email: '',
     passwordOne: '',
@@ -26,6 +26,32 @@ const SignUpFormBase = props => {
     error: null,
     success: false
   });
+
+  const filterInputsToDisplay = ({
+    username,
+    email,
+    passwordOne,
+    passwordTwo
+  }) => ({ username, email, passwordOne, passwordTwo });
+
+  const formOptions = [
+    {
+      label: 'Full Name',
+      placeholder: 'Full Name',
+      type: 'text'
+    },
+    { label: 'Email Address', placeholder: 'Email Address', type: 'text' },
+    { label: 'Enter Your Password', placeholder: 'Password', type: 'password' },
+    {
+      label: 'Confirm Password',
+      placeholder: 'Confirm Password',
+      type: 'password'
+    }
+  ];
+
+  const displayInputs = mapInputs(filterInputsToDisplay(formState))(
+    formOptions
+  );
 
   const onSubmit = event => {
     event.preventDefault();
@@ -70,50 +96,10 @@ const SignUpFormBase = props => {
     <Row helper="justify-content-center">
       <Column size="md-6 12">
         <form onSubmit={onSubmit}>
-          <div className="form-group">
-            <input
-              className="form-control"
-              name="username"
-              value={username}
-              onChange={onChange}
-              type="text"
-              placeholder="Full Name"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="form-control"
-              name="email"
-              value={email}
-              onChange={onChange}
-              type="text"
-              placeholder="Email Address"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="form-control"
-              name="passwordOne"
-              value={passwordOne}
-              onChange={onChange}
-              type="password"
-              placeholder="Password"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              className="form-control"
-              name="passwordTwo"
-              value={passwordTwo}
-              onChange={onChange}
-              type="password"
-              placeholder="Confirm Password"
-            />
-          </div>
+          <div className="form-group">{displayInputs}</div>
           <button className="btn btn-false" disabled={isInvalid} type="submit">
             Sign Up
           </button>
-
           {error && <p>{error.message}</p>}
         </form>
       </Column>

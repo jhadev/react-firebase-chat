@@ -26,14 +26,15 @@ const SignIn = () => (
 );
 
 const SignInFormBase = props => {
-  const { formState, setFormState, mapInputs } = useForm({
-    email: '',
-    password: '',
-    error: null,
-    success: false
-  });
-
-  const filterInputsToDisplay = ({ email, password }) => ({ email, password });
+  const { formState, setFormState, mapInputs } = useForm(
+    {
+      email: '',
+      password: '',
+      error: null,
+      success: false
+    },
+    'sign-in'
+  );
 
   const formOptions = [
     {
@@ -43,7 +44,7 @@ const SignInFormBase = props => {
     {}
   ];
 
-  const displayInputs = mapInputs(filterInputsToDisplay(formState))(
+  const displayInputs = mapInputs(formState, ['email', 'password'])(
     formOptions
   );
 

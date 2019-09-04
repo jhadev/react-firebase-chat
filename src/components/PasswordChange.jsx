@@ -12,11 +12,6 @@ const PasswordChangeForm = ({ firebase }) => {
     success: false
   });
 
-  const filterInputsToDisplay = ({ passwordOne, passwordTwo }) => ({
-    passwordOne,
-    passwordTwo
-  });
-
   const formOptions = [
     {
       type: 'password',
@@ -28,7 +23,7 @@ const PasswordChangeForm = ({ firebase }) => {
     }
   ];
 
-  const displayInputs = mapInputs(filterInputsToDisplay(formState))(
+  const displayInputs = mapInputs(formState, ['passwordOne', 'passwordTwo'])(
     formOptions
   );
 

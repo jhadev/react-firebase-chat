@@ -16,19 +16,18 @@ const PasswordForget = () => (
 );
 
 const PasswordForgetFormBase = ({ firebase }) => {
-  const { formState, setFormState, mapInputs } = useForm({
-    email: '',
-    error: null,
-    success: false
-  });
-
-  const filterInputsToDisplay = ({ email }) => ({ email });
+  const { formState, setFormState, mapInputs } = useForm(
+    {
+      email: '',
+      error: null,
+      success: false
+    },
+    'password-forget'
+  );
 
   const formOptions = [{ type: 'text', placeholder: 'Email Address' }];
 
-  const displayInputs = mapInputs(filterInputsToDisplay(formState))(
-    formOptions
-  );
+  const displayInputs = mapInputs(formState, ['email'])(formOptions);
 
   const onSubmit = event => {
     event.preventDefault();

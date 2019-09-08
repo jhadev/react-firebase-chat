@@ -22,9 +22,9 @@ const SearchResults = props => {
 
   useEffect(() => {
     if (formState.search !== '') {
-      const results = props.chat.filter(chatMessage =>
-        chatMessage.message.includes(formState.search)
-      );
+      const results = props.chat.filter(({ message }) => {
+        return message.includes(formState.search);
+      });
       setFormState({ results });
     } else {
       setFormState({ results: [] });
@@ -44,6 +44,7 @@ const SearchResults = props => {
               <Column key={id} size={'12'}>
                 <div className="w-100">
                   <Message
+                    search
                     color={authUser.email === user ? 'user' : 'receiver'}
                     message={message}
                     user={user}

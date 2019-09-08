@@ -3,14 +3,22 @@ import MessageBody from './MessageBody';
 import PropTypes from 'prop-types';
 import './styles/components/message.scss';
 
-const User = ({ user }) => <div className="mb-1 user-name">{user}</div>;
-const Time = ({ timestamp }) => <div className="mb-1 time">{timestamp}</div>;
+const User = ({ user, search }) => (
+  <div className={`mb-1 ${!search ? 'user-name' : 'user-search-name'}`}>
+    {user}
+  </div>
+);
+const Time = ({ timestamp, search }) => (
+  <div className={`mb-1 ${!search ? 'time' : 'user-search-time'}`}>
+    {timestamp}
+  </div>
+);
 
-const Message = ({ user, timestamp, message, color }) => (
+const Message = ({ user, timestamp, message, color, search }) => (
   <>
-    <User user={user} />
-    <Time timestamp={timestamp} />
-    <MessageBody body={message} color={color} />
+    <User search={search} user={user} />
+    <Time search={search} timestamp={timestamp} />
+    <MessageBody search={search} body={message} color={color} />
   </>
 );
 

@@ -8,6 +8,14 @@ import Row from '../components/common/Row';
 import Column from '../components/common/Column';
 import Container from '../components/common/Container';
 
+const INITIAL_STATE = {
+  username: '',
+  email: '',
+  passwordOne: '',
+  passwordTwo: '',
+  error: null
+};
+
 const SignUp = () => {
   return (
     <Container>
@@ -18,21 +26,10 @@ const SignUp = () => {
 };
 
 const SignUpFormBase = props => {
-  const { formState, setFormState, mapInputs } = useForm({
-    username: '',
-    email: '',
-    passwordOne: '',
-    passwordTwo: '',
-    error: null,
-    success: false
-  });
-
-  const filterInputsToDisplay = ({
-    username,
-    email,
-    passwordOne,
-    passwordTwo
-  }) => ({ username, email, passwordOne, passwordTwo });
+  const { formState, setFormState, mapInputs } = useForm(
+    INITIAL_STATE,
+    'sign-up'
+  );
 
   const formOptions = [
     {
@@ -49,9 +46,9 @@ const SignUpFormBase = props => {
     }
   ];
 
-  const displayInputs = mapInputs(filterInputsToDisplay(formState))(
-    formOptions
-  );
+  const inputs = ['username', 'email', 'passwordOne', 'passwordTwo'];
+
+  const displayInputs = mapInputs(formState, inputs)(formOptions);
 
   const onSubmit = event => {
     event.preventDefault();
@@ -69,13 +66,7 @@ const SignUpFormBase = props => {
       })
       .then(() => {
         //set state back to original values
-        setFormState({
-          username: '',
-          email: '',
-          passwordOne: '',
-          passwordTwo: '',
-          error: null
-        });
+        setFormState(INITIAL_STATE);
         //send them to home page
         props.history.push(ROUTES.HOME);
       })

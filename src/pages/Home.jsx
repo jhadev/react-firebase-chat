@@ -8,6 +8,7 @@ import Message from '../components/Message';
 import MessageForm from '../components/MessageForm';
 import ChatList from '../components/ChatList';
 import Container from '../components/common/Container';
+import SearchResults from '../components/SearchResults';
 import alert from '../sounds/sent.mp3';
 const alertSound = new Audio(alert);
 
@@ -101,6 +102,7 @@ const Home = ({ firebase }) => {
                       setChatRoom={setChatRoom}
                       currentRoom={room}
                     />
+                    <SearchResults room={room} chat={chat} />
                   </div>
                 </Column>
                 <Column size="12 md-10">

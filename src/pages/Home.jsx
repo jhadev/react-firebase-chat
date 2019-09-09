@@ -79,7 +79,7 @@ const Home = ({ firebase }) => {
   };
 
   return (
-    <>
+    <div style={{ scrollBehavior: chat.length < 50 ? 'smooth' : 'auto' }}>
       <div className="text-center">
         <h1 className=" welcome my-4">Welcome, {authUser.email}</h1>
         <button
@@ -151,7 +151,7 @@ const Home = ({ firebase }) => {
           />
         </Container>
       )}
-    </>
+    </div>
   );
 };
 

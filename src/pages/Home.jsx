@@ -8,7 +8,7 @@ import Message from '../components/Message';
 import MessageForm from '../components/MessageForm';
 import ChatList from '../components/ChatList';
 import Container from '../components/common/Container';
-import SearchResults from '../components/SearchResults';
+import Search from '../components/Search';
 import alert from '../sounds/sent.mp3';
 const alertSound = new Audio(alert);
 
@@ -143,7 +143,7 @@ const Home = ({ firebase }) => {
         </>
       ) : (
         <Container>
-          <SearchResults
+          <Search
             showChat={showChat}
             dispatch={dispatch}
             room={room}

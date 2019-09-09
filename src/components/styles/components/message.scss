@@ -11,6 +11,17 @@
   font-size: 0.95rem;
 }
 
+.user-search-time {
+  font-style: italic;
+  font-size: 0.6rem;
+  // margin: 2px 0px;
+}
+
+.user-search-name {
+  font-weight: bold;
+  font-size: 0.7rem;
+}
+
 @media #{$tablet} {
   .time {
     font-style: italic;

@@ -8,6 +8,7 @@ import Message from '../components/Message';
 import MessageForm from '../components/MessageForm';
 import ChatList from '../components/ChatList';
 import Container from '../components/common/Container';
+import Search from '../components/Search';
 import alert from '../sounds/sent.mp3';
 const alertSound = new Audio(alert);
 
@@ -78,7 +79,7 @@ const Home = ({ firebase }) => {
   };
 
   return (
-    <>
+    <div style={{ scrollBehavior: chat.length < 50 ? 'smooth' : 'auto' }}>
       <div className="text-center">
         <h1 className=" welcome my-4">Welcome, {authUser.email}</h1>
         <button
@@ -87,7 +88,7 @@ const Home = ({ firebase }) => {
           {!showChat ? 'Show Chat' : 'Hide Chat'}
         </button>
       </div>
-      {showChat && (
+      {showChat ? (
         <>
           <div className="white-space">
             <Container>
@@ -101,6 +102,11 @@ const Home = ({ firebase }) => {
                       setChatRoom={setChatRoom}
                       currentRoom={room}
                     />
+                    <button
+                      className={`btn btn-${showChat} btn-block`}
+                      onClick={() => dispatch({ type: 'TOGGLE_CHAT' })}>
+                      {!showChat ? 'Show Chat' : `Search ${room}`}
+                    </button>
                   </div>
                 </Column>
                 <Column size="12 md-10">
@@ -135,8 +141,17 @@ const Home = ({ firebase }) => {
           </div>
           <div id="bottom" />
         </>
+      ) : (
+        <Container>
+          <Search
+            showChat={showChat}
+            dispatch={dispatch}
+            room={room}
+            chat={chat}
+          />
+        </Container>
       )}
-    </>
+    </div>
   );
 };
 

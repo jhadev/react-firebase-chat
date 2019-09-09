@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Audio, Image, Link, Video } from './Matching';
 import './styles/components/message-body.scss';
 
-const MessageBody = ({ body, color }) => {
+const MessageBody = ({ body, color, search }) => {
   // extremely hacky
   const msgCopy = `${body}`;
 
@@ -88,7 +88,10 @@ const MessageBody = ({ body, color }) => {
   // media will stack on top of the words in the message.
 
   return (
-    <div className={`badge badge-${color} msgText mb-2`}>
+    <div
+      className={`badge badge-${color} ${
+        search ? 'msgSearch' : 'msgText'
+      } mb-2`}>
       {matchesDone.length
         ? matchesDone.map((match, index) => (
             <div key={match.props.url.concat(index + 1)}>{match}</div>

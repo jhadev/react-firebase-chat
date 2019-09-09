@@ -3,7 +3,7 @@
 @import '../src//components/styles/fonts';
 
 html {
-  scroll-behavior: smooth;
+  // scroll-behavior: smooth;
   min-height: 100vh;
 }
 
@@ -28,6 +28,10 @@ body {
   height: 8vh;
 }
 
+.spacer {
+  height: 8vh;
+}
+
 .white-space {
   min-height: calc(100vh - 86px);
 }
@@ -40,12 +44,74 @@ body {
 .btn-true:hover {
   background-color: $user-color !important;
   color: $text-color;
+
+  &:active,
+  &:focus {
+    outline: none !important;
+    box-shadow: none;
+  }
 }
 
 .btn-false,
 .btn-false:hover {
   background-color: $receiver-color;
   color: $text-color;
+
+  span {
+    font-style: italic;
+  }
+
+  // &:active,
+  // &:focus {
+  //   outline: none !important;
+  //   box-shadow: none;
+  // }
+}
+
+.btn-outline-true {
+
+  border-color: $user-color !important;
+  color: $user-color;
+  background-color: transparent;
+
+  &:hover {
+    color: $text-color;
+    background-color: $user-color;
+  }
+
+  // &:active,
+  // &:focus {
+  //   outline: none !important;
+  //   box-shadow: none;
+  // }
+}
+
+.btn-outline-false {
+  border-color: $receiver-color !important;
+  color: $receiver-color;
+  background-color: transparent;
+
+
+  &:hover {
+    color: $text-color;
+    background-color: $receiver-color;
+  }
+
+  &:active,
+  &:focus {
+    outline: none !important;
+    box-shadow: none;
+  }
+}
+
+.searchDisplay {
+  background-color: $text-color;
+  padding: 10px;
+}
+
+.filter-bg {
+  background-color: #fff;
+  z-index: 1;
 }
 
 @media #{$tablet} {

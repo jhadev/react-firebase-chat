@@ -46,6 +46,10 @@ body {
 .btn-false:hover {
   background-color: $receiver-color;
   color: $text-color;
+
+  span {
+    font-style: italic;
+  }
 }
 
 @media #{$tablet} {

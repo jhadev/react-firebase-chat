@@ -3,6 +3,7 @@ import MessageBody from './MessageBody';
 import PropTypes from 'prop-types';
 import './styles/components/message.scss';
 
+// search prop is only necessary for alt way of handling search
 const User = ({ user, search }) => (
   <div className={`mb-1 ${!search ? 'user-name' : 'user-search-name'}`}>
     {user}

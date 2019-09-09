@@ -88,7 +88,7 @@ const Home = ({ firebase }) => {
           {!showChat ? 'Show Chat' : 'Hide Chat'}
         </button>
       </div>
-      {showChat && (
+      {showChat ? (
         <>
           <div className="white-space">
             <Container>
@@ -102,7 +102,11 @@ const Home = ({ firebase }) => {
                       setChatRoom={setChatRoom}
                       currentRoom={room}
                     />
-                    <SearchResults room={room} chat={chat} />
+                    <button
+                      className={`btn btn-${showChat} btn-block`}
+                      onClick={() => dispatch({ type: 'TOGGLE_CHAT' })}>
+                      {!showChat ? 'Show Chat' : `Search ${room}`}
+                    </button>
                   </div>
                 </Column>
                 <Column size="12 md-10">
@@ -137,6 +141,15 @@ const Home = ({ firebase }) => {
           </div>
           <div id="bottom" />
         </>
+      ) : (
+        <Container>
+          <SearchResults
+            showChat={showChat}
+            dispatch={dispatch}
+            room={room}
+            chat={chat}
+          />
+        </Container>
       )}
     </>
   );

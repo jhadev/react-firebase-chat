@@ -5,12 +5,12 @@ import './styles/components/message.scss';
 
 // search prop is only necessary for alt way of handling search
 const User = ({ user, search }) => (
-  <div className={`mb-1 ${!search ? 'user-name' : 'user-search-name'}`}>
+  <div className={`mb-1 mx-1 ${!search ? 'user-name' : 'user-search-name'}`}>
     {user}
   </div>
 );
 const Time = ({ timestamp, search }) => (
-  <div className={`mb-1 ${!search ? 'time' : 'user-search-time'}`}>
+  <div className={`mb-1 mx-1 ${!search ? 'time' : 'user-search-time'}`}>
     {timestamp}
   </div>
 );

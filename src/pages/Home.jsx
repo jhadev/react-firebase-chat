@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useReducer } from 'react';
+import React, { useEffect, useContext, useReducer, useCallback } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
 import { INITIAL_STATE, reducer } from '../reducers/chatReducer';
@@ -19,13 +19,29 @@ const Home = ({ firebase }) => {
     INITIAL_STATE
   );
 
-  const scrollToBottom = () => {
-    document.getElementById('bottom').scrollIntoView(false);
-  };
+  const scrollToBottom = useCallback(() => {
+    if (chat.length > 50) {
+      document.getElementById('bottom').scrollIntoView(false);
+    } else {
+      document.getElementById('bottom').scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+        inline: 'nearest'
+      });
+    }
+  }, [chat.length]);
 
-  const scrollToTop = () => {
-    window.scrollTo(0, 0);
-  };
+  const scrollToTop = useCallback(() => {
+    if (chat.length > 50) {
+      window.scrollTo(0, 0);
+    } else {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }
+  }, [chat.length]);
 
   useEffect(() => {
     firebase
@@ -54,7 +70,7 @@ const Home = ({ firebase }) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [chat]);
+  }, [chat, scrollToBottom]);
 
   const setChatRoom = event => {
     const { value } = event.target;
@@ -79,7 +95,7 @@ const Home = ({ firebase }) => {
   };
 
   return (
-    <div style={{ scrollBehavior: chat.length < 50 ? 'smooth' : 'auto' }}>
+    <div>
       <div className="text-center">
         <h1 className=" welcome my-4">Welcome, {authUser.email}</h1>
         <button

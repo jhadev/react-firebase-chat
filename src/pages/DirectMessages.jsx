@@ -1,4 +1,4 @@
-import React, { useReducer, useContext, useEffect } from 'react';
+import React, { useReducer, useContext, useEffect, useCallback } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
 import { INITIAL_STATE, reducer } from '../reducers/dmReducer';
@@ -18,14 +18,29 @@ const DirectMessages = ({ firebase }) => {
     reducer,
     INITIAL_STATE
   );
+  const scrollToBottom = useCallback(() => {
+    if (chat.length > 50) {
+      document.getElementById('bottom').scrollIntoView(false);
+    } else {
+      document.getElementById('bottom').scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+        inline: 'nearest'
+      });
+    }
+  }, [chat.length]);
 
-  const scrollToBottom = () => {
-    document.getElementById('bottom').scrollIntoView(false);
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo(0, 0);
-  };
+  const scrollToTop = useCallback(() => {
+    if (chat.length > 50) {
+      window.scrollTo(0, 0);
+    } else {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }
+  }, [chat.length]);
 
   useEffect(() => {
     const handleUsers = snapshot => {
@@ -69,7 +84,7 @@ const DirectMessages = ({ firebase }) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [chat]);
+  }, [chat, scrollToBottom]);
 
   const setChatRoom = event => {
     const { value } = event.target;

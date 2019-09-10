@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import ChatList from './ChatList';
 // import Footer from './common/Footer';
@@ -38,12 +37,16 @@ const MessageForm = ({
   const maxCount = 200;
 
   useEffect(() => {
+    setScrollDirection(false);
+  }, [currentRoom]);
+
+  useEffect(() => {
     if (scrollTop) {
       scrollToTop();
     } else {
       scrollToBottom();
     }
-  }, [scrollTop]);
+  }, [scrollToBottom, scrollToTop, scrollTop]);
 
   const sendNewMessage = e => {
     e.preventDefault();
@@ -129,7 +132,9 @@ const MessageForm = ({
             <Col md={10} sm={12}>
               <InputGroup className="my-2" size="md">
                 <InputGroupAddon
-                  onClick={() => setScrollDirection(!scrollTop)}
+                  onClick={() =>
+                    setScrollDirection(prevDirection => !prevDirection)
+                  }
                   addonType="prepend">
                   <InputGroupText id="scrollToTop">
                     {!scrollTop ? (

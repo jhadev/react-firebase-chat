@@ -95,9 +95,11 @@ const DirectMessages = ({ firebase }) => {
     return (
       <div
         key={id || idx}
-        className={`animated zoomIn d-flex flex-column my-2 align-items-${
-          authUser.email === user ? 'end' : 'start'
-        }`}>
+        className={`animated ${
+          authUser.email === user
+            ? 'zoomInRight align-items-end'
+            : 'zoomInLeft align-items-start'
+        } faster d-flex flex-column my-2`}>
         <Message
           color={authUser.email === user ? 'user' : 'receiver'}
           message={message}

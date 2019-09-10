@@ -100,7 +100,7 @@ const Search = props => {
             <div className="spacer" />
             <div className="form-group mt-2">
               <label htmlFor="search-input">
-                Search for messages in: {props.room}
+                Search in: <b>{props.room}</b>
               </label>
               <input
                 className="form-control mb-2"

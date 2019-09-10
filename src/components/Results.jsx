@@ -33,24 +33,26 @@ const Results = props => {
             })}
         </div>
       </div>
-      {props.results.map(({ user, timestamp, message, id }, index) => {
-        return (
-          <div
-            key={id || index}
-            className={`animated ${
-              props.authUser.email === user ? 'slideInRight' : 'slideInLeft'
-            } faster d-flex flex-column my-2 align-items-${
-              props.authUser.email === user ? 'end' : 'start'
-            }`}>
-            <Message
-              color={props.authUser.email === user ? 'user' : 'receiver'}
-              message={message}
-              user={user}
-              timestamp={timestamp}
-            />
-          </div>
-        );
-      })}
+      <div className="mt-4">
+        {props.results.map(({ user, timestamp, message, id }, index) => {
+          return (
+            <div
+              key={id || index}
+              className={`animated align-items-${
+                props.authUser.email === user
+                  ? 'end slideInRight'
+                  : 'start slideInLeft'
+              } faster d-flex flex-column my-2`}>
+              <Message
+                color={props.authUser.email === user ? 'user' : 'receiver'}
+                message={message}
+                user={user}
+                timestamp={timestamp}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

@@ -107,6 +107,8 @@ body {
 .searchDisplay {
   background-color: $text-color;
   padding: 10px;
+  margin-top: 2.3rem;
+  margin-bottom: 2.3rem;
 }
 
 .filter-bg {
@@ -129,7 +131,15 @@ body {
     position: -webkit-sticky;
   }
 
-  #spacer {
-    height: 0vh;
+  .searchDisplay {
+    background-color: $text-color;
+    padding: 10px;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+  }
+
+  #spacer,
+  .spacer {
+    height: 6vh;
   }
 }

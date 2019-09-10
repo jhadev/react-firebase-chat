@@ -3,7 +3,6 @@ import AuthUserContext from './Session/context';
 import Row from './common/Row';
 import Column from './common/Column';
 import Results from './Results';
-import FilteredResults from './FilteredResults';
 import { useForm } from '../hooks/useForm';
 import searchGif from '../images/search.gif';
 import frank from '../images/frank.gif';
@@ -49,7 +48,12 @@ const Search = props => {
         filteredResults: []
       });
     } else {
-      setFormState({ results: [], filter: false, userToFilter: '' });
+      setFormState({
+        results: [],
+        filteredResults: [],
+        filter: false,
+        userToFilter: ''
+      });
     }
   }, [formState.search, props.chat, setFormState]);
 
@@ -117,18 +121,14 @@ const Search = props => {
           </div>
         </Column>
         <Column size={'md-9 12'}>
-          {formState.results.length > 0 && !formState.filter ? (
+          {formState.results.length > 0 ||
+          formState.filteredResults.length > 0 ? (
             <Results
-              results={formState.results}
-              displayUsers={displayUsers}
-              search={formState.search}
-              userToFilter={formState.userToFilter}
-              filterByUser={filterByUser}
-              authUser={authUser}
-            />
-          ) : formState.filteredResults.length > 0 && formState.filter ? (
-            <FilteredResults
-              filteredResults={formState.filteredResults}
+              results={
+                !formState.filter
+                  ? formState.results
+                  : formState.filteredResults
+              }
               displayUsers={displayUsers}
               search={formState.search}
               userToFilter={formState.userToFilter}

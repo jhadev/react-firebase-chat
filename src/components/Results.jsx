@@ -11,6 +11,12 @@ const Results = props => {
             Displaying {props.results.length} results for{' '}
             <span className="font-italic">{`'${props.search}'`}</span>
           </h4>
+          {props.userToFilter && (
+            <div className="font-weight-bold my-2">
+              {' '}
+              {` by: ${props.userToFilter}`}
+            </div>
+          )}
           {props.displayUsers.length > 2 &&
             props.displayUsers.map((user, index) => {
               return (
@@ -31,7 +37,9 @@ const Results = props => {
         return (
           <div
             key={id || index}
-            className={`animated zoomIn d-flex flex-column my-2 align-items-${
+            className={`animated ${
+              props.authUser.email === user ? 'slideInRight' : 'slideInLeft'
+            } faster d-flex flex-column my-2 align-items-${
               props.authUser.email === user ? 'end' : 'start'
             }`}>
             <Message

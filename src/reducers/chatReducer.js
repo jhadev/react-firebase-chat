@@ -2,7 +2,8 @@ const INITIAL_STATE = {
   showChat: true,
   chat: [],
   room: 'chat',
-  roomList: []
+  roomList: [],
+  allUsers: []
 };
 
 const reducer = (state, action) => {
@@ -15,6 +16,8 @@ const reducer = (state, action) => {
       return { ...state, room: action.room };
     case 'SET_ROOM_LIST':
       return { ...state, roomList: action.roomList };
+    case 'SET_USERS':
+      return { ...state, allUsers: action.allUsers };
     default:
       return INITIAL_STATE;
   }

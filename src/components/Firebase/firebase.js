@@ -25,7 +25,10 @@ class Firebase {
   doSignInUser = (email, password) =>
     this.auth.signInWithEmailAndPassword(email, password);
 
-  doSignOutUser = () => this.auth.signOut();
+  doSignOutUser = (authUser, status = false) => {
+    this.setOnlineStatus(authUser, status);
+    return this.auth.signOut();
+  };
 
   doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
@@ -49,6 +52,23 @@ class Firebase {
   chat = room => this.db.ref(room);
   //match the location where users are stored based on their uid
   user = uid => this.db.ref(`users/${uid}`);
+
+  setOnlineStatus = (authUser, status) => {
+    this.db.ref(`users/${authUser.uid}`).update({ online: status });
+  };
+
+  getOnlineStatus = authUser => {
+    this.db
+      .ref(`users/${authUser.uid}`)
+      .on('value')
+      .then(snapshot => {
+        if (snapshot.val()) {
+          return snapshot.val().online;
+        }
+      })
+      .catch(err => console.log(err));
+  };
+  // setOnlineStatus = uid => this.db.ref(`users/${uid}`).
 
   dms = () => this.db.ref('dms');
 

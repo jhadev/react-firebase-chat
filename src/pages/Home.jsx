@@ -192,6 +192,8 @@ const Home = ({ firebase }) => {
             dispatch={dispatch}
             room={room}
             chat={chat}
+            getOnlineStatus={getOnlineStatus}
+            allUsers={allUsers}
           />
         </Container>
       )}

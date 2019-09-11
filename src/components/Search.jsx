@@ -134,6 +134,8 @@ const Search = props => {
               userToFilter={formState.userToFilter}
               filterByUser={filterByUser}
               authUser={authUser}
+              getOnlineStatus={props.getOnlineStatus}
+              allUsers={props.allUsers}
             />
           ) : (
             <div className="text-center">

@@ -103,7 +103,6 @@ const Home = ({ firebase }) => {
 
   const handleLayout = ({ user, timestamp, message, id }, idx) => {
     const status = getOnlineStatus(user);
-    console.log(status);
 
     return (
       <div

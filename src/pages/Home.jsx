@@ -14,7 +14,7 @@ const alertSound = new Audio(alert);
 
 const Home = ({ firebase }) => {
   const authUser = useContext(AuthUserContext);
-  const [{ showChat, chat, room, roomList }, dispatch] = useReducer(
+  const [{ showChat, allUsers, chat, room, roomList }, dispatch] = useReducer(
     reducer,
     INITIAL_STATE
   );
@@ -42,6 +42,23 @@ const Home = ({ firebase }) => {
       });
     }
   }, [chat.length]);
+
+  useEffect(() => {
+    const handleUsers = snapshot => {
+      const usersObj = snapshot.val();
+      const usersArr = Object.keys(usersObj).map(key => ({
+        ...usersObj[key],
+        uid: key
+      }));
+      const allUsers = usersArr;
+      dispatch({ type: 'SET_USERS', allUsers });
+    };
+    // get all users other than authUser
+    firebase.users().on('value', handleUsers);
+    return () => {
+      firebase.users().off('value', handleUsers);
+    };
+  }, [authUser.email, firebase]);
 
   useEffect(() => {
     firebase
@@ -77,7 +94,16 @@ const Home = ({ firebase }) => {
     dispatch({ type: 'SET_ROOM', room: value });
   };
 
+  const getOnlineStatus = args => {
+    if (allUsers) {
+      const findUser = allUsers.find(user => user.email === args);
+      return findUser;
+    }
+  };
+
   const handleLayout = ({ user, timestamp, message, id }, idx) => {
+    const status = getOnlineStatus(user);
+
     return (
       <div
         key={id || idx}
@@ -86,6 +112,7 @@ const Home = ({ firebase }) => {
         } faster d-flex flex-column my-2`}>
         <Message
           color={authUser.email === user ? 'user' : 'receiver'}
+          status={status ? status.online : null}
           message={message}
           user={user}
           timestamp={timestamp}
@@ -129,7 +156,7 @@ const Home = ({ firebase }) => {
                   <div className="wrapper">
                     <div id="spacer" />
                     <>
-                      {chat.length > 0 ? (
+                      {chat.length > 0 && allUsers.length > 0 ? (
                         chat.map((message, idx) => handleLayout(message, idx))
                       ) : (
                         <h3 className="text-center text-dark">
@@ -164,6 +191,8 @@ const Home = ({ firebase }) => {
             dispatch={dispatch}
             room={room}
             chat={chat}
+            getOnlineStatus={getOnlineStatus}
+            allUsers={allUsers}
           />
         </Container>
       )}

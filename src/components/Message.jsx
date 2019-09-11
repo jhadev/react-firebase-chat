@@ -4,22 +4,29 @@ import PropTypes from 'prop-types';
 import './styles/components/message.scss';
 
 // search prop is only necessary for alt way of handling search
-const User = ({ user, search }) => (
-  <div className={`mb-1 mx-1 ${!search ? 'user-name' : 'user-search-name'}`}>
+const User = ({ user, status }) => (
+  <div className={`mb-1 mx-1 user-name`}>
+    <span>
+      {status ? (
+        <i className="fas fa-circle"></i>
+      ) : (
+        <i className="far fa-circle"></i>
+      )}
+      {'  '}
+    </span>
     {user}
   </div>
 );
-const Time = ({ timestamp, search }) => (
-  <div className={`mb-1 mx-1 ${!search ? 'time' : 'user-search-time'}`}>
-    {timestamp}
-  </div>
+
+const Time = ({ timestamp }) => (
+  <div className={`mb-1 mx-1 time`}>{timestamp}</div>
 );
 
-const Message = ({ user, timestamp, message, color, search }) => (
+const Message = ({ user, timestamp, message, color, status }) => (
   <>
-    <User search={search} user={user} />
-    <Time search={search} timestamp={timestamp} />
-    <MessageBody search={search} body={message} color={color} />
+    <User status={status} user={user} />
+    <Time timestamp={timestamp} />
+    <MessageBody body={message} color={color} />
   </>
 );
 

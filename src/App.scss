@@ -116,6 +116,10 @@ body {
   z-index: 1;
 }
 
+.fas.fa-circle {
+  color: rgb(86, 255, 64) !important;
+}
+
 @media #{$tablet} {
 
   .welcome {

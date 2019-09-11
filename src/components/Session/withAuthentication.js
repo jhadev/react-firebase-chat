@@ -8,10 +8,20 @@ const withAuthentication = Component => {
 
     useEffect(() => {
       const listener = props.firebase.auth.onAuthStateChanged(authUser => {
-        authUser ? setAuthUser(authUser) : setAuthUser(null);
+        if (authUser) {
+          props.firebase.setOnlineStatus(authUser, true);
+          localStorage.setItem('uid', authUser.uid);
+          setAuthUser({ ...authUser, online: true });
+        } else {
+          // const uid = localStorage.getItem('uid');
+          // const uidObj = { uid };
+          // console.log(uidObj);
+          // props.firebase.setOnlineStatus(uidObj, false);
+          setAuthUser(null);
+        }
       });
       return () => listener();
-    }, [authUser, props.firebase.auth]);
+    }, [props.firebase]);
 
     return (
       <AuthUserContext.Provider value={authUser}>

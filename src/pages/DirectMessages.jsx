@@ -1,5 +1,4 @@
-import React, { useReducer, useContext, useEffect } from 'react';
-import AuthUserContext from '../components/Session/context';
+import React from 'react';
 import { withAuthorization } from '../components/Session/index';
 import { INITIAL_STATE, reducer } from '../reducers/dmReducer';
 import { useScroll } from '../hooks/useScroll';

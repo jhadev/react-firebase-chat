@@ -1,5 +1,4 @@
-import React, { useEffect, useContext, useReducer } from 'react';
-import AuthUserContext from '../components/Session/context';
+import React, { useEffect } from 'react';
 import { withAuthorization } from '../components/Session/index';
 import { INITIAL_STATE, reducer } from '../reducers/chatReducer';
 import { useChat } from '../hooks/useChat';
@@ -20,6 +19,9 @@ const Home = ({ firebase }) => {
     dispatch,
     authUser
   ] = useChat(reducer, INITIAL_STATE, firebase, 'chat');
+
+  // destructure individual state values, dispatch, and authUser from useChat return array
+  // initialize it with imported reducer and initial state, firebase prop, and type for effect switch.
 
   useEffect(() => {
     firebase

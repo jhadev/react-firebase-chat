@@ -51,7 +51,19 @@ const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
           name={room}
           onClick={dms ? e => setChatRoom(e) : setChatRoom}
           className="text-center">
-          {room}
+          {dms && (
+            <span>
+              {room.online ? (
+                <i className="fas fa-circle"></i>
+              ) : (
+                <i className="far fa-circle"></i>
+              )}
+            </span>
+          )}
+          <span>
+            {'  '}
+            {room}
+          </span>
         </ListGroupItem>
       ))}
     </ListGroup>

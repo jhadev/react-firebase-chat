@@ -68,6 +68,18 @@ body {
   // }
 }
 
+.react-switch-bg {
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+  outline: #fff;
+  border: solid;
+  border-color: #fff;
+  border-width: thin;
+}
+
+.switchLabel {
+  font-size: 80%;
+}
+
 .btn-outline-true {
 
   border-color: $user-color !important;
@@ -128,6 +140,11 @@ body {
 
   button {
     cursor: pointer;
+  }
+
+  .switchLabel {
+    font-size: 80%;
+    margin: 0;
   }
 
   .sticky-footer {

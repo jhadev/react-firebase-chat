@@ -9,8 +9,6 @@ import Container from '../components/common/Container';
 import ChatList from '../components/ChatList';
 import Message from '../components/Message';
 import MessageForm from '../components/MessageForm';
-// import alert from '../sounds/sent.mp3';
-// const alertSound = new Audio(alert);
 
 const DirectMessages = ({ firebase }) => {
   // destructure individual state values, dispatch, and authUser from useChat return array

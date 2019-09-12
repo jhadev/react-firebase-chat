@@ -10,8 +10,6 @@ import MessageForm from '../components/MessageForm';
 import ChatList from '../components/ChatList';
 import Container from '../components/common/Container';
 import Search from '../components/Search';
-// import alert from '../sounds/sent.mp3';
-// const alertSound = new Audio(alert);
 
 const Home = ({ firebase }) => {
   const [

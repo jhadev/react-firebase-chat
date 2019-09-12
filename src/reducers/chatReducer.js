@@ -3,7 +3,7 @@ const INITIAL_STATE = {
   chat: [],
   room: 'chat',
   roomList: [],
-  allUsers: []
+  users: []
 };
 
 const reducer = (state, action) => {
@@ -17,7 +17,7 @@ const reducer = (state, action) => {
     case 'SET_ROOM_LIST':
       return { ...state, roomList: action.roomList };
     case 'SET_USERS':
-      return { ...state, allUsers: action.allUsers };
+      return { ...state, users: action.users };
     default:
       return INITIAL_STATE;
   }

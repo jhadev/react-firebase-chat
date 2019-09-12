@@ -1,8 +1,8 @@
 import { useCallback, useEffect } from 'react';
 
-const useScroll = (arr, size) => {
+const useScroll = (arr, maxLength) => {
   const scrollToBottom = useCallback(() => {
-    if (arr.length > size) {
+    if (arr.length > maxLength) {
       document.getElementById('bottom').scrollIntoView(false);
     } else {
       document.getElementById('bottom').scrollIntoView({
@@ -11,10 +11,10 @@ const useScroll = (arr, size) => {
         inline: 'nearest'
       });
     }
-  }, [arr.length, size]);
+  }, [arr.length, maxLength]);
 
   const scrollToTop = useCallback(() => {
-    if (arr.length > size) {
+    if (arr.length > maxLength) {
       window.scrollTo(0, 0);
     } else {
       window.scrollTo({
@@ -23,7 +23,7 @@ const useScroll = (arr, size) => {
         behavior: 'smooth'
       });
     }
-  }, [arr.length, size]);
+  }, [arr.length, maxLength]);
 
   useEffect(() => {
     scrollToBottom();

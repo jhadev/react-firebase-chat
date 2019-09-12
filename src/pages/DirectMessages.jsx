@@ -23,15 +23,14 @@ const DirectMessages = ({ firebase }) => {
   useEffect(() => {
     const handleUsers = snapshot => {
       const usersObj = snapshot.val();
-      const usersArr = Object.keys(usersObj).map(key => ({
+      const users = Object.keys(usersObj).map(key => ({
         ...usersObj[key],
         uid: key
       }));
-      const allUsers = usersArr;
 
-      dispatch({ type: 'SET_USERS', users: allUsers });
+      dispatch({ type: 'SET_USERS', users });
     };
-    // get all users other than authUser
+    // get all users
     firebase.users().on('value', handleUsers);
     return () => {
       firebase.users().off('value', handleUsers);
@@ -59,6 +58,7 @@ const DirectMessages = ({ firebase }) => {
     };
   }, [authUser.email, firebase, userToDm]);
 
+  // pass down scroll funcs as props from here, useScroll takes array to track and max length to stop smooth scroll
   const { scrollToBottom, scrollToTop } = useScroll(chat, 50);
 
   const setChatRoom = event => {
@@ -66,14 +66,16 @@ const DirectMessages = ({ firebase }) => {
     dispatch({ type: 'SET_USER_TO_DM', userToDm: value });
   };
 
+  // filter authUser from list can't dm yourself
   const handleDmList = arr => {
     return arr.filter(({ email }) => email !== authUser.email);
   };
 
+  // get online status to display for each message.
   const getOnlineStatus = args => {
     if (users) {
-      const findUser = users.find(user => user.email === args);
-      return findUser;
+      const foundUser = users.find(user => user.email === args);
+      return foundUser;
     }
   };
 

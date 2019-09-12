@@ -15,7 +15,7 @@ const alertSound = new Audio(alert);
 
 const Home = ({ firebase }) => {
   const authUser = useContext(AuthUserContext);
-  const [{ showChat, allUsers, chat, room, roomList }, dispatch] = useReducer(
+  const [{ showChat, users, chat, room, roomList }, dispatch] = useReducer(
     reducer,
     INITIAL_STATE
   );
@@ -23,14 +23,14 @@ const Home = ({ firebase }) => {
   useEffect(() => {
     const handleUsers = snapshot => {
       const usersObj = snapshot.val();
-      const usersArr = Object.keys(usersObj).map(key => ({
+      const users = Object.keys(usersObj).map(key => ({
         ...usersObj[key],
         uid: key
       }));
-      const allUsers = usersArr;
-      dispatch({ type: 'SET_USERS', allUsers });
+
+      dispatch({ type: 'SET_USERS', users });
     };
-    // get all users other than authUser
+    // get all users
     firebase.users().on('value', handleUsers);
     return () => {
       firebase.users().off('value', handleUsers);
@@ -62,6 +62,7 @@ const Home = ({ firebase }) => {
     };
   }, [firebase, room]);
 
+  // pass down scroll funcs as props from here, useScroll takes array to track and max length to stop smooth scroll
   const { scrollToBottom, scrollToTop } = useScroll(chat, 50);
 
   const setChatRoom = event => {
@@ -69,10 +70,11 @@ const Home = ({ firebase }) => {
     dispatch({ type: 'SET_ROOM', room: value });
   };
 
+  // get online status to display for each message.
   const getOnlineStatus = args => {
-    if (allUsers) {
-      const findUser = allUsers.find(user => user.email === args);
-      return findUser;
+    if (users) {
+      const foundUser = users.find(user => user.email === args);
+      return foundUser;
     }
   };
 
@@ -131,7 +133,7 @@ const Home = ({ firebase }) => {
                   <div className="wrapper">
                     <div id="spacer" />
                     <>
-                      {chat.length > 0 && allUsers.length > 0 ? (
+                      {chat.length > 0 && users.length > 0 ? (
                         chat.map((message, idx) => handleLayout(message, idx))
                       ) : (
                         <h3 className="text-center text-dark">
@@ -167,7 +169,7 @@ const Home = ({ firebase }) => {
             room={room}
             chat={chat}
             getOnlineStatus={getOnlineStatus}
-            allUsers={allUsers}
+            users={users}
           />
         </Container>
       )}

@@ -3,60 +3,25 @@ import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
 import { INITIAL_STATE, reducer } from '../reducers/dmReducer';
 import { useScroll } from '../hooks/useScroll';
+import { useChat } from '../hooks/useChat';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
 import Container from '../components/common/Container';
 import ChatList from '../components/ChatList';
 import Message from '../components/Message';
 import MessageForm from '../components/MessageForm';
-import alert from '../sounds/sent.mp3';
-const alertSound = new Audio(alert);
+// import alert from '../sounds/sent.mp3';
+// const alertSound = new Audio(alert);
 
 const DirectMessages = ({ firebase }) => {
-  const authUser = useContext(AuthUserContext);
-
-  const [{ users, chat, userToDm }, dispatch] = useReducer(
+  // destructure individual state values, dispatch, and authUser from useChat return array
+  // initialize it with imported reducer and initial state, firebase prop, and type for effect switch.
+  const [{ users, chat, userToDm }, dispatch, authUser] = useChat(
     reducer,
-    INITIAL_STATE
+    INITIAL_STATE,
+    firebase,
+    'dms'
   );
-
-  useEffect(() => {
-    const handleUsers = snapshot => {
-      const usersObj = snapshot.val();
-      const users = Object.keys(usersObj).map(key => ({
-        ...usersObj[key],
-        uid: key
-      }));
-
-      dispatch({ type: 'SET_USERS', users });
-    };
-    // get all users
-    firebase.users().on('value', handleUsers);
-    return () => {
-      firebase.users().off('value', handleUsers);
-    };
-  }, [authUser.email, firebase]);
-
-  useEffect(() => {
-    const handleNewMessages = snapshot => {
-      if (snapshot.val()) {
-        const messages = Object.values(snapshot.val());
-
-        const filterByPersonToDm = messages.filter(
-          message =>
-            (message.user === authUser.email &&
-              message.receiver === userToDm) ||
-            (message.user === userToDm && message.receiver === authUser.email)
-        );
-        dispatch({ type: 'SET_CHAT', chat: filterByPersonToDm });
-        alertSound.play();
-      }
-    };
-    firebase.dms().on('value', handleNewMessages);
-    return () => {
-      firebase.dms().off('value', handleNewMessages);
-    };
-  }, [authUser.email, firebase, userToDm]);
 
   // pass down scroll funcs as props from here, useScroll takes array to track and max length to stop smooth scroll
   const { scrollToBottom, scrollToTop } = useScroll(chat, 50);

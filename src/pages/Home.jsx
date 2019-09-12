@@ -1,7 +1,8 @@
-import React, { useEffect, useContext, useReducer, useCallback } from 'react';
+import React, { useEffect, useContext, useReducer } from 'react';
 import AuthUserContext from '../components/Session/context';
 import { withAuthorization } from '../components/Session/index';
 import { INITIAL_STATE, reducer } from '../reducers/chatReducer';
+import { useScroll } from '../hooks/useScroll';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
 import Message from '../components/Message';
@@ -18,30 +19,6 @@ const Home = ({ firebase }) => {
     reducer,
     INITIAL_STATE
   );
-
-  const scrollToBottom = useCallback(() => {
-    if (chat.length > 50) {
-      document.getElementById('bottom').scrollIntoView(false);
-    } else {
-      document.getElementById('bottom').scrollIntoView({
-        behavior: 'smooth',
-        block: 'end',
-        inline: 'nearest'
-      });
-    }
-  }, [chat.length]);
-
-  const scrollToTop = useCallback(() => {
-    if (chat.length > 50) {
-      window.scrollTo(0, 0);
-    } else {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'smooth'
-      });
-    }
-  }, [chat.length]);
 
   useEffect(() => {
     const handleUsers = snapshot => {
@@ -85,9 +62,7 @@ const Home = ({ firebase }) => {
     };
   }, [firebase, room]);
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [chat, scrollToBottom]);
+  const { scrollToBottom, scrollToTop } = useScroll(chat, 50);
 
   const setChatRoom = event => {
     const { value } = event.target;

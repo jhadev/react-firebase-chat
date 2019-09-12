@@ -67,7 +67,7 @@ const DirectMessages = ({ firebase }) => {
   };
 
   const handleDmList = arr => {
-    return arr.filter(email => email !== authUser.email);
+    return arr.filter(({ email }) => email !== authUser.email);
   };
 
   const getOnlineStatus = args => {
@@ -97,7 +97,6 @@ const DirectMessages = ({ firebase }) => {
     );
   };
 
-  const usersList = handleDmList(users);
   const usersButNotAuthUser = handleDmList(users);
 
   return (
@@ -143,7 +142,7 @@ const DirectMessages = ({ firebase }) => {
         <Container>
           <MessageForm
             username={authUser.email}
-            rooms={usersList}
+            rooms={usersButNotAuthUser}
             receiver={userToDm}
             setChatRoom={setChatRoom}
             currentRoom={'dms'}

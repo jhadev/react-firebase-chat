@@ -10,6 +10,8 @@ import MessageForm from '../components/MessageForm';
 import ChatList from '../components/ChatList';
 import Container from '../components/common/Container';
 import Search from '../components/Search';
+import click from '../sounds/click.mp3';
+const clickSound = new Audio(click);
 
 const Home = ({ firebase }) => {
   const [
@@ -36,6 +38,7 @@ const Home = ({ firebase }) => {
   const setChatRoom = event => {
     const { value } = event.target;
     dispatch({ type: 'SET_ROOM', room: value });
+    clickSound.play();
   };
 
   // get online status to display for each message.

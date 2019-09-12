@@ -9,6 +9,8 @@ import Container from '../components/common/Container';
 import ChatList from '../components/ChatList';
 import Message from '../components/Message';
 import MessageForm from '../components/MessageForm';
+import click from '../sounds/click.mp3';
+const clickSound = new Audio(click);
 
 const DirectMessages = ({ firebase }) => {
   // destructure individual state values, dispatch, and authUser from useChat return array
@@ -26,6 +28,7 @@ const DirectMessages = ({ firebase }) => {
   const setChatRoom = event => {
     const { value } = event.target;
     dispatch({ type: 'SET_USER_TO_DM', userToDm: value });
+    clickSound.play();
   };
 
   // filter authUser from list can't dm yourself
@@ -73,7 +76,7 @@ const DirectMessages = ({ firebase }) => {
                 <div id="spacer" />
                 <h6 className="text-center">
                   You are chatting with:{' '}
-                  <p>{userToDm !== '' ? userToDm : 'Select A User'}</p>
+                  <p>{userToDm !== '' ? <b>{userToDm}</b> : <b>yourself</b>}</p>
                 </h6>
                 <ChatList
                   rooms={usersButNotAuthUser}
@@ -91,9 +94,14 @@ const DirectMessages = ({ firebase }) => {
                     chat.map((message, idx) => handleLayout(message, idx))
                   ) : (
                     <h3 className="text-center">
-                      {userToDm !== ''
-                        ? 'No messages with this user yet.'
-                        : 'Select a user to chat with.'}
+                      {userToDm !== '' ? (
+                        'No messages with this user yet.'
+                      ) : (
+                        <>
+                          <p>Select a user to chat with...</p>
+                          <p>or talk to yourself.</p>
+                        </>
+                      )}
                     </h3>
                   )}
                 </div>

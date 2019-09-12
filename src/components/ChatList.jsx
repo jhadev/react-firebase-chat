@@ -12,7 +12,6 @@ import './styles/components/chat-list.scss';
 
 const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
   const [dropdownOpen, setDropdown] = useState(false);
-  console.log(rooms);
 
   return dropdown ? (
     <Dropdown

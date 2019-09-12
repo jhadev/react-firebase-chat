@@ -15,7 +15,10 @@ import moment from 'moment';
 import 'emoji-mart/css/emoji-mart.css';
 import EmojiContainer from './EmojiContainer';
 import swal from '@sweetalert/with-react';
+import sent from '../sounds/sentmessage.mp3';
 import './styles/components/message-form.scss';
+
+const sentSound = new Audio(sent);
 
 const MessageForm = ({
   rooms,
@@ -58,7 +61,7 @@ const MessageForm = ({
         receiver: receiver ? receiver : ''
       };
       firebase.send(currentRoom, messageObj);
-
+      sentSound.play();
       setNewMessage('');
       setCounter(0);
     }

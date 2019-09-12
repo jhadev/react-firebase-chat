@@ -12,6 +12,7 @@ import './styles/components/chat-list.scss';
 
 const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
   const [dropdownOpen, setDropdown] = useState(false);
+  console.log(rooms);
 
   return dropdown ? (
     <Dropdown
@@ -49,21 +50,28 @@ const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
           key={room}
           value={room}
           name={room}
-          onClick={dms ? e => setChatRoom(e) : setChatRoom}
+          onClick={e => setChatRoom(e)}
           className="text-center">
-          {dms && (
-            <span>
+          {dms ? (
+            <>
               {room.online ? (
-                <i className="fas fa-circle"></i>
+                <>
+                  <i className="fas fa-circle"></i>
+                  {'  '}
+                  {room}
+                </>
               ) : (
-                <i className="far fa-circle"></i>
+                <>
+                  {' '}
+                  <i className="far fa-circle"></i>
+                  {'  '}
+                  {room}
+                </>
               )}
-            </span>
+            </>
+          ) : (
+            <>{room}</>
           )}
-          <span>
-            {'  '}
-            {room}
-          </span>
         </ListGroupItem>
       ))}
     </ListGroup>

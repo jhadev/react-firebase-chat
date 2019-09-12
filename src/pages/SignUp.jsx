@@ -55,13 +55,16 @@ const SignUpFormBase = props => {
 
     const { username, email, passwordOne } = formState;
 
+    const casedEmail = email.toLowerCase();
+
     props.firebase
-      .doCreateUser(email, passwordOne)
+      .doCreateUser(casedEmail, passwordOne)
       .then(authUser => {
         // creates the user in the firebase db using their username and email by referencing the auth db using the uid
         return props.firebase.user(authUser.user.uid).set({
           username,
-          email
+          email: casedEmail,
+          online: true
         });
       })
       .then(() => {

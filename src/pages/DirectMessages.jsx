@@ -49,9 +49,8 @@ const DirectMessages = ({ firebase }) => {
         ...usersObj[key],
         uid: key
       }));
-      const allUsers = usersArr
-        .map(user => user.email)
-        .filter(user => user !== authUser.email);
+      const allUsers = usersArr;
+
       dispatch({ type: 'SET_USERS', users: allUsers });
     };
     // get all users other than authUser
@@ -91,7 +90,22 @@ const DirectMessages = ({ firebase }) => {
     dispatch({ type: 'SET_USER_TO_DM', userToDm: value });
   };
 
+  const handleDmList = () => {
+    return users
+      .map(user => user.email)
+      .filter(email => email !== authUser.email);
+  };
+
+  const getOnlineStatus = args => {
+    if (users) {
+      const findUser = users.find(user => user.email === args);
+      return findUser;
+    }
+  };
+
   const handleLayout = ({ user, timestamp, message, id }, idx) => {
+    const status = getOnlineStatus(user);
+
     return (
       <div
         key={id || idx}
@@ -101,12 +115,15 @@ const DirectMessages = ({ firebase }) => {
         <Message
           color={authUser.email === user ? 'user' : 'receiver'}
           message={message}
+          status={status ? status.online : null}
           user={user}
           timestamp={timestamp}
         />
       </div>
     );
   };
+
+  const usersList = handleDmList();
 
   return (
     <>
@@ -121,7 +138,7 @@ const DirectMessages = ({ firebase }) => {
                   <p>{userToDm !== '' ? userToDm : 'Select A User'}</p>
                 </h6>
                 <ChatList
-                  rooms={users}
+                  rooms={usersList}
                   setChatRoom={setChatRoom}
                   currentRoom={userToDm}
                   dms
@@ -151,7 +168,7 @@ const DirectMessages = ({ firebase }) => {
         <Container>
           <MessageForm
             username={authUser.email}
-            rooms={users}
+            rooms={usersList}
             receiver={userToDm}
             setChatRoom={setChatRoom}
             currentRoom={'dms'}

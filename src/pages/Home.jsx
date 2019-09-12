@@ -129,6 +129,7 @@ const Home = ({ firebase }) => {
             <Container>
               <MessageForm
                 username={authUser.email}
+                uid={authUser.uid}
                 rooms={roomList}
                 setChatRoom={setChatRoom}
                 currentRoom={room}

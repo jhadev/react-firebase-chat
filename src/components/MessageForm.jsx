@@ -29,6 +29,7 @@ const MessageForm = ({
   scrollToTop,
   scrollToBottom,
   receiver,
+  uid,
   dms
 }) => {
   const [newMessage, setNewMessage] = useState('');
@@ -55,6 +56,7 @@ const MessageForm = ({
     if (newMessage !== '' && newMessage.length > 1 && charCounter <= maxCount) {
       let messageObj = {
         id: uuid(),
+        uid,
         user: username,
         timestamp: moment().format('LLLL'),
         message: newMessage,

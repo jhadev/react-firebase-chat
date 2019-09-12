@@ -116,6 +116,7 @@ const DirectMessages = ({ firebase }) => {
         <Container>
           <MessageForm
             username={authUser.email}
+            uid={authUser.uid}
             rooms={usersButNotAuthUser}
             receiver={userToDm}
             setChatRoom={setChatRoom}

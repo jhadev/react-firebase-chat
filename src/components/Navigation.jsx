@@ -10,7 +10,7 @@ import {
   NavItem
 } from 'reactstrap';
 import Switch from 'react-switch';
-import { AuthUserContext } from './Session/index';
+import { AuthUserContext } from './Session';
 import { withFirebase } from './Firebase';
 import SignOut from './SignOut';
 import * as ROLES from '../constants/roles';

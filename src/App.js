@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { withAuthentication } from './components/Session/index';
+import { withAuthentication } from './components/Session';
 import * as ROUTES from './constants/routes';
 import Navigation from './components/Navigation';
 import Admin from './pages/Admin';

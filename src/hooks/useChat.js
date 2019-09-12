@@ -1,5 +1,5 @@
 import { useEffect, useContext, useReducer } from 'react';
-import AuthUserContext from '../components/Session/context';
+import { AuthUserContext } from '../components/Session';
 import alert from '../sounds/sent.mp3';
 const alertSound = new Audio(alert);
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useRef } from 'react';
-import AuthUserContext from './Session/context';
+import { AuthUserContext } from './Session';
 import Row from './common/Row';
 import Column from './common/Column';
 import Results from './Results';

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import ChatList from './ChatList';
-// import Footer from './common/Footer';
 import {
   Col,
   Form,

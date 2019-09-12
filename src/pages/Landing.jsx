@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import * as ROUTES from '../constants/routes';
-import AuthUserContext from '../components/Session/context';
+import { AuthUserContext } from '../components/Session';
 import SignIn from './SignIn';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';

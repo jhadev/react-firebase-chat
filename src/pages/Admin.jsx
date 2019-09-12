@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { withAuthorization } from '../components/Session/index';
+import { withAuthorization } from '../components/Session';
 import { useForm } from '../hooks/formHook';
 import AllUsers from '../components/AllUsers';
 import ChatList from '../components/ChatList';

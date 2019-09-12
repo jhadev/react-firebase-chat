@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import Container from '../components/common/Container';
 import { PasswordForgetForm } from './PasswordForget';
 import PasswordChangeForm from '../components/PasswordChange';
-import { withAuthorization } from '../components/Session/index';
-import AuthUserContext from '../components/Session/context';
+import { withAuthorization } from '../components/Session';
+import { AuthUserContext } from '../components/Session';
 
 const Account = () => {
   const authUser = useContext(AuthUserContext);

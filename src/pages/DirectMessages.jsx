@@ -1,5 +1,5 @@
 import React from 'react';
-import { withAuthorization } from '../components/Session/index';
+import { withAuthorization } from '../components/Session';
 import { INITIAL_STATE, reducer } from '../reducers/dmReducer';
 import { useScroll } from '../hooks/useScroll';
 import { useChat } from '../hooks/useChat';

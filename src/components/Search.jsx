@@ -135,7 +135,7 @@ const Search = props => {
               filterByUser={filterByUser}
               authUser={authUser}
               getOnlineStatus={props.getOnlineStatus}
-              allUsers={props.allUsers}
+              users={props.users}
             />
           ) : (
             <div className="text-center">

@@ -40,7 +40,6 @@ const useChat = (reducer, INITIAL_STATE, firebase, type) => {
                 message.receiver === authUser.email)
           );
           dispatch({ type: 'SET_CHAT', chat: filterByPersonToDm });
-          alertSound.play();
         }
       };
       firebase.dms().on('value', handleNewMessages);
@@ -54,7 +53,6 @@ const useChat = (reducer, INITIAL_STATE, firebase, type) => {
           // remove first msg bc it is a placeholder to create a new room
           messages.shift();
           dispatch({ type: 'SET_MESSAGES', chat: messages });
-          alertSound.play();
         }
       };
       firebase.chat(state.room).on('value', handleNewMessages);
@@ -63,6 +61,14 @@ const useChat = (reducer, INITIAL_STATE, firebase, type) => {
       };
     }
   }, [authUser.email, dispatch, firebase, type, state.userToDm, state.room]);
+
+  useEffect(() => {
+    if (state.chat.length > 0) {
+      if (state.chat[state.chat.length - 1].user !== authUser.email) {
+        alertSound.play();
+      }
+    }
+  }, [authUser.email, state.chat]);
 
   return [state, dispatch, authUser];
 };

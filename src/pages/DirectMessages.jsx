@@ -9,6 +9,8 @@ import Container from '../components/common/Container';
 import ChatList from '../components/ChatList';
 import Message from '../components/Message';
 import MessageForm from '../components/MessageForm';
+import click from '../sounds/click.mp3';
+const clickSound = new Audio(click);
 
 const DirectMessages = ({ firebase }) => {
   // destructure individual state values, dispatch, and authUser from useChat return array
@@ -26,6 +28,7 @@ const DirectMessages = ({ firebase }) => {
   const setChatRoom = event => {
     const { value } = event.target;
     dispatch({ type: 'SET_USER_TO_DM', userToDm: value });
+    clickSound.play();
   };
 
   // filter authUser from list can't dm yourself

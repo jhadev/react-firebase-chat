@@ -22,6 +22,13 @@ body {
 .sticky-top {
   position: -webkit-sticky !important;
   z-index: 0;
+
+  h6 {
+    p {
+      color: $receiver-color !important;
+      font-weight: bold;
+    }
+  }
 }
 
 #spacer {

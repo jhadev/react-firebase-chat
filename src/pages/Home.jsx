@@ -87,7 +87,9 @@ const Home = ({ firebase }) => {
                 <Column size="12 md-2">
                   <div className="sticky-top">
                     <div id="spacer" />
-                    <h6>Current Room: {room}</h6>
+                    <h6 className="text-center">
+                      current room: <p className="font-italic mt-2">{room}</p>
+                    </h6>
                     <ChatList
                       rooms={roomList}
                       setChatRoom={setChatRoom}
@@ -96,7 +98,13 @@ const Home = ({ firebase }) => {
                     <button
                       className={`btn btn-${showChat} btn-block`}
                       onClick={() => dispatch({ type: 'TOGGLE_CHAT' })}>
-                      {!showChat ? 'Show Chat' : `Search ${room}`}
+                      {!showChat ? (
+                        'Show Chat'
+                      ) : (
+                        <>
+                          Search <span className="font-italic">{room}</span>
+                        </>
+                      )}
                     </button>
                   </div>
                 </Column>

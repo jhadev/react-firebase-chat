@@ -76,7 +76,9 @@ const DirectMessages = ({ firebase }) => {
                 <div id="spacer" />
                 <h6 className="text-center">
                   You are chatting with:{' '}
-                  <p>{userToDm !== '' ? <b>{userToDm}</b> : <b>yourself</b>}</p>
+                  <p className="mt-1 font-italic">
+                    {userToDm !== '' ? userToDm : 'yourself'}
+                  </p>
                 </h6>
                 <ChatList
                   rooms={usersButNotAuthUser}

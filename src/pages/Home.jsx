@@ -1,7 +1,7 @@
-import React, { useEffect, useContext, useReducer } from 'react';
-import AuthUserContext from '../components/Session/context';
-import { withAuthorization } from '../components/Session/index';
+import React, { useEffect } from 'react';
+import { withAuthorization } from '../components/Session';
 import { INITIAL_STATE, reducer } from '../reducers/chatReducer';
+import { useChat } from '../hooks/useChat';
 import { useScroll } from '../hooks/useScroll';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
@@ -10,32 +10,16 @@ import MessageForm from '../components/MessageForm';
 import ChatList from '../components/ChatList';
 import Container from '../components/common/Container';
 import Search from '../components/Search';
-import alert from '../sounds/sent.mp3';
-const alertSound = new Audio(alert);
 
 const Home = ({ firebase }) => {
-  const authUser = useContext(AuthUserContext);
-  const [{ showChat, users, chat, room, roomList }, dispatch] = useReducer(
-    reducer,
-    INITIAL_STATE
-  );
+  const [
+    { showChat, users, chat, room, roomList },
+    dispatch,
+    authUser
+  ] = useChat(reducer, INITIAL_STATE, firebase, 'chat');
 
-  useEffect(() => {
-    const handleUsers = snapshot => {
-      const usersObj = snapshot.val();
-      const users = Object.keys(usersObj).map(key => ({
-        ...usersObj[key],
-        uid: key
-      }));
-
-      dispatch({ type: 'SET_USERS', users });
-    };
-    // get all users
-    firebase.users().on('value', handleUsers);
-    return () => {
-      firebase.users().off('value', handleUsers);
-    };
-  }, [authUser.email, firebase]);
+  // destructure individual state values, dispatch, and authUser from useChat return array
+  // initialize it with imported reducer and initial state, firebase prop, and type for effect switch.
 
   useEffect(() => {
     firebase
@@ -44,23 +28,7 @@ const Home = ({ firebase }) => {
         dispatch({ type: 'SET_ROOM_LIST', roomList: res });
       })
       .catch(err => console.log(err));
-  }, [firebase]);
-
-  useEffect(() => {
-    const handleNewMessages = snapshot => {
-      if (snapshot.val()) {
-        const messages = Object.values(snapshot.val());
-        // remove first msg bc it is a placeholder to create a new room
-        messages.shift();
-        dispatch({ type: 'SET_MESSAGES', chat: messages });
-        alertSound.play();
-      }
-    };
-    firebase.chat(room).on('value', handleNewMessages);
-    return () => {
-      firebase.chat(room).off('value', handleNewMessages);
-    };
-  }, [firebase, room]);
+  }, [dispatch, firebase]);
 
   // pass down scroll funcs as props from here, useScroll takes array to track and max length to stop smooth scroll
   const { scrollToBottom, scrollToTop } = useScroll(chat, 50);

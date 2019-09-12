@@ -5,7 +5,7 @@ import * as ROUTES from '../constants/routes';
 import { useForm } from '../hooks/useForm';
 import { SignUpLink } from './SignUp';
 import { PasswordForgetLink } from './PasswordForget';
-import { withFirebase } from '../components/Firebase/index';
+import { withFirebase } from '../components/Firebase';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
 import Container from '../components/common/Container';

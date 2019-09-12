@@ -1,5 +1,5 @@
 import React from 'react';
-import { withFirebase } from './Firebase/index';
+import { withFirebase } from './Firebase';
 
 const SignOut = ({ firebase }) => {
   const uid = localStorage.getItem('uid');

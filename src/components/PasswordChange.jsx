@@ -1,5 +1,5 @@
 import React from 'react';
-import { withFirebase } from './Firebase/index';
+import { withFirebase } from './Firebase';
 import { useForm } from '../hooks/useForm';
 import Row from './common/Row';
 import Column from './common/Column';

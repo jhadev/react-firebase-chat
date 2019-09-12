@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../constants/routes';
-import { withFirebase } from '../components/Firebase/index';
+import { withFirebase } from '../components/Firebase';
 import { useForm } from '../hooks/useForm';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';

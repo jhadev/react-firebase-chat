@@ -90,10 +90,8 @@ const DirectMessages = ({ firebase }) => {
     dispatch({ type: 'SET_USER_TO_DM', userToDm: value });
   };
 
-  const handleDmList = () => {
-    return users
-      .map(user => user.email)
-      .filter(email => email !== authUser.email);
+  const handleDmList = arr => {
+    return arr.filter(email => email !== authUser.email);
   };
 
   const getOnlineStatus = args => {
@@ -123,7 +121,8 @@ const DirectMessages = ({ firebase }) => {
     );
   };
 
-  const usersList = handleDmList();
+  const usersList = handleDmList(users);
+  const usersButNotAuthUser = handleDmList(users);
 
   return (
     <>
@@ -138,7 +137,7 @@ const DirectMessages = ({ firebase }) => {
                   <p>{userToDm !== '' ? userToDm : 'Select A User'}</p>
                 </h6>
                 <ChatList
-                  rooms={usersList}
+                  rooms={usersButNotAuthUser}
                   setChatRoom={setChatRoom}
                   currentRoom={userToDm}
                   dms

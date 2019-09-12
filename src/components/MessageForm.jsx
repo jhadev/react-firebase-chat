@@ -173,6 +173,7 @@ const MessageForm = ({
                       setChatRoom={setChatRoom}
                       currentRoom={currentRoom}
                       dropdown
+                      dms={dms}
                     />
                   </InputGroupText>
                 </InputGroupAddon>

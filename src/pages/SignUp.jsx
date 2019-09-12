@@ -61,7 +61,8 @@ const SignUpFormBase = props => {
         // creates the user in the firebase db using their username and email by referencing the auth db using the uid
         return props.firebase.user(authUser.user.uid).set({
           username,
-          email
+          email,
+          online: true
         });
       })
       .then(() => {

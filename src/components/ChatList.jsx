@@ -30,12 +30,31 @@ const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
         {rooms.map(room => (
           <DropdownItem
             tag="button"
-            active={currentRoom === room ? true : false}
-            key={room}
-            value={room}
-            name={room}
+            active={currentRoom === (room.email || room) ? true : false}
+            key={dms ? room.email : room}
+            value={dms ? room.email : room}
+            name={dms ? room.email : room}
             onClick={setChatRoom}>
-            {room}
+            {dms ? (
+              <>
+                {room.online ? (
+                  <>
+                    <i className="fas fa-circle"></i>
+                    {'  '}
+                    {room.email}
+                  </>
+                ) : (
+                  <>
+                    {' '}
+                    <i className="far fa-circle"></i>
+                    {'  '}
+                    {room.email}
+                  </>
+                )}
+              </>
+            ) : (
+              <>{room}</>
+            )}
           </DropdownItem>
         ))}
       </DropdownMenu>
@@ -45,11 +64,11 @@ const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
       {rooms.map(room => (
         <ListGroupItem
           tag="button"
-          active={currentRoom === room ? true : false}
+          active={currentRoom === (dms ? room.email : room) ? true : false}
           action
-          key={room}
-          value={room}
-          name={room}
+          key={dms ? room.email : room}
+          value={dms ? room.email : room}
+          name={dms ? room.email : room}
           onClick={e => setChatRoom(e)}
           className="text-center">
           {dms ? (
@@ -58,14 +77,14 @@ const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
                 <>
                   <i className="fas fa-circle"></i>
                   {'  '}
-                  {room}
+                  {room.email}
                 </>
               ) : (
                 <>
                   {' '}
                   <i className="far fa-circle"></i>
                   {'  '}
-                  {room}
+                  {room.email}
                 </>
               )}
             </>

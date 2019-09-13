@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
+import Switch from 'react-switch';
 import { withAuthorization } from '../components/Session';
-import { useForm } from '../hooks/formHook';
+import { useForm } from '../hooks/useForm';
 import AllUsers from '../components/AllUsers';
 import ChatList from '../components/ChatList';
-import RoomInput from '../components/RoomInput';
 import Column from '../components/common/Column';
 import Row from '../components/common/Row';
 import Container from '../components/common/Container';
@@ -14,21 +14,27 @@ import swal from '@sweetalert/with-react';
 // admin page adds ability to see all users
 
 const Admin = ({ firebase }) => {
-  // this isn't only a form but why not use it anyway.
-  const {
-    formState: { loading, users, rooms, roomToAdd, roomToRemove },
-    setFormState,
-    onChange
-  } = useForm({
+  const { formState, setFormState, mapInputs } = useForm({
     // set loading flag
     loading: false,
     // users set to empty array
     users: [],
     rooms: [],
-    roomToAdd: '',
-    roomToRemove: '',
-    success: false
+    room: '',
+    isAdd: true
   });
+
+  const { users, rooms, room, isAdd, loading } = formState;
+
+  const formOptions = [
+    {
+      placeholder: `${isAdd ? 'add room' : 'remove room'}`,
+      type: 'text',
+      className: 'form-control'
+    }
+  ];
+
+  const displayInputs = mapInputs(formState, ['room'])(formOptions);
 
   useEffect(() => {
     setFormState({ loading: true });
@@ -55,7 +61,7 @@ const Admin = ({ firebase }) => {
   }, [firebase, setFormState]);
 
   const submitRoom = () => {
-    if (rooms.includes(roomToAdd) || roomToAdd === '') {
+    if (isAdd && rooms.includes(room)) {
       swal({
         content: <h4>Room already exists or room name is not defined</h4>,
         button: {
@@ -63,41 +69,7 @@ const Admin = ({ firebase }) => {
           closeModal: true
         }
       });
-    } else {
-      firebase.send(roomToAdd.split(' ').join(''), roomToAdd).then(() => {
-        swal({
-          content: <h4>Success! {roomToAdd} has been added</h4>,
-          button: {
-            text: 'Close',
-            closeModal: true
-          }
-        });
-      });
-    }
-    firebase
-      .allRooms()
-      .then(res => {
-        setFormState({ rooms: res, roomToAdd: '' });
-      })
-      .catch(err => console.log(err.message));
-  };
-
-  const removeRoom = () => {
-    if (rooms.includes(roomToRemove)) {
-      firebase
-        .chat(roomToRemove)
-        .remove()
-        .then(() => {
-          swal({
-            content: <h4>Success! {roomToRemove} has been removed</h4>,
-            button: {
-              text: 'Close',
-              closeModal: true
-            }
-          });
-        })
-        .catch(err => console.log(err.message));
-    } else {
+    } else if (!isAdd && !rooms.includes(room)) {
       swal({
         content: <h4>Room not found...</h4>,
         button: {
@@ -105,13 +77,46 @@ const Admin = ({ firebase }) => {
           closeModal: true
         }
       });
+    } else if (isAdd && !rooms.includes(room)) {
+      firebase.send(room.split(' ').join(''), room).then(() => {
+        swal({
+          content: <h4>Success! {room} has been added</h4>,
+          button: {
+            text: 'Close',
+            closeModal: true
+          }
+        });
+        getRooms();
+      });
+    } else if (!isAdd && rooms.includes(room)) {
+      firebase
+        .chat(room)
+        .remove()
+        .then(() => {
+          swal({
+            content: <h4>Success! {room} has been removed</h4>,
+            button: {
+              text: 'Close',
+              closeModal: true
+            }
+          });
+          getRooms();
+        })
+        .catch(err => console.log(err.message));
     }
+  };
+
+  const getRooms = () => {
     firebase
       .allRooms()
       .then(res => {
-        setFormState({ rooms: res, roomToRemove: '' });
+        setFormState({ rooms: res, room: '' });
       })
       .catch(err => console.log(err.message));
+  };
+
+  const toggle = value => {
+    setFormState({ isAdd: value });
   };
 
   return (
@@ -123,27 +128,49 @@ const Admin = ({ firebase }) => {
           <AllUsers users={users} />
         </Column>
       </Row>
-      <Row helper="my-3">
+      <Row helper="my-2">
         <Column size="12 md-2">
           <p className="text-center">Chatrooms</p>
           <ChatList rooms={rooms} />
         </Column>
-        <Column size="12 md-5">
-          <RoomInput
-            color="success"
-            onChange={onChange}
-            onSubmit={submitRoom}
-            value={roomToAdd}
-            add
-          />
-        </Column>
-        <Column size="12 md-5">
-          <RoomInput
-            color="danger"
-            onChange={onChange}
-            onSubmit={removeRoom}
-            value={roomToRemove}
-          />
+        <Column size="12 md-10">
+          <h3 className="text-center">Manage Rooms</h3>
+          <Row helper="justify-content-center my-4">
+            <div className="form-row align-items-center">
+              <div className="col-auto">
+                <label className="my-1 mx-2" htmlFor="room-switch">
+                  <Switch
+                    checked={isAdd}
+                    onChange={toggle}
+                    onColor="#28a745"
+                    onHandleColor="#ebedeb"
+                    handleDiameter={16}
+                    uncheckedIcon={false}
+                    checkedIcon={false}
+                    boxShadow="0px 1px 3px rgba(0, 0, 0, 0.6)"
+                    activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                    height={20}
+                    width={40}
+                    className="react-switch align-middle"
+                    id="room-switch"
+                  />
+                </label>
+              </div>
+              <div className="col-auto">{displayInputs}</div>
+              <div className="col-auto">
+                <button
+                  className={`btn btn-${isAdd ? 'success' : 'danger'}`}
+                  disabled={room === ''}
+                  onClick={submitRoom}>
+                  {isAdd ? (
+                    <i className="fas fa-check"></i>
+                  ) : (
+                    <i className="fas fa-times"></i>
+                  )}
+                </button>
+              </div>
+            </div>
+          </Row>
         </Column>
       </Row>
     </Container>

@@ -54,13 +54,13 @@ const MessageForm = ({
 
   useEffect(() => {
     if (!dms) {
-      if (charCounter > 0) {
+      if (charCounter === 1) {
         firebase.typing(uid).update({
           username,
           isTyping: true,
           currentRoom
         });
-      } else {
+      } else if (charCounter === 0) {
         firebase.typing(uid).update({
           username,
           isTyping: false,

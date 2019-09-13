@@ -97,7 +97,11 @@ const Home = ({ firebase }) => {
 
     return (
       <React.Fragment key={index}>
-        <User className={`usersInRoom`} status={status} user={user} />
+        <User
+          className={`usersInRoom`}
+          status={status ? status.online : null}
+          user={user}
+        />
       </React.Fragment>
     );
   };

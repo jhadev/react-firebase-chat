@@ -15,16 +15,16 @@ import click from '../sounds/click.mp3';
 const clickSound = new Audio(click);
 
 const Home = ({ firebase }) => {
+  // destructure individual state values, dispatch, and authUser from useChat return array
+  // initialize it with imported reducer and initial state, firebase prop, and type for effect switch.
   const [
     { showChat, users, chat, room, roomList, usersInRoom },
     dispatch,
     authUser
   ] = useChat(reducer, INITIAL_STATE, firebase, 'chat');
 
-  // destructure individual state values, dispatch, and authUser from useChat return array
-  // initialize it with imported reducer and initial state, firebase prop, and type for effect switch.
-
   useEffect(() => {
+    // get all rooms
     firebase
       .allRooms()
       .then(res => {
@@ -37,12 +37,11 @@ const Home = ({ firebase }) => {
     const handleUsersInRoom = snapshot => {
       if (snapshot.val()) {
         const allUsers = Object.values(snapshot.val());
-
+        // only see users that aren't authUser and are in the current room.
         const handleUsersInRoom = allUsers
-          .filter(
-            user =>
-              user.username !== authUser.email && room === user.currentRoom
-          )
+          .filter(({ username, currentRoom }) => {
+            return username !== authUser.email && room === currentRoom;
+          })
           .map(user => user.username);
 
         dispatch({ type: 'SET_USERS_IN_ROOM', usersInRoom: handleUsersInRoom });
@@ -60,6 +59,7 @@ const Home = ({ firebase }) => {
   const setChatRoom = event => {
     const { value } = event.target;
     dispatch({ type: 'SET_ROOM', room: value });
+    // save room on switch to load it into state on boot
     localStorage.setItem('room', value);
     clickSound.play();
   };
@@ -72,9 +72,9 @@ const Home = ({ firebase }) => {
     }
   };
 
+  // map over messages in chat in the return
   const handleLayout = ({ user, timestamp, message, id }, idx) => {
     const status = getOnlineStatus(user);
-
     return (
       <div
         key={id || idx}
@@ -92,9 +92,9 @@ const Home = ({ firebase }) => {
     );
   };
 
+  // map over users that were last seen in the current room in the return
   const displayUsersInRoom = (user, index) => {
     const status = getOnlineStatus(user);
-
     return (
       <React.Fragment key={index}>
         <User

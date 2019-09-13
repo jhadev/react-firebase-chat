@@ -36,6 +36,6 @@ Message.propTypes = {
   color: PropTypes.string
 };
 
-export { User };
+export { User, Time };
 
 export default Message;

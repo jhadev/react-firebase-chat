@@ -36,6 +36,7 @@ const MessageForm = ({
   const [charCounter, setCounter] = useState(0);
   const [emojiPicker, handlePickerOpen] = useState(false);
   const [scrollTop, setScrollDirection] = useState(false);
+  const [whoseTyping, setWhoseTyping] = useState([]);
 
   const maxCount = 200;
 
@@ -50,6 +51,49 @@ const MessageForm = ({
       scrollToBottom();
     }
   }, [scrollToBottom, scrollToTop, scrollTop]);
+
+  useEffect(() => {
+    if (!dms) {
+      if (charCounter > 0) {
+        firebase.typing(uid).update({
+          username,
+          isTyping: true,
+          currentRoom
+        });
+      } else {
+        firebase.typing(uid).update({
+          username,
+          isTyping: false,
+          currentRoom
+        });
+      }
+    }
+  }, [charCounter, currentRoom, dms, firebase, uid, username]);
+
+  useEffect(() => {
+    if (!dms) {
+      const handleTyping = snapshot => {
+        if (snapshot.val()) {
+          const allUsers = Object.values(snapshot.val());
+
+          const typers = allUsers
+            .filter(
+              user =>
+                user.isTyping &&
+                user.username !== username &&
+                currentRoom === user.currentRoom
+            )
+            .map(user => user.username);
+
+          setWhoseTyping(typers);
+        }
+      };
+      firebase.typingRef().on('value', handleTyping);
+      return () => {
+        firebase.typingRef().off('value', handleTyping);
+      };
+    }
+  }, [currentRoom, dms, firebase, username]);
 
   const sendNewMessage = e => {
     e.preventDefault();
@@ -118,9 +162,25 @@ const MessageForm = ({
     );
   };
 
+  console.log(whoseTyping);
+
   return (
     <>
       <div className="sticky-footer">
+        {whoseTyping.length > 0 &&
+          (whoseTyping.length === 1 ? (
+            <div className="typers">
+              <span className="focus-in-expand-fwd">
+                {whoseTyping.join(', ')} is typing...
+              </span>
+            </div>
+          ) : (
+            <div className="typers">
+              <span className="focus-in-expand-fwd">
+                {whoseTyping.join(', ')} are typing...
+              </span>
+            </div>
+          ))}
         <Form onSubmit={sendNewMessage}>
           <FormGroup id="messageForm" row>
             <Label

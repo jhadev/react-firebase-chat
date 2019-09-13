@@ -44,7 +44,7 @@ class Firebase {
       .once('value')
       .then(snapshot => {
         return Object.keys(snapshot.val()).filter(
-          room => room !== 'users' && room !== 'dms'
+          room => room !== 'users' && room !== 'dms' && room !== 'typing'
         );
       });
 
@@ -71,6 +71,10 @@ class Firebase {
   // setOnlineStatus = uid => this.db.ref(`users/${uid}`).
 
   dms = () => this.db.ref('dms');
+
+  typing = uid => this.db.ref(`typing/${uid}`);
+
+  typingRef = () => this.db.ref('typing');
 
   sendDm = message => this.db.ref('dms').push(message);
 

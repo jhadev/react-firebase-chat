@@ -36,6 +36,7 @@ const MessageForm = ({
   const [charCounter, setCounter] = useState(0);
   const [emojiPicker, handlePickerOpen] = useState(false);
   const [scrollTop, setScrollDirection] = useState(false);
+  const [whoseTyping, setWhoseTyping] = useState([]);
 
   const maxCount = 200;
 
@@ -50,6 +51,40 @@ const MessageForm = ({
       scrollToBottom();
     }
   }, [scrollToBottom, scrollToTop, scrollTop]);
+
+  useEffect(() => {
+    if (charCounter > 0) {
+      firebase.typing(uid).update({
+        username,
+        isTyping: true,
+        currentRoom
+      });
+    } else {
+      firebase.typing(uid).update({
+        username,
+        isTyping: false,
+        currentRoom
+      });
+    }
+  }, [charCounter, currentRoom, firebase, uid, username]);
+
+  useEffect(() => {
+    const handleTyping = snapshot => {
+      if (snapshot.val()) {
+        const allUsers = Object.values(snapshot.val());
+
+        const typers = allUsers
+          .filter(user => user.isTyping)
+          .map(user => user.username);
+
+        setWhoseTyping(typers);
+      }
+    };
+    firebase.typingRef().on('value', handleTyping);
+    return () => {
+      firebase.typingRef().off('value', handleTyping);
+    };
+  }, [firebase, username]);
 
   const sendNewMessage = e => {
     e.preventDefault();
@@ -118,10 +153,17 @@ const MessageForm = ({
     );
   };
 
+  console.log(whoseTyping);
+
   return (
     <>
       <div className="sticky-footer">
-        <Form onSubmit={sendNewMessage}>
+        {whoseTyping.length > 0 && (
+          <div className="text-light typers">
+            {whoseTyping.join(', ')} is typing...
+          </div>
+        )}
+        <Form className="p-2" onSubmit={sendNewMessage}>
           <FormGroup id="messageForm" row>
             <Label
               for="chatInput"

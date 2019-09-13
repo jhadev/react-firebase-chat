@@ -3,6 +3,7 @@ import { withAuthorization } from '../components/Session';
 import { INITIAL_STATE, reducer } from '../reducers/chatReducer';
 import { useChat } from '../hooks/useChat';
 import { useScroll } from '../hooks/useScroll';
+import { User } from '../components/Message';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
 import Message from '../components/Message';
@@ -15,7 +16,7 @@ const clickSound = new Audio(click);
 
 const Home = ({ firebase }) => {
   const [
-    { showChat, users, chat, room, roomList },
+    { showChat, users, chat, room, roomList, usersInRoom },
     dispatch,
     authUser
   ] = useChat(reducer, INITIAL_STATE, firebase, 'chat');
@@ -31,6 +32,27 @@ const Home = ({ firebase }) => {
       })
       .catch(err => console.log(err));
   }, [dispatch, firebase]);
+
+  useEffect(() => {
+    const handleUsersInRoom = snapshot => {
+      if (snapshot.val()) {
+        const allUsers = Object.values(snapshot.val());
+
+        const handleUsersInRoom = allUsers
+          .filter(
+            user =>
+              user.username !== authUser.email && room === user.currentRoom
+          )
+          .map(user => user.username);
+
+        dispatch({ type: 'SET_USERS_IN_ROOM', usersInRoom: handleUsersInRoom });
+      }
+    };
+    firebase.typingRef().on('value', handleUsersInRoom);
+    return () => {
+      firebase.typingRef().off('value', handleUsersInRoom);
+    };
+  }, [authUser.email, dispatch, firebase, room]);
 
   // pass down scroll funcs as props from here, useScroll takes array to track and max length to stop smooth scroll
   const { scrollToBottom, scrollToTop } = useScroll(chat, 50);
@@ -66,6 +88,16 @@ const Home = ({ firebase }) => {
           timestamp={timestamp}
         />
       </div>
+    );
+  };
+
+  const displayUsersInRoom = (user, index) => {
+    const status = getOnlineStatus(user);
+
+    return (
+      <React.Fragment key={index}>
+        <User className={`usersInRoom`} status={status} user={user}></User>
+      </React.Fragment>
     );
   };
 
@@ -106,6 +138,18 @@ const Home = ({ firebase }) => {
                         </>
                       )}
                     </button>
+                    <>
+                      {usersInRoom.length > 0 && roomList.length > 0 ? (
+                        <div className="users-in-room-wrapper">
+                          <p>users last seen here</p>
+                          <hr />
+                          {usersInRoom.map((user, index) =>
+                            displayUsersInRoom(user, index)
+                          )}
+                          {/* <hr /> */}
+                        </div>
+                      ) : null}
+                    </>
                   </div>
                 </Column>
                 <Column size="12 md-10">

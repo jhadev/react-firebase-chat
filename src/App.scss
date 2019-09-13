@@ -31,6 +31,32 @@ body {
   }
 }
 
+
+
+.users-in-room-wrapper {
+  margin-top: 10px;
+  padding: 1rem;
+  border: solid;
+  border-width: 1px;
+  border-color: $user-color;
+  border-radius: 2px 2px 2px 2px;
+
+  width: 100%;
+
+  p {
+    font-size: 0.78rem;
+    text-align: center;
+  }
+
+  .usersInRoom {
+    // display: flex;
+    font-size: 65%;
+    margin: 0px 0 2px 0;
+    font-weight: bold;
+  }
+
+}
+
 #spacer {
   height: 8vh;
 }
@@ -164,6 +190,17 @@ body {
     padding: 10px;
     margin-top: 0rem;
     margin-bottom: 0rem;
+  }
+
+  .users-in-room-wrapper {
+    p {
+      font-size: 100%;
+    }
+
+    .usersInRoom {
+      // display: flex;
+      font-size: 80%;
+    }
   }
 
   #spacer,

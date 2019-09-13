@@ -35,26 +35,30 @@ body {
 
 .users-in-room-wrapper {
   margin-top: 10px;
-  padding: 1rem;
+  padding: 0.35rem;
   border: solid;
   border-width: 1px;
   border-color: $user-color;
   border-radius: 2px 2px 2px 2px;
 
-  width: 100%;
+
 
   p {
     font-size: 0.78rem;
     text-align: center;
+    margin: 5px 0 5px 0;
+  }
+
+  hr {
+    margin: 10px;
   }
 
   .usersInRoom {
-    // display: flex;
+
     font-size: 65%;
-    margin: 0px 0 2px 0;
+    margin: 5px 0 5px 0;
     font-weight: bold;
   }
-
 }
 
 #spacer {

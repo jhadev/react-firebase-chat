@@ -60,6 +60,7 @@ const Home = ({ firebase }) => {
   const setChatRoom = event => {
     const { value } = event.target;
     dispatch({ type: 'SET_ROOM', room: value });
+    localStorage.setItem('room', value);
     clickSound.play();
   };
 
@@ -96,7 +97,7 @@ const Home = ({ firebase }) => {
 
     return (
       <React.Fragment key={index}>
-        <User className={`usersInRoom`} status={status} user={user}></User>
+        <User className={`usersInRoom`} status={status} user={user} />
       </React.Fragment>
     );
   };
@@ -146,7 +147,6 @@ const Home = ({ firebase }) => {
                           {usersInRoom.map((user, index) =>
                             displayUsersInRoom(user, index)
                           )}
-                          {/* <hr /> */}
                         </div>
                       ) : null}
                     </>

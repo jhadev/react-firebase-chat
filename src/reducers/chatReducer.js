@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
   showChat: true,
   chat: [],
-  room: 'chat',
+  room: localStorage.getItem('room') || 'chat',
   roomList: [],
   users: [],
   usersInRoom: []

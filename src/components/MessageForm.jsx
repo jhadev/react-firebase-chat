@@ -162,8 +162,6 @@ const MessageForm = ({
     );
   };
 
-  console.log(whoseTyping);
-
   return (
     <>
       <div className="sticky-footer">

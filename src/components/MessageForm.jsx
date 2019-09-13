@@ -77,7 +77,12 @@ const MessageForm = ({
           const allUsers = Object.values(snapshot.val());
 
           const typers = allUsers
-            .filter(user => user.isTyping && user.username !== username)
+            .filter(
+              user =>
+                user.isTyping &&
+                user.username !== username &&
+                currentRoom === user.currentRoom
+            )
             .map(user => user.username);
 
           setWhoseTyping(typers);
@@ -88,7 +93,7 @@ const MessageForm = ({
         firebase.typingRef().off('value', handleTyping);
       };
     }
-  }, [dms, firebase, username]);
+  }, [currentRoom, dms, firebase, username]);
 
   const sendNewMessage = e => {
     e.preventDefault();
@@ -162,12 +167,21 @@ const MessageForm = ({
   return (
     <>
       <div className="sticky-footer">
-        {whoseTyping.length > 0 && (
-          <div className="text-light typers">
-            {whoseTyping.join(', ')} is typing...
-          </div>
-        )}
-        <Form className="p-2" onSubmit={sendNewMessage}>
+        {whoseTyping.length > 0 &&
+          (whoseTyping.length === 1 ? (
+            <div className="typers">
+              <span className="focus-in-expand-fwd">
+                {whoseTyping.join(', ')} is typing...
+              </span>
+            </div>
+          ) : (
+            <div className="typers">
+              <span className="focus-in-expand-fwd">
+                {whoseTyping.join(', ')} are typing...
+              </span>
+            </div>
+          ))}
+        <Form onSubmit={sendNewMessage}>
           <FormGroup id="messageForm" row>
             <Label
               for="chatInput"

@@ -53,38 +53,42 @@ const MessageForm = ({
   }, [scrollToBottom, scrollToTop, scrollTop]);
 
   useEffect(() => {
-    if (charCounter > 0) {
-      firebase.typing(uid).update({
-        username,
-        isTyping: true,
-        currentRoom
-      });
-    } else {
-      firebase.typing(uid).update({
-        username,
-        isTyping: false,
-        currentRoom
-      });
+    if (!dms) {
+      if (charCounter > 0) {
+        firebase.typing(uid).update({
+          username,
+          isTyping: true,
+          currentRoom
+        });
+      } else {
+        firebase.typing(uid).update({
+          username,
+          isTyping: false,
+          currentRoom
+        });
+      }
     }
-  }, [charCounter, currentRoom, firebase, uid, username]);
+  }, [charCounter, currentRoom, dms, firebase, uid, username]);
 
   useEffect(() => {
-    const handleTyping = snapshot => {
-      if (snapshot.val()) {
-        const allUsers = Object.values(snapshot.val());
+    if (!dms) {
+      const handleTyping = snapshot => {
+        if (snapshot.val()) {
+          const allUsers = Object.values(snapshot.val());
 
-        const typers = allUsers
-          .filter(user => user.isTyping)
-          .map(user => user.username);
+          const typers = allUsers
+            .filter(user => user.isTyping && user.username !== username)
+            .map(user => user.username);
 
-        setWhoseTyping(typers);
-      }
-    };
-    firebase.typingRef().on('value', handleTyping);
-    return () => {
-      firebase.typingRef().off('value', handleTyping);
-    };
-  }, [firebase, username]);
+          setWhoseTyping(typers);
+        }
+      };
+      firebase.typingRef().on('value', handleTyping);
+      return () => {
+        firebase.typingRef().off('value', handleTyping);
+      };
+    }
+  }, [dms, firebase, username]);
 
   const sendNewMessage = e => {
     e.preventDefault();

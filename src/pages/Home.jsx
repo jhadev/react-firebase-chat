@@ -97,6 +97,12 @@ const Home = ({ firebase }) => {
   // map over users that were last seen in the current room in the return
   const displayUsersInRoom = ({ username, uid }) => {
     const status = getOnlineStatus(username);
+
+    // FIXME: this is temp don't forget it.
+    if (username.length > 20) {
+      username = username.split('@').join(' @');
+    }
+
     return (
       <React.Fragment key={uid}>
         <User

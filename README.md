@@ -2,7 +2,7 @@
 
 ### A real time chat built with React and Firebase.
 
-## ![chat](https://user-images.githubusercontent.com/42519030/64755247-7ddb1b00-d4f8-11e9-96a1-17b7cb54bca5.jpg)
+## ![chat](https://user-images.githubusercontent.com/42519030/64911367-decc4400-d6ee-11e9-95eb-0407e6e63485.jpg)
 
 ## ![search](https://user-images.githubusercontent.com/42519030/64755248-7ddb1b00-d4f8-11e9-9259-88517d609a55.jpg)
 

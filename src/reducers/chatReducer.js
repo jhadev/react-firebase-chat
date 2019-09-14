@@ -1,9 +1,10 @@
 const INITIAL_STATE = {
   showChat: true,
   chat: [],
-  room: 'chat',
+  room: localStorage.getItem('room') || 'chat',
   roomList: [],
-  users: []
+  users: [],
+  usersInRoom: []
 };
 
 const reducer = (state, action) => {
@@ -18,6 +19,8 @@ const reducer = (state, action) => {
       return { ...state, roomList: action.roomList };
     case 'SET_USERS':
       return { ...state, users: action.users };
+    case 'SET_USERS_IN_ROOM':
+      return { ...state, usersInRoom: action.usersInRoom };
     default:
       return INITIAL_STATE;
   }

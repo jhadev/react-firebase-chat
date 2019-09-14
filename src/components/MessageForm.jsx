@@ -57,12 +57,14 @@ const MessageForm = ({
       if (charCounter === 1) {
         firebase.typing(uid).update({
           username,
+          uid,
           isTyping: true,
           currentRoom
         });
       } else if (charCounter === 0) {
         firebase.typing(uid).update({
           username,
+          uid,
           isTyping: false,
           currentRoom
         });

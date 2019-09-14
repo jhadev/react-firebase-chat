@@ -3,8 +3,8 @@ import MessageBody from './MessageBody';
 import PropTypes from 'prop-types';
 import './styles/components/message.scss';
 
-const User = ({ user, status }) => (
-  <div className={`mb-1 mx-1 user-name`}>
+const User = ({ user, status, className }) => (
+  <div className={className}>
     <span>
       {status ? (
         <i className="fas fa-circle"></i>
@@ -23,7 +23,7 @@ const Time = ({ timestamp }) => (
 
 const Message = ({ user, timestamp, message, color, status }) => (
   <>
-    <User status={status} user={user} />
+    <User className={`mb-1 mx-1 user-name`} status={status} user={user} />
     <Time timestamp={timestamp} />
     <MessageBody body={message} color={color} />
   </>
@@ -35,5 +35,7 @@ Message.propTypes = {
   body: PropTypes.string,
   color: PropTypes.string
 };
+
+export { User, Time };
 
 export default Message;

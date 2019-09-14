@@ -3,6 +3,7 @@ import { withAuthorization } from '../components/Session';
 import { INITIAL_STATE, reducer } from '../reducers/chatReducer';
 import { useChat } from '../hooks/useChat';
 import { useScroll } from '../hooks/useScroll';
+import { User } from '../components/Message';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
 import Message from '../components/Message';
@@ -14,16 +15,16 @@ import click from '../sounds/click.mp3';
 const clickSound = new Audio(click);
 
 const Home = ({ firebase }) => {
+  // destructure individual state values, dispatch, and authUser from useChat return array
+  // initialize it with imported reducer and initial state, firebase prop, and type for effect switch.
   const [
-    { showChat, users, chat, room, roomList },
+    { showChat, users, chat, room, roomList, usersInRoom },
     dispatch,
     authUser
   ] = useChat(reducer, INITIAL_STATE, firebase, 'chat');
 
-  // destructure individual state values, dispatch, and authUser from useChat return array
-  // initialize it with imported reducer and initial state, firebase prop, and type for effect switch.
-
   useEffect(() => {
+    // get all rooms
     firebase
       .allRooms()
       .then(res => {
@@ -32,12 +33,34 @@ const Home = ({ firebase }) => {
       .catch(err => console.log(err));
   }, [dispatch, firebase]);
 
+  useEffect(() => {
+    const handleUsersInRoom = snapshot => {
+      if (snapshot.val()) {
+        const allUsers = Object.values(snapshot.val());
+        // only see users that aren't authUser and are in the current room.
+        const handleUsersInRoom = allUsers
+          .filter(({ username, currentRoom }) => {
+            return username !== authUser.email && room === currentRoom;
+          })
+          .map(({ username, uid }) => ({ username, uid }));
+
+        dispatch({ type: 'SET_USERS_IN_ROOM', usersInRoom: handleUsersInRoom });
+      }
+    };
+    firebase.typingRef().on('value', handleUsersInRoom);
+    return () => {
+      firebase.typingRef().off('value', handleUsersInRoom);
+    };
+  }, [authUser.email, dispatch, firebase, room]);
+
   // pass down scroll funcs as props from here, useScroll takes array to track and max length to stop smooth scroll
   const { scrollToBottom, scrollToTop } = useScroll(chat, 50);
 
   const setChatRoom = event => {
     const { value } = event.target;
     dispatch({ type: 'SET_ROOM', room: value });
+    // save room on switch to load it into state on boot
+    localStorage.setItem('room', value);
     clickSound.play();
   };
 
@@ -49,14 +72,16 @@ const Home = ({ firebase }) => {
     }
   };
 
+  // map over messages in chat in the return
   const handleLayout = ({ user, timestamp, message, id }, idx) => {
     const status = getOnlineStatus(user);
-
     return (
       <div
         key={id || idx}
         className={`animated align-items-${
-          authUser.email === user ? 'end zoomInRight' : 'start zoomInLeft'
+          authUser.email === user
+            ? 'end flip-in-ver-right'
+            : 'start flip-in-ver-left'
         } faster d-flex flex-column my-2`}>
         <Message
           color={authUser.email === user ? 'user' : 'receiver'}
@@ -66,6 +91,20 @@ const Home = ({ firebase }) => {
           timestamp={timestamp}
         />
       </div>
+    );
+  };
+
+  // map over users that were last seen in the current room in the return
+  const displayUsersInRoom = ({ username, uid }) => {
+    const status = getOnlineStatus(username);
+    return (
+      <React.Fragment key={uid}>
+        <User
+          className={`usersInRoom`}
+          status={status ? status.online : null}
+          user={username}
+        />
+      </React.Fragment>
     );
   };
 
@@ -106,6 +145,15 @@ const Home = ({ firebase }) => {
                         </>
                       )}
                     </button>
+                    <>
+                      {usersInRoom.length > 0 && roomList.length > 0 ? (
+                        <div className="users-in-room-wrapper">
+                          <p>users last seen here</p>
+                          <hr />
+                          {usersInRoom.map(user => displayUsersInRoom(user))}
+                        </div>
+                      ) : null}
+                    </>
                   </div>
                 </Column>
                 <Column size="12 md-10">

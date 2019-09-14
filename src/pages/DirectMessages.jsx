@@ -51,7 +51,9 @@ const DirectMessages = ({ firebase }) => {
       <div
         key={id || idx}
         className={`animated align-items-${
-          authUser.email === user ? 'end zoomInRight' : 'start zoomInLeft'
+          authUser.email === user
+            ? 'end flip-in-ver-right'
+            : 'start flip-in-ver-left'
         } faster d-flex flex-column my-2`}>
         <Message
           color={authUser.email === user ? 'user' : 'receiver'}

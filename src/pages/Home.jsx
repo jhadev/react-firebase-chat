@@ -42,7 +42,7 @@ const Home = ({ firebase }) => {
           .filter(({ username, currentRoom }) => {
             return username !== authUser.email && room === currentRoom;
           })
-          .map(user => user.username);
+          .map(({ username, uid }) => ({ username, uid }));
 
         dispatch({ type: 'SET_USERS_IN_ROOM', usersInRoom: handleUsersInRoom });
       }
@@ -79,7 +79,9 @@ const Home = ({ firebase }) => {
       <div
         key={id || idx}
         className={`animated align-items-${
-          authUser.email === user ? 'end zoomInRight' : 'start zoomInLeft'
+          authUser.email === user
+            ? 'end flip-in-ver-right'
+            : 'start flip-in-ver-left'
         } faster d-flex flex-column my-2`}>
         <Message
           color={authUser.email === user ? 'user' : 'receiver'}
@@ -93,14 +95,14 @@ const Home = ({ firebase }) => {
   };
 
   // map over users that were last seen in the current room in the return
-  const displayUsersInRoom = (user, index) => {
-    const status = getOnlineStatus(user);
+  const displayUsersInRoom = ({ username, uid }) => {
+    const status = getOnlineStatus(username);
     return (
-      <React.Fragment key={index}>
+      <React.Fragment key={uid}>
         <User
           className={`usersInRoom`}
           status={status ? status.online : null}
-          user={user}
+          user={username}
         />
       </React.Fragment>
     );
@@ -148,9 +150,7 @@ const Home = ({ firebase }) => {
                         <div className="users-in-room-wrapper">
                           <p>users last seen here</p>
                           <hr />
-                          {usersInRoom.map((user, index) =>
-                            displayUsersInRoom(user, index)
-                          )}
+                          {usersInRoom.map(user => displayUsersInRoom(user))}
                         </div>
                       ) : null}
                     </>

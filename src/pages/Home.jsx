@@ -39,13 +39,13 @@ const Home = ({ firebase }) => {
       if (snapshot.val()) {
         const allUsers = Object.values(snapshot.val());
         // only see users that aren't authUser and are in the current room.
-        const handleUsersInRoom = allUsers
+        const usersInRoom = allUsers
           .filter(({ username, currentRoom }) => {
             return username !== authUser.email && room === currentRoom;
           })
           .map(({ username, uid }) => ({ username, uid }));
 
-        dispatch({ type: 'SET_USERS_IN_ROOM', usersInRoom: handleUsersInRoom });
+        dispatch({ type: 'SET_USERS_IN_ROOM', usersInRoom });
       }
     };
     firebase.typingRef().on('value', handleUsersInRoom);

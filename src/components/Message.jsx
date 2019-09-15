@@ -3,45 +3,38 @@ import MessageBody from './MessageBody';
 import PropTypes from 'prop-types';
 import './styles/components/message.scss';
 
-const User = ({ user, status, className }) => {
-  if (className) {
-    return (
-      <div className={className}>
+const User = ({ user, status, avatar }) => {
+  return (
+    <>
+      <span>
+        {status ? (
+          <i className="fas fa-circle"></i>
+        ) : (
+          <i className="far fa-circle"></i>
+        )}
+        {'  '}
+      </span>
+      {user}
+      {avatar && (
         <span>
-          {status ? (
-            <i className="fas fa-circle"></i>
-          ) : (
-            <i className="far fa-circle"></i>
-          )}
-          {'  '}
+          <a href={avatar} rel="noopener noreferrer" target="_blank">
+            <img src={avatar} alt={'avatar'} className={'avatar'} />
+          </a>
         </span>
-        {user}
-      </div>
-    );
-  } else {
-    return (
-      <>
-        <span>
-          {status ? (
-            <i className="fas fa-circle"></i>
-          ) : (
-            <i className="far fa-circle"></i>
-          )}
-          {'  '}
-        </span>
-        {user}
-      </>
-    );
-  }
+      )}
+    </>
+  );
 };
 
 const Time = ({ timestamp }) => (
   <div className={`mb-1 mx-1 time`}>{timestamp}</div>
 );
 
-const Message = ({ user, timestamp, message, color, status }) => (
+const Message = ({ user, timestamp, message, color, avatar, status }) => (
   <>
-    <User className={`mb-1 mx-1 user-name`} status={status} user={user} />
+    <div className={`mb-1 mx-1 user-name`}>
+      <User avatar={avatar} status={status} user={user} />
+    </div>
     <Time timestamp={timestamp} />
     <MessageBody body={message} color={color} />
   </>

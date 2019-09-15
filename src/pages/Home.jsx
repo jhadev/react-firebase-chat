@@ -87,6 +87,7 @@ const Home = ({ firebase }) => {
           color={authUser.email === user ? 'user' : 'receiver'}
           status={status ? status.online : null}
           message={message}
+          avatar={status ? status.avatar : null}
           user={user}
           timestamp={timestamp}
         />
@@ -104,13 +105,13 @@ const Home = ({ firebase }) => {
     }
 
     return (
-      <React.Fragment key={uid}>
+      <div key={username} className={'usersInRoom'}>
         <User
-          className={`usersInRoom`}
+          avatar={status ? status.avatar : null}
           status={status ? status.online : null}
           user={username}
         />
-      </React.Fragment>
+      </div>
     );
   };
 

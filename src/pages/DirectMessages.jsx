@@ -59,6 +59,7 @@ const DirectMessages = ({ firebase }) => {
           color={authUser.email === user ? 'user' : 'receiver'}
           message={message}
           status={status ? status.online : null}
+          avatar={status ? status.avatar : null}
           user={user}
           timestamp={timestamp}
         />

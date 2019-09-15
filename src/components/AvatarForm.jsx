@@ -5,6 +5,7 @@ import { AuthUserContext } from './Session';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
 import * as REGEX from '../constants/regex';
+import swal from '@sweetalert/with-react';
 
 const AvatarForm = props => {
   const authUser = useContext(AuthUserContext);
@@ -39,6 +40,44 @@ const AvatarForm = props => {
     }
   };
 
+  const widget = () => {
+    window.cloudinary.openUploadWidget(
+      {
+        cloud_name: process.env.REACT_APP_CLOUDINARY_NAME,
+        upload_preset: process.env.REACT_APP_CLOUDINARY_PRESET,
+        tags: ['react-firebase-chat'],
+        sources: ['local', 'url', 'image_search'],
+        googleApiKey: process.env.REACT_APP_GOOGLE_IMAGE_SEARCH,
+        defaultSource: 'local',
+        cropping: true,
+        multiple: false,
+        folder: 'react_chat/avatars',
+        clientAllowedFormats: ['png', 'gif', 'jpeg', 'jpg'],
+        maxFileSize: 10000000,
+        maxImageWidth: 1200,
+        maxImageHeight: 1200,
+        croppingValidateDimensions: true,
+        showUploadMoreButton: false
+      },
+      (error, result) => {
+        if (!error && result && result.event === 'success') {
+          console.log(result);
+          const url = result.info.secure_url;
+          swal({
+            button: {
+              text: 'Close',
+              closeModal: true
+            },
+            icon: 'success',
+            title: 'Success!',
+            text: `${url} has been inserted into the text box.`
+          });
+          setFormState({ avatar: url });
+        }
+      }
+    );
+  };
+
   return (
     <Row helper="justify-content-center my-4">
       <Column size="md-6 12">
@@ -46,12 +85,19 @@ const AvatarForm = props => {
         <div className="form-group">{displayInputs}</div>
         {formState.error && <div>{formState.error}</div>}
         {formState.success && <div>{formState.success}</div>}
-        <button
-          className={'btn btn-true'}
-          onClick={submitAvatar}
-          disabled={formState.avatar === ''}>
-          Submit
-        </button>
+        <div>
+          <button className="btn btn-false" onClick={widget}>
+            Upload Image
+          </button>
+        </div>
+        <div>
+          <button
+            className={'btn btn-true mt-2'}
+            onClick={submitAvatar}
+            disabled={formState.avatar === ''}>
+            Submit
+          </button>
+        </div>
       </Column>
     </Row>
   );

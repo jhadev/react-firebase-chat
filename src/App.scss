@@ -63,6 +63,17 @@ body {
   }
 }
 
+.avatar {
+  height: 40px;
+  width: 40px;
+  margin: 0 0 0 4px;
+  border: solid;
+  border-color: $user-color;
+  border-width: 1px;
+  border-radius: 5px;
+  padding: .10rem;
+}
+
 #spacer {
   height: 8vh;
 }

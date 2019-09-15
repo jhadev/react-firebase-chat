@@ -6,7 +6,6 @@ import { useScroll } from '../hooks/useScroll';
 import { User } from '../components/Message';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
-import Message from '../components/Message';
 import MessageForm from '../components/MessageForm';
 import ChatList from '../components/ChatList';
 import Container from '../components/common/Container';
@@ -20,7 +19,9 @@ const Home = ({ firebase }) => {
   const [
     { showChat, users, chat, room, roomList, usersInRoom },
     dispatch,
-    authUser
+    authUser,
+    handleLayout,
+    getUserDetails
   ] = useChat(reducer, INITIAL_STATE, firebase, 'chat');
 
   useEffect(() => {
@@ -64,40 +65,9 @@ const Home = ({ firebase }) => {
     clickSound.play();
   };
 
-  // get online status to display for each message.
-  const getOnlineStatus = args => {
-    if (users) {
-      const foundUser = users.find(user => user.email === args);
-      return foundUser;
-    }
-  };
-
-  // map over messages in chat in the return
-  const handleLayout = ({ user, timestamp, message, id }, idx) => {
-    const status = getOnlineStatus(user);
-    return (
-      <div
-        key={id || idx}
-        className={`animated align-items-${
-          authUser.email === user
-            ? 'end flip-in-ver-right'
-            : 'start flip-in-ver-left'
-        } faster d-flex flex-column my-2`}>
-        <Message
-          color={authUser.email === user ? 'user' : 'receiver'}
-          status={status ? status.online : null}
-          message={message}
-          avatar={status ? status.avatar : null}
-          user={user}
-          timestamp={timestamp}
-        />
-      </div>
-    );
-  };
-
   // map over users that were last seen in the current room in the return
   const displayUsersInRoom = ({ username, uid }) => {
-    const status = getOnlineStatus(username);
+    const details = getUserDetails(username);
 
     // FIXME: this is temp don't forget it.
     if (username.length > 20) {
@@ -107,8 +77,8 @@ const Home = ({ firebase }) => {
     return (
       <div key={username} className={'usersInRoom'}>
         <User
-          avatar={status ? status.avatar : null}
-          status={status ? status.online : null}
+          avatar={details ? details.avatar : null}
+          status={details ? details.online : null}
           user={username}
         />
       </div>
@@ -203,7 +173,7 @@ const Home = ({ firebase }) => {
             dispatch={dispatch}
             room={room}
             chat={chat}
-            getOnlineStatus={getOnlineStatus}
+            getUserDetails={getUserDetails}
             users={users}
           />
         </Container>

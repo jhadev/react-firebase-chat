@@ -134,7 +134,7 @@ const Search = props => {
               userToFilter={formState.userToFilter}
               filterByUser={filterByUser}
               authUser={authUser}
-              getOnlineStatus={props.getOnlineStatus}
+              getUserDetails={props.getUserDetails}
               users={props.users}
             />
           ) : (

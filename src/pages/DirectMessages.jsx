@@ -7,7 +7,6 @@ import Row from '../components/common/Row';
 import Column from '../components/common/Column';
 import Container from '../components/common/Container';
 import ChatList from '../components/ChatList';
-import Message from '../components/Message';
 import MessageForm from '../components/MessageForm';
 import click from '../sounds/click.mp3';
 const clickSound = new Audio(click);
@@ -15,7 +14,7 @@ const clickSound = new Audio(click);
 const DirectMessages = ({ firebase }) => {
   // destructure individual state values, dispatch, and authUser from useChat return array
   // initialize it with imported reducer and initial state, firebase prop, and type for effect switch.
-  const [{ users, chat, userToDm }, dispatch, authUser] = useChat(
+  const [{ users, chat, userToDm }, dispatch, authUser, handleLayout] = useChat(
     reducer,
     INITIAL_STATE,
     firebase,
@@ -34,37 +33,6 @@ const DirectMessages = ({ firebase }) => {
   // filter authUser from list can't dm yourself
   const handleDmList = arr => {
     return arr.filter(({ email }) => email !== authUser.email);
-  };
-
-  // get online status to display for each message.
-  const getOnlineStatus = args => {
-    if (users) {
-      const foundUser = users.find(user => user.email === args);
-      return foundUser;
-    }
-  };
-
-  const handleLayout = ({ user, timestamp, message, id }, idx) => {
-    const status = getOnlineStatus(user);
-
-    return (
-      <div
-        key={id || idx}
-        className={`animated align-items-${
-          authUser.email === user
-            ? 'end flip-in-ver-right'
-            : 'start flip-in-ver-left'
-        } faster d-flex flex-column my-2`}>
-        <Message
-          color={authUser.email === user ? 'user' : 'receiver'}
-          message={message}
-          status={status ? status.online : null}
-          avatar={status ? status.avatar : null}
-          user={user}
-          timestamp={timestamp}
-        />
-      </div>
-    );
   };
 
   const usersButNotAuthUser = handleDmList(users);

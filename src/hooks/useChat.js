@@ -1,5 +1,6 @@
-import { useEffect, useContext, useReducer } from 'react';
+import React, { useEffect, useContext, useReducer } from 'react';
 import { AuthUserContext } from '../components/Session';
+import Message from '../components/Message';
 import alert from '../sounds/sent.mp3';
 const alertSound = new Audio(alert);
 
@@ -70,7 +71,38 @@ const useChat = (reducer, INITIAL_STATE, firebase, type) => {
     }
   }, [authUser.email, state.chat]);
 
-  return [state, dispatch, authUser];
+  // get online status to display for each message.
+  const getUserDetails = args => {
+    if (state.users) {
+      const foundUser = state.users.find(user => user.email === args);
+      return foundUser;
+    }
+  };
+
+  // map over messages in chat in the return
+  const handleLayout = ({ user, timestamp, message, id }, idx) => {
+    const details = getUserDetails(user);
+    return (
+      <div
+        key={id || idx}
+        className={`animated align-items-${
+          authUser.email === user
+            ? 'end flip-in-ver-right'
+            : 'start flip-in-ver-left'
+        } faster d-flex flex-column my-2`}>
+        <Message
+          color={authUser.email === user ? 'user' : 'receiver'}
+          status={details ? details.online : null}
+          message={message}
+          avatar={details ? details.avatar : null}
+          user={user}
+          timestamp={timestamp}
+        />
+      </div>
+    );
+  };
+
+  return [state, dispatch, authUser, handleLayout, getUserDetails];
 };
 
 export { useChat };

@@ -1,6 +1,5 @@
 import React from 'react';
 import * as REGEX from '../constants/regex';
-import PropTypes from 'prop-types';
 import { Audio, Image, Link, Video } from './Matching';
 import './styles/components/message-body.scss';
 
@@ -97,11 +96,6 @@ const MessageBody = ({ body, color }) => {
       {noLinks.length !== 0 && noLinks.join(' ')}
     </div>
   );
-};
-
-MessageBody.propTypes = {
-  body: PropTypes.string,
-  color: PropTypes.string
 };
 
 export default MessageBody;

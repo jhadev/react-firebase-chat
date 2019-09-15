@@ -57,6 +57,10 @@ class Firebase {
     this.db.ref(`users/${authUser.uid}`).update({ online: status });
   };
 
+  setAvatar = (authUser, avatar) => {
+    this.db.ref(`users/${authUser.uid}`).update({ avatar });
+  };
+
   getOnlineStatus = authUser => {
     this.db
       .ref(`users/${authUser.uid}`)

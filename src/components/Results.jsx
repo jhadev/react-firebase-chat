@@ -35,7 +35,7 @@ const Results = props => {
       </div>
       <div className="mt-4">
         {props.results.map(({ user, timestamp, message, id }, index) => {
-          const status = props.getOnlineStatus(user);
+          const details = props.getUserDetails(user);
           return (
             <div
               key={id || index}
@@ -46,7 +46,8 @@ const Results = props => {
               } faster d-flex flex-column my-2`}>
               <Message
                 color={props.authUser.email === user ? 'user' : 'receiver'}
-                status={status ? status.online : null}
+                status={details ? details.online : null}
+                avatar={details ? details.avatar : null}
                 message={message}
                 user={user}
                 timestamp={timestamp}

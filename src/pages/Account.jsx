@@ -4,6 +4,7 @@ import { PasswordForgetForm } from './PasswordForget';
 import PasswordChangeForm from '../components/PasswordChange';
 import { withAuthorization } from '../components/Session';
 import { AuthUserContext } from '../components/Session';
+import AvatarForm from '../components/AvatarForm';
 
 const Account = () => {
   const authUser = useContext(AuthUserContext);
@@ -18,6 +19,7 @@ const Account = () => {
       </div>
       <PasswordForgetForm />
       <PasswordChangeForm />
+      <AvatarForm />
     </Container>
   );
 };

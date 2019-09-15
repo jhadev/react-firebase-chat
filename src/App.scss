@@ -54,10 +54,12 @@ body {
   }
 
   .usersInRoom {
-
-    font-size: 65%;
-    margin: 5px 0 5px 0;
+    // FIXME: change sizing here if change in Home.jsx
+    // font-size: 60%;
+    font-size: 70%;
+    margin: 0.7rem 0 0.7rem 0;
     font-weight: bold;
+    text-align: center;
   }
 }
 

@@ -7,6 +7,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from 'reactstrap';
+import { User } from './Message';
 import PropTypes from 'prop-types';
 import './styles/components/chat-list.scss';
 
@@ -29,28 +30,13 @@ const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
         {rooms.map(room => (
           <DropdownItem
             tag="button"
-            active={currentRoom === (room.email || room) ? true : false}
+            active={currentRoom === (dms ? room.email : room) ? true : false}
             key={dms ? room.email : room}
             value={dms ? room.email : room}
             name={dms ? room.email : room}
             onClick={setChatRoom}>
             {dms ? (
-              <>
-                {room.online ? (
-                  <>
-                    <i className="fas fa-circle"></i>
-                    {'  '}
-                    {room.email}
-                  </>
-                ) : (
-                  <>
-                    {' '}
-                    <i className="far fa-circle"></i>
-                    {'  '}
-                    {room.email}
-                  </>
-                )}
-              </>
+              <User status={room.online} user={room.email} />
             ) : (
               <>{room}</>
             )}
@@ -70,26 +56,7 @@ const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
           name={dms ? room.email : room}
           onClick={e => setChatRoom(e)}
           className="text-center">
-          {dms ? (
-            <>
-              {room.online ? (
-                <>
-                  <i className="fas fa-circle"></i>
-                  {'  '}
-                  {room.email}
-                </>
-              ) : (
-                <>
-                  {' '}
-                  <i className="far fa-circle"></i>
-                  {'  '}
-                  {room.email}
-                </>
-              )}
-            </>
-          ) : (
-            <>{room}</>
-          )}
+          {dms ? <User status={room.online} user={room.email} /> : <>{room}</>}
         </ListGroupItem>
       ))}
     </ListGroup>

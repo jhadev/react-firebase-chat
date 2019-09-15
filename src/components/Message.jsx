@@ -3,19 +3,37 @@ import MessageBody from './MessageBody';
 import PropTypes from 'prop-types';
 import './styles/components/message.scss';
 
-const User = ({ user, status, className }) => (
-  <div className={className}>
-    <span>
-      {status ? (
-        <i className="fas fa-circle"></i>
-      ) : (
-        <i className="far fa-circle"></i>
-      )}
-      {'  '}
-    </span>
-    {user}
-  </div>
-);
+const User = ({ user, status, className }) => {
+  if (className) {
+    return (
+      <div className={className}>
+        <span>
+          {status ? (
+            <i className="fas fa-circle"></i>
+          ) : (
+            <i className="far fa-circle"></i>
+          )}
+          {'  '}
+        </span>
+        {user}
+      </div>
+    );
+  } else {
+    return (
+      <>
+        <span>
+          {status ? (
+            <i className="fas fa-circle"></i>
+          ) : (
+            <i className="far fa-circle"></i>
+          )}
+          {'  '}
+        </span>
+        {user}
+      </>
+    );
+  }
+};
 
 const Time = ({ timestamp }) => (
   <div className={`mb-1 mx-1 time`}>{timestamp}</div>

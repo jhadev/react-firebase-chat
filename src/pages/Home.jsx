@@ -76,11 +76,7 @@ const Home = ({ firebase }) => {
 
     return (
       <div key={username} className={'usersInRoom'}>
-        <User
-          avatar={details ? details.avatar : null}
-          status={details ? details.online : null}
-          user={username}
-        />
+        <User status={details ? details.online : null} user={username} />
       </div>
     );
   };

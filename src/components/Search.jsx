@@ -19,7 +19,7 @@ const INITIAL_STATE = {
 
 const Search = props => {
   const authUser = useContext(AuthUserContext);
-  const inputRef = useRef(null);
+  const inputRef = useRef();
 
   const { formState, setFormState, onChange } = useForm(
     INITIAL_STATE,
@@ -58,6 +58,7 @@ const Search = props => {
   }, [formState.search, props.chat, setFormState]);
 
   useEffect(() => {
+    inputRef.current.focus();
     if (formState.filter) {
       const filteredResults = formState.results.filter(
         result => result.user === formState.userToFilter
@@ -81,8 +82,6 @@ const Search = props => {
   };
 
   const filterByUser = user => {
-    inputRef.current.focus();
-
     if (user === 'All') {
       setFormState({ filter: false, userToFilter: '' });
     } else {

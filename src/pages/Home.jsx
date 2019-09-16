@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { withAuthorization } from '../components/Session';
 import { INITIAL_STATE, reducer } from '../reducers/chatReducer';
 import { useChat } from '../hooks/useChat';
@@ -16,6 +16,9 @@ const clickSound = new Audio(click);
 const Home = ({ firebase }) => {
   // destructure individual state values, dispatch, and authUser from useChat return array
   // initialize it with imported reducer and initial state, firebase prop, and type for effect switch.
+
+  const bottomRef = useRef();
+
   const [
     { showChat, users, chat, room, roomList, usersInRoom },
     dispatch,
@@ -55,7 +58,7 @@ const Home = ({ firebase }) => {
   }, [authUser.email, dispatch, firebase, room]);
 
   // pass down scroll funcs as props from here, useScroll takes array to track and max length to stop smooth scroll
-  const { scrollToBottom, scrollToTop } = useScroll(chat, 50);
+  const { scrollToBottom, scrollToTop } = useScroll(chat, 50, bottomRef);
 
   const setChatRoom = event => {
     const { value } = event.target;
@@ -164,7 +167,7 @@ const Home = ({ firebase }) => {
               />
             </Container>
           </div>
-          <div id="bottom" />
+          <div ref={bottomRef} id="bottom" />
         </>
       ) : (
         <Container>

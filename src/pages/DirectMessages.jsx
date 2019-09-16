@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { withAuthorization } from '../components/Session';
 import { INITIAL_STATE, reducer } from '../reducers/dmReducer';
 import { useScroll } from '../hooks/useScroll';
@@ -14,6 +14,9 @@ const clickSound = new Audio(click);
 const DirectMessages = ({ firebase }) => {
   // destructure individual state values, dispatch, and authUser from useChat return array
   // initialize it with imported reducer and initial state, firebase prop, and type for effect switch.
+
+  const bottomRef = useRef();
+
   const [{ users, chat, userToDm }, dispatch, authUser, handleLayout] = useChat(
     reducer,
     INITIAL_STATE,
@@ -22,7 +25,7 @@ const DirectMessages = ({ firebase }) => {
   );
 
   // pass down scroll funcs as props from here, useScroll takes array to track and max length to stop smooth scroll
-  const { scrollToBottom, scrollToTop } = useScroll(chat, 50);
+  const { scrollToBottom, scrollToTop } = useScroll(chat, 50, bottomRef);
 
   const setChatRoom = event => {
     const { value } = event.target;
@@ -99,7 +102,7 @@ const DirectMessages = ({ firebase }) => {
           />
         </Container>
       </div>
-      <div id="bottom" />
+      <div ref={bottomRef} id="bottom" />
     </>
   );
 };

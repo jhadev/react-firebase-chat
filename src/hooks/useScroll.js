@@ -1,17 +1,17 @@
 import { useCallback, useEffect } from 'react';
 
-const useScroll = (arr, maxLength) => {
+const useScroll = (arr, maxLength, ref) => {
   const scrollToBottom = useCallback(() => {
     if (arr.length > maxLength) {
-      document.getElementById('bottom').scrollIntoView(false);
+      ref.current.scrollIntoView(false);
     } else {
-      document.getElementById('bottom').scrollIntoView({
+      ref.current.scrollIntoView({
         behavior: 'smooth',
         block: 'end',
         inline: 'nearest'
       });
     }
-  }, [arr.length, maxLength]);
+  }, [arr.length, maxLength, ref]);
 
   const scrollToTop = useCallback(() => {
     if (arr.length > maxLength) {

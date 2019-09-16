@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useForm } from '../hooks/useForm';
 import { withFirebase } from './Firebase';
 import { AuthUserContext } from './Session';
@@ -12,33 +12,62 @@ const AvatarForm = props => {
 
   const { formState, setFormState, mapInputs } = useForm(
     {
-      avatar: '',
-      error: null,
-      success: ''
+      avatar: ''
     },
     'avatar'
   );
 
+  useEffect(() => {
+    const preview = async () => {
+      if (REGEX.imgUrlPattern.test(formState.avatar)) {
+        await swal({
+          buttons: {
+            cancel: 'Cancel',
+            submit: 'Submit'
+          },
+          content: (
+            <div>
+              <h1>Preview</h1>
+              <img
+                src={formState.avatar}
+                alt={'avatar'}
+                className={'img-fluid'}
+              />
+              <p className="mt-2">If you like this image click Submit.</p>
+            </div>
+          )
+        }).then(willSubmit => {
+          if (willSubmit) {
+            props.firebase.setAvatar(authUser, formState.avatar);
+            swal({
+              title: 'Success',
+              icon: 'success',
+              button: 'Cool',
+              content: (
+                <p className="text-center">
+                  {authUser.email}, your avatar has been updated!
+                </p>
+              )
+            });
+
+            setFormState({ avatar: '' });
+          } else {
+            setFormState({ avatar: '' });
+          }
+        });
+      }
+    };
+    preview();
+  }, [authUser, formState.avatar, props.firebase, setFormState]);
+
   const formOptions = [
-    { label: 'Must be valid url ending in .jpg, .jpeg, .gif, or .png' }
+    {
+      label:
+        'Paste a valid url ending in .jpg, .jpeg, .gif, or .png and a preview of your image will be displayed.'
+    }
   ];
 
-  const displayInputs = mapInputs(formState, ['avatar'])(formOptions);
-
-  const submitAvatar = () => {
-    if (!REGEX.imgUrlPattern.test(formState.avatar)) {
-      return setFormState({
-        error: 'You need to submit a .jpg, .jpeg, .gif, or .png image link.'
-      });
-    } else {
-      props.firebase.setAvatar(authUser, formState.avatar);
-      setFormState({
-        avatar: '',
-        error: null,
-        success: 'Success your avatar has been set!'
-      });
-    }
-  };
+  const displayInputs = mapInputs(formState)(formOptions);
 
   const widget = () => {
     window.cloudinary.openUploadWidget(
@@ -83,19 +112,9 @@ const AvatarForm = props => {
       <Column size="md-6 12">
         <h4 className="text-center">Set Your Avatar</h4>
         <div className="form-group">{displayInputs}</div>
-        {formState.error && <div>{formState.error}</div>}
-        {formState.success && <div>{formState.success}</div>}
         <div>
-          <button className="btn btn-false" onClick={widget}>
+          <button className="btn btn-true" onClick={widget}>
             Upload Image
-          </button>
-        </div>
-        <div>
-          <button
-            className={'btn btn-true mt-2'}
-            onClick={submitAvatar}
-            disabled={formState.avatar === ''}>
-            Submit
           </button>
         </div>
       </Column>

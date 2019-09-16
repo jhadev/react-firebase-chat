@@ -1,6 +1,8 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const useScroll = (arr, maxLength) => {
+  const [scrollTop, setScrollDirection] = useState(false);
+
   const scrollToBottom = useCallback(() => {
     if (arr.length > maxLength) {
       document.getElementById('bottom').scrollIntoView(false);
@@ -26,10 +28,14 @@ const useScroll = (arr, maxLength) => {
   }, [arr.length, maxLength]);
 
   useEffect(() => {
-    scrollToBottom();
-  }, [arr, scrollToBottom]);
+    if (scrollTop) {
+      scrollToTop();
+    } else {
+      scrollToBottom();
+    }
+  }, [arr, scrollToBottom, scrollToTop, scrollTop]);
 
-  return { scrollToBottom, scrollToTop };
+  return { scrollToBottom, scrollToTop, scrollTop, setScrollDirection };
 };
 
 export { useScroll };

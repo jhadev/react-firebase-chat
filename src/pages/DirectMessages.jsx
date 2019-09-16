@@ -1,7 +1,6 @@
 import React from 'react';
 import { withAuthorization } from '../components/Session';
 import { INITIAL_STATE, reducer } from '../reducers/dmReducer';
-import { useScroll } from '../hooks/useScroll';
 import { useChat } from '../hooks/useChat';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
@@ -22,7 +21,7 @@ const DirectMessages = ({ firebase }) => {
   );
 
   // pass down scroll funcs as props from here, useScroll takes array to track and max length to stop smooth scroll
-  const { scrollToBottom, scrollToTop } = useScroll(chat, 50);
+  // const { scrollToBottom, scrollToTop } = useScroll(chat, 50);
 
   const setChatRoom = event => {
     const { value } = event.target;
@@ -92,9 +91,8 @@ const DirectMessages = ({ firebase }) => {
             receiver={userToDm}
             setChatRoom={setChatRoom}
             currentRoom={'dms'}
+            chat={chat}
             firebase={firebase}
-            scrollToTop={scrollToTop}
-            scrollToBottom={scrollToBottom}
             dms
           />
         </Container>

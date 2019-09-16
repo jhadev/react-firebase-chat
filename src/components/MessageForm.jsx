@@ -14,6 +14,7 @@ import uuid from 'uuidv4';
 import moment from 'moment';
 import 'emoji-mart/css/emoji-mart.css';
 import EmojiContainer from './EmojiContainer';
+import { useScroll } from '../hooks/useScroll';
 import swal from '@sweetalert/with-react';
 import sent from '../sounds/sentmessage.mp3';
 import './styles/components/message-form.scss';
@@ -26,8 +27,7 @@ const MessageForm = ({
   currentRoom,
   firebase,
   username,
-  scrollToTop,
-  scrollToBottom,
+  chat,
   receiver,
   uid,
   dms
@@ -35,22 +35,15 @@ const MessageForm = ({
   const [newMessage, setNewMessage] = useState('');
   const [charCounter, setCounter] = useState(0);
   const [emojiPicker, handlePickerOpen] = useState(false);
-  const [scrollTop, setScrollDirection] = useState(false);
   const [whoseTyping, setWhoseTyping] = useState([]);
 
   const maxCount = 200;
 
-  useEffect(() => {
-    setScrollDirection(false);
-  }, [currentRoom]);
+  const { scrollTop, setScrollDirection } = useScroll(chat, 50);
 
   useEffect(() => {
-    if (scrollTop) {
-      scrollToTop();
-    } else {
-      scrollToBottom();
-    }
-  }, [scrollToBottom, scrollToTop, scrollTop]);
+    setScrollDirection(false);
+  }, [currentRoom, setScrollDirection, chat]);
 
   useEffect(() => {
     if (!dms) {

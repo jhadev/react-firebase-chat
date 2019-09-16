@@ -19,45 +19,46 @@ const AvatarForm = props => {
 
   useEffect(() => {
     const preview = async () => {
-      if (REGEX.imgUrlPattern.test(formState.avatar)) {
-        await swal({
-          buttons: {
-            cancel: 'Cancel',
-            submit: 'Submit'
-          },
-          content: (
-            <div>
-              <h1>Preview</h1>
-              <img
-                src={formState.avatar}
-                alt={'avatar'}
-                className={'img-fluid'}
-              />
-              <p className="mt-2">If you like this image click Submit.</p>
-            </div>
-          )
-        }).then(willSubmit => {
-          if (willSubmit) {
-            props.firebase.setAvatar(authUser, formState.avatar);
-            swal({
-              title: 'Success',
-              icon: 'success',
-              button: 'Cool',
-              content: (
-                <p className="text-center">
-                  {authUser.email}, your avatar has been updated!
-                </p>
-              )
-            });
+      await swal({
+        buttons: {
+          cancel: 'Cancel',
+          submit: 'Submit'
+        },
+        content: (
+          <div>
+            <h1>Preview</h1>
+            <img
+              src={formState.avatar}
+              alt={'avatar'}
+              className={'img-fluid'}
+            />
+            <p className="mt-2">If you like this image click Submit.</p>
+          </div>
+        )
+      }).then(willSubmit => {
+        if (willSubmit) {
+          props.firebase.setAvatar(authUser, formState.avatar);
+          swal({
+            title: 'Success',
+            icon: 'success',
+            button: 'Cool',
+            content: (
+              <p className="text-center">
+                {authUser.email}, your avatar has been updated!
+              </p>
+            )
+          });
 
-            setFormState({ avatar: '' });
-          } else {
-            setFormState({ avatar: '' });
-          }
-        });
-      }
+          setFormState({ avatar: '' });
+        } else {
+          setFormState({ avatar: '' });
+        }
+      });
     };
-    preview();
+
+    if (REGEX.imgUrlPattern.test(formState.avatar)) {
+      preview();
+    }
   }, [authUser, formState.avatar, props.firebase, setFormState]);
 
   const formOptions = [

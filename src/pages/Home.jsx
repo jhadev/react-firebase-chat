@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { withAuthorization } from '../components/Session';
 import { INITIAL_STATE, reducer } from '../reducers/chatReducer';
 import { useChat } from '../hooks/useChat';
-import { useScroll } from '../hooks/useScroll';
 import { User } from '../components/Message';
 import Row from '../components/common/Row';
 import Column from '../components/common/Column';
@@ -54,8 +53,8 @@ const Home = ({ firebase }) => {
     };
   }, [authUser.email, dispatch, firebase, room]);
 
-  // pass down scroll funcs as props from here, useScroll takes array to track and max length to stop smooth scroll
-  const { scrollToBottom, scrollToTop } = useScroll(chat, 50);
+  // // pass down scroll funcs as props from here, useScroll takes array to track and max length to stop smooth scroll
+  // useScroll(chat, 50);
 
   const setChatRoom = event => {
     const { value } = event.target;
@@ -152,11 +151,10 @@ const Home = ({ firebase }) => {
                 username={authUser.email}
                 uid={authUser.uid}
                 rooms={roomList}
+                chat={chat}
                 setChatRoom={setChatRoom}
                 currentRoom={room}
                 firebase={firebase}
-                scrollToTop={scrollToTop}
-                scrollToBottom={scrollToBottom}
               />
             </Container>
           </div>

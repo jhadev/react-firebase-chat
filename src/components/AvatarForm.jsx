@@ -93,15 +93,7 @@ const AvatarForm = props => {
         if (!error && result && result.event === 'success') {
           console.log(result);
           const url = result.info.secure_url;
-          swal({
-            button: {
-              text: 'Close',
-              closeModal: true
-            },
-            icon: 'success',
-            title: 'Success!',
-            text: `${url} has been inserted into the text box.`
-          });
+
           setFormState({ avatar: url });
         }
       }

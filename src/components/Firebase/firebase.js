@@ -27,6 +27,9 @@ class Firebase {
 
   doSignOutUser = (authUser, status = false) => {
     this.setOnlineStatus(authUser, status);
+    this.typing(authUser.uid).update({
+      isTyping: false
+    });
     return this.auth.signOut();
   };
 

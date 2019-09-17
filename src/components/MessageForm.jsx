@@ -160,27 +160,30 @@ const MessageForm = ({
   return (
     <>
       <div className="sticky-footer">
-        {whoseTyping.length > 0 &&
-          (whoseTyping.length === 1 ? (
-            <div className="typers">
+        {whoseTyping.length > 0 && (
+          <div className="typers">
+            {whoseTyping.length === 1 ? (
               <span className="focus-in-expand-fwd">
                 {whoseTyping.join(', ')} is typing...
               </span>
-            </div>
-          ) : (
-            <div className="typers">
+            ) : whoseTyping.length > 1 && whoseTyping.length <= 3 ? (
               <span className="focus-in-expand-fwd">
                 {whoseTyping.join(', ')} are typing...
               </span>
-            </div>
-          ))}
+            ) : (
+              <span className="focus-in-expand-fwd">
+                multiple users are typing...
+              </span>
+            )}
+          </div>
+        )}
         <Form onSubmit={sendNewMessage}>
           <FormGroup id="messageForm" row>
             <Label
               for="chatInput"
               className="text-center counter"
               md={2}
-              sm={2}>
+              sm={12}>
               {charCounter < maxCount
                 ? (charCounter - maxCount).toString().slice(1)
                 : 0}{' '}

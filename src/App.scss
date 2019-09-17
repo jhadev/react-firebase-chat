@@ -289,9 +289,9 @@ body {
   }
 
   .sticky-footer {
-    position: sticky !important;
-    position: -webkit-sticky;
-  }
+   position: sticky !important;
+   position: -webkit-sticky;
+ }
 
   .searchDisplay {
     background-color: $text-color;
@@ -312,7 +312,7 @@ body {
   }
 
   #spacer,
-  .spacer {
-    height: 6vh;
-  }
+.spacer {
+  height: 6vh;
+}
 }

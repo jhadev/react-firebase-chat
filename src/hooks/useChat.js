@@ -5,10 +5,10 @@ import alert from '../sounds/sent.mp3';
 const alertSound = new Audio(alert);
 
 // takes in imported reducer function, initial state, firebase prop, type to handle effect switch.
-const useChat = (reducer, INITIAL_STATE, firebase, type) => {
+const useChat = (reducer, initialState, firebase, type) => {
   const authUser = useContext(AuthUserContext);
 
-  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+  const [state, dispatch] = useReducer(reducer, initialState);
   // these are shared effects of both chat pages
   useEffect(() => {
     const handleUsers = snapshot => {

@@ -51,7 +51,7 @@ const Navigation = ({ firebase }) => {
             {'Just Another Chat'}
             <i className="far fa-comments ml-2" />
           </NavbarBrand>
-          <NavbarToggler onClick={() => toggle(!isOpen)} />
+          <NavbarToggler onClick={() => toggle(prevValue => !prevValue)} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto" navbar>
               {/* conditionally render navbar items based on if a user is signed in or not */}
@@ -83,7 +83,7 @@ const Navigation = ({ firebase }) => {
                   </NavItem>
                   <NavItem>
                     <NavLink
-                      onClick={() => toggle(!isOpen)}
+                      onClick={() => toggle(prevValue => !prevValue)}
                       className="navStyle nav-link"
                       to={ROUTES.HOME}>
                       Home
@@ -91,7 +91,7 @@ const Navigation = ({ firebase }) => {
                   </NavItem>
                   <NavItem>
                     <NavLink
-                      onClick={() => toggle(!isOpen)}
+                      onClick={() => toggle(prevValue => !prevValue)}
                       className="navStyle nav-link"
                       to={ROUTES.DMS}>
                       DMs
@@ -99,7 +99,7 @@ const Navigation = ({ firebase }) => {
                   </NavItem>
                   <NavItem>
                     <NavLink
-                      onClick={() => toggle(!isOpen)}
+                      onClick={() => toggle(prevValue => !prevValue)}
                       className="navStyle nav-link"
                       to={ROUTES.ACCOUNT}>
                       Account
@@ -109,7 +109,7 @@ const Navigation = ({ firebase }) => {
                   {ROLES.ADMIN.includes(authUser.email) && (
                     <NavItem>
                       <NavLink
-                        onClick={() => toggle(!isOpen)}
+                        onClick={() => toggle(prevValue => !prevValue)}
                         className="navStyle nav-link"
                         to={ROUTES.ADMIN}>
                         Admin
@@ -133,7 +133,7 @@ const Navigation = ({ firebase }) => {
                 <React.Fragment>
                   <NavItem>
                     <NavLink
-                      onClick={() => toggle(!isOpen)}
+                      onClick={() => toggle(prevValue => !prevValue)}
                       className="navStyle nav-link"
                       to={ROUTES.SIGN_UP}>
                       Sign Up
@@ -141,7 +141,7 @@ const Navigation = ({ firebase }) => {
                   </NavItem>
                   <NavItem>
                     <NavLink
-                      onClick={() => toggle(!isOpen)}
+                      onClick={() => toggle(prevValue => !prevValue)}
                       className="navStyle nav-link"
                       to={ROUTES.SIGN_IN}>
                       Sign In

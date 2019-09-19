@@ -8,7 +8,6 @@ import {
   DropdownItem
 } from 'reactstrap';
 import { User } from './Message';
-import PropTypes from 'prop-types';
 import './styles/components/chat-list.scss';
 
 const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
@@ -61,13 +60,6 @@ const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
       ))}
     </ListGroup>
   );
-};
-
-ChatList.propTypes = {
-  rooms: PropTypes.array,
-  setChatRoom: PropTypes.func,
-  currentRoom: PropTypes.string,
-  dropdown: PropTypes.bool
 };
 
 export default ChatList;

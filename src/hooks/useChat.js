@@ -85,11 +85,11 @@ const useChat = (reducer, initialState, firebase, type) => {
     return (
       <div
         key={id || idx}
-        className={`animated align-items-${
+        className={`align-items-${
           authUser.email === user
             ? 'end flip-in-ver-right'
             : 'start flip-in-ver-left'
-        } faster d-flex flex-column my-2`}>
+        } d-flex flex-column my-2`}>
         <Message
           color={authUser.email === user ? 'user' : 'receiver'}
           status={details ? details.online : null}

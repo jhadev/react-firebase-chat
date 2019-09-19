@@ -43,9 +43,9 @@ const Search = props => {
       });
       setFormState({
         results,
+        filteredResults: [],
         filter: false,
-        userToFilter: '',
-        filteredResults: []
+        userToFilter: ''
       });
     } else {
       setFormState({

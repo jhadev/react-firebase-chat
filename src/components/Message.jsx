@@ -43,7 +43,11 @@ const Message = ({
       <User avatar={avatar} status={status} user={user} />
     </div>
     <Time timestamp={timestamp} />
-    <MessageBody search={search || null} body={message} color={color} />
+    {search ? (
+      <MessageBody search={search} body={message} color={color} />
+    ) : (
+      <MessageBody body={message} color={color} />
+    )}
   </>
 );
 

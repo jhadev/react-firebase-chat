@@ -3,7 +3,7 @@ import Message from './Message';
 
 const Results = props => {
   return (
-    <div>
+    <div className="mb-3">
       <div className="sticky-top filter-bg">
         <div className="spacer" />
         <div className="searchDisplay shadow-sm rounded">

@@ -83,41 +83,34 @@ const MessageBody = ({ body, color, search }) => {
   const matchesDone = doMatches();
   const noLinks = messageWithoutLink();
 
-  const handleHighlights = () => {
-    if (search) {
-      const highlight = noLinks.map(word => {
-        if (word.includes(search)) {
-          return (
-            <>
-              <span className="highlight">{word}</span>{' '}
-            </>
-          );
-        }
-        return (
-          <>
-            <span>{word}</span>{' '}
-          </>
-        );
-      });
-      return highlight;
-    }
-  };
-
-  const highlightedWords = handleHighlights();
-
   // can now have multiple links in a message
   // media will stack on top of the words in the message.
 
   return (
-    <div className={`badge badge-${color} msgText mb-2`}>
+    <div
+      className={`badge badge-${color} ${search ? 'msgAlt' : 'msgText'} mb-2`}>
       {matchesDone.length
         ? matchesDone.map((match, index) => (
             <div key={match.props.url.concat(index + 1)}>{match}</div>
           ))
         : null}
-      {noLinks.length !== 0 && search
-        ? highlightedWords.map(word => word)
-        : noLinks.join(' ')}
+      {noLinks.length !== 0 &&
+        (search
+          ? noLinks.map((word, index) => {
+              if (word.includes(search)) {
+                return (
+                  <React.Fragment key={word + index}>
+                    <span className="highlight">{word}</span>{' '}
+                  </React.Fragment>
+                );
+              }
+              return (
+                <React.Fragment key={word + index}>
+                  <span>{word}</span>{' '}
+                </React.Fragment>
+              );
+            })
+          : noLinks.join(' '))}
     </div>
   );
 };

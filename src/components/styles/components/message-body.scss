@@ -18,6 +18,22 @@ $height: 80vh;
   max-width: 30%;
   color: $text-color;
   font-family: 'Open Sans', sans-serif;
+}
+
+.msgAlt {
+  font-size: 1rem !important;
+  word-break: normal;
+  word-wrap: break-word;
+  /* overflow-wrap: break-word; */
+  white-space: normal;
+  line-height: 1.5;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  max-width: 30%;
+  color: $text-color;
+  font-family: 'Open Sans', sans-serif;
 
   .highlight {
     background-color: $text-color;

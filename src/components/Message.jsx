@@ -29,13 +29,25 @@ const Time = ({ timestamp }) => (
   <div className={`mb-1 mx-1 time`}>{timestamp}</div>
 );
 
-const Message = ({ user, timestamp, message, color, avatar, status }) => (
+const Message = ({
+  user,
+  timestamp,
+  message,
+  color,
+  avatar,
+  status,
+  search
+}) => (
   <>
     <div className={`mb-1 mx-1 user-name`}>
       <User avatar={avatar} status={status} user={user} />
     </div>
     <Time timestamp={timestamp} />
-    <MessageBody body={message} color={color} />
+    {search ? (
+      <MessageBody search={search} body={message} color={color} />
+    ) : (
+      <MessageBody body={message} color={color} />
+    )}
   </>
 );
 

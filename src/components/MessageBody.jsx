@@ -3,7 +3,7 @@ import * as REGEX from '../constants/regex';
 import { Audio, Image, Link, Video } from './Matching';
 import './styles/components/message-body.scss';
 
-const MessageBody = ({ body, color }) => {
+const MessageBody = ({ body, color, search }) => {
   // extremely hacky
   const msgCopy = `${body}`;
 
@@ -87,13 +87,30 @@ const MessageBody = ({ body, color }) => {
   // media will stack on top of the words in the message.
 
   return (
-    <div className={`badge badge-${color} msgText mb-2`}>
+    <div
+      className={`badge badge-${color} ${search ? 'msgAlt' : 'msgText'} mb-2`}>
       {matchesDone.length
         ? matchesDone.map((match, index) => (
             <div key={match.props.url.concat(index + 1)}>{match}</div>
           ))
         : null}
-      {noLinks.length !== 0 && noLinks.join(' ')}
+      {noLinks.length !== 0 &&
+        (search
+          ? noLinks.map((word, index) => {
+              if (word.includes(search)) {
+                return (
+                  <React.Fragment key={word + index}>
+                    <span className="highlight">{word}</span>{' '}
+                  </React.Fragment>
+                );
+              }
+              return (
+                <React.Fragment key={word + index}>
+                  <span>{word}</span>{' '}
+                </React.Fragment>
+              );
+            })
+          : noLinks.join(' '))}
     </div>
   );
 };

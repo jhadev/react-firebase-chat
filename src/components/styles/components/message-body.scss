@@ -18,6 +18,16 @@ $height: 80vh;
   max-width: 30%;
   color: $text-color;
   font-family: 'Open Sans', sans-serif;
+
+  .highlight {
+    background-color: $text-color;
+    // font-style: italic;
+    // font-weight: bolder;
+    color: $user-color;
+    border-radius: 2px;
+    padding: 0 5px 0 5px;
+    // line-height: 1.5rem;
+  }
 }
 
 .msgSearch {

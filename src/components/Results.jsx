@@ -49,6 +49,7 @@ const Results = props => {
                 status={details ? details.online : null}
                 avatar={details ? details.avatar : null}
                 message={message}
+                search={props.search}
                 user={user}
                 timestamp={timestamp}
               />

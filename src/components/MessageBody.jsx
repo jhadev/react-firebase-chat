@@ -83,6 +83,16 @@ const MessageBody = ({ body, color, search }) => {
   const matchesDone = doMatches();
   const noLinks = messageWithoutLink();
 
+  const buildWordToHighlight = arr => {
+    const copy = `${search}`;
+    const destructured = copy.indexOf(' ') >= 0 ? copy.split(' ') : [copy];
+    const filterWords = arr.filter(word => destructured.includes(word));
+    console.log(filterWords);
+    return filterWords;
+  };
+
+  const entireWords = buildWordToHighlight(noLinks);
+
   // can now have multiple links in a message
   // media will stack on top of the words in the message.
 
@@ -97,18 +107,25 @@ const MessageBody = ({ body, color, search }) => {
       {noLinks.length !== 0 &&
         (search
           ? noLinks.map((word, index) => {
-              if (word.includes(search)) {
+              if (entireWords.includes(word) && search.indexOf(' ') >= 0) {
                 return (
                   <React.Fragment key={word + index}>
                     <span className="highlight">{word}</span>{' '}
                   </React.Fragment>
                 );
+              } else if (word.includes(search)) {
+                return (
+                  <React.Fragment key={word + index}>
+                    <span className="highlight">{word}</span>{' '}
+                  </React.Fragment>
+                );
+              } else {
+                return (
+                  <React.Fragment key={word + index}>
+                    <span>{word}</span>{' '}
+                  </React.Fragment>
+                );
               }
-              return (
-                <React.Fragment key={word + index}>
-                  <span>{word}</span>{' '}
-                </React.Fragment>
-              );
             })
           : noLinks.join(' '))}
     </div>

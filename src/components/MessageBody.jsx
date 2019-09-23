@@ -84,11 +84,13 @@ const MessageBody = ({ body, color, search }) => {
   const noLinks = messageWithoutLink();
 
   const buildWordToHighlight = arr => {
-    const copy = `${search}`;
-    const destructured = copy.indexOf(' ') >= 0 ? copy.split(' ') : [copy];
-    const filterWords = arr.filter(word => destructured.includes(word));
-    console.log(filterWords);
-    return filterWords;
+    if (search) {
+      const copy = `${search}`;
+      const destructured = copy.indexOf(' ') >= 0 ? copy.split(' ') : [copy];
+      const filterWords = arr.filter(word => destructured.includes(word));
+      console.log(filterWords);
+      return filterWords;
+    }
   };
 
   const entireWords = buildWordToHighlight(noLinks);

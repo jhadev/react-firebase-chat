@@ -97,18 +97,28 @@ const MessageBody = ({ body, color, search }) => {
       {noLinks.length !== 0 &&
         (search
           ? noLinks.map((word, index) => {
-              if (word.includes(search)) {
+              if (
+                search.indexOf(' ') !== -1 &&
+                word.includes(search.split(' ')[index])
+              ) {
                 return (
                   <React.Fragment key={word + index}>
                     <span className="highlight">{word}</span>{' '}
                   </React.Fragment>
                 );
+              } else if (word.includes(search.split(' ').join(''))) {
+                return (
+                  <React.Fragment key={word + index}>
+                    <span className="highlight">{word}</span>{' '}
+                  </React.Fragment>
+                );
+              } else {
+                return (
+                  <React.Fragment key={word + index}>
+                    <span>{word}</span>{' '}
+                  </React.Fragment>
+                );
               }
-              return (
-                <React.Fragment key={word + index}>
-                  <span>{word}</span>{' '}
-                </React.Fragment>
-              );
             })
           : noLinks.join(' '))}
     </div>

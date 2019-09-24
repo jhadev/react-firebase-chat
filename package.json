@@ -13,6 +13,7 @@
     "react": "^16.8.6",
     "react-animated-css": "^1.2.1",
     "react-dom": "^16.8.6",
+    "react-iframe": "^1.8.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "^3.0.1",
     "react-switch": "^5.0.1",

@@ -1,6 +1,7 @@
+/* eslint-disable no-useless-escape */
 import React from 'react';
 import * as REGEX from '../constants/regex';
-import { Audio, Image, Link, Video } from './Matching';
+import { Audio, Image, Link, Video, YouTube } from './Matching';
 import './styles/components/message-body.scss';
 
 const MessageBody = ({ body, color, search }) => {
@@ -14,11 +15,28 @@ const MessageBody = ({ body, color, search }) => {
   // will hold all the matched link, image, video, audio urls
   const matches = [];
 
+  const getYouTubeID = url => {
+    let id = '';
+    url = url
+      .replace(/(>|<)/gi, '')
+      .split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+    if (url[2] !== undefined) {
+      id = url[2].split(/[^0-9a-z_\-]/i);
+      id = id[0];
+    } else {
+      id = url;
+    }
+    return id;
+  };
+
   // find relevant matches and add them accordlingly i worked this out terrible but it is ok
   // if this is cleaned up it will trickle down.
   // invoke this immediately does not need to be used anywhere else
   (() => {
     destructuredMsg.forEach(word => {
+      if (word.match(REGEX.youTubePattern)) {
+        matches.push({ youtube: word });
+      }
       if (word.match(REGEX.urlPattern)) {
         matches.push({ url: word });
       }
@@ -37,6 +55,13 @@ const MessageBody = ({ body, color, search }) => {
   // turn matches into JSX
   const doMatches = () => {
     const linksAsJSX = matches.map(match => {
+      if (match.youtube) {
+        return (
+          <YouTube
+            url={`http://www.youtube.com/embed/${getYouTubeID(match.youtube)}`}
+          />
+        );
+      }
       if (match.url) {
         return <Link url={match.url}>{match.url}</Link>;
       }

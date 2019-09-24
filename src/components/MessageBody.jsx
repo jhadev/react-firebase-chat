@@ -58,7 +58,7 @@ const MessageBody = ({ body, color, search }) => {
       if (match.youtube) {
         return (
           <YouTube
-            url={`http://www.youtube.com/embed/${getYouTubeID(match.youtube)}`}
+            url={`https://www.youtube.com/embed/${getYouTubeID(match.youtube)}`}
           />
         );
       }

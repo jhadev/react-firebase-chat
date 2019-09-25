@@ -247,8 +247,7 @@ const MessageForm = ({
                     setCounter(e.target.value.length);
                   }}
                   onKeyUp={event =>
-                    (event.keyCode === 10 || event.keyCode === 13) &&
-                    sendNewMessage(event)
+                    event.key === 'Enter' && sendNewMessage(event)
                   }
                 />
                 <InputGroupAddon addonType="append">

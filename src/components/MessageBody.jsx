@@ -34,11 +34,11 @@ const MessageBody = ({ body, color, search }) => {
   // invoke this immediately does not need to be used anywhere else
   (() => {
     destructuredMsg.forEach(word => {
+      if (word.match(REGEX.urlPattern && !REGEX.youTubePattern)) {
+        matches.push({ url: word });
+      }
       if (word.match(REGEX.youTubePattern)) {
         matches.push({ youtube: word });
-      }
-      if (word.match(REGEX.urlPattern)) {
-        matches.push({ url: word });
       }
       if (word.match(REGEX.imgUrlPattern)) {
         matches.push({ img: word });
@@ -61,28 +61,21 @@ const MessageBody = ({ body, color, search }) => {
             url={`https://www.youtube.com/embed/${getYouTubeID(match.youtube)}`}
           />
         );
-      }
-      if (match.url) {
+      } else if (match.url) {
         return <Link url={match.url}>{match.url}</Link>;
-      }
-
-      if (match.img) {
+      } else if (match.img) {
         return (
           <Link url={match.img}>
             <Image url={match.img} />
           </Link>
         );
-      }
-
-      if (match.audio) {
+      } else if (match.audio) {
         return <Audio url={match.audio} />;
-      }
-
-      if (match.video) {
+      } else if (match.video) {
         return <Video url={match.video} />;
+      } else {
+        return match;
       }
-
-      return match;
     });
 
     return linksAsJSX;

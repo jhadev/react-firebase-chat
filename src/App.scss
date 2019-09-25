@@ -74,10 +74,8 @@ body {
   // padding: .10rem;
 }
 
-#spacer {
-  height: 8vh;
-}
-
+#spacer,
+#space-last-seen,
 .spacer {
   height: 8vh;
 }
@@ -289,9 +287,9 @@ body {
   }
 
   .sticky-footer {
-   position: sticky !important;
-   position: -webkit-sticky;
- }
+    position: sticky !important;
+    position: -webkit-sticky;
+  }
 
   .searchDisplay {
     background-color: $text-color;
@@ -312,7 +310,11 @@ body {
   }
 
   #spacer,
-.spacer {
-  height: 6vh;
-}
+  .spacer {
+    height: 6vh;
+  }
+
+  #space-last-seen {
+    height: 0vh;
+  }
 }

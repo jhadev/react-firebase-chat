@@ -126,6 +126,7 @@ const Home = ({ firebase }) => {
                         </div>
                       ) : null}
                     </>
+                    <div id="space-last-seen" />
                   </div>
                 </Column>
                 <Column size="12 md-10">

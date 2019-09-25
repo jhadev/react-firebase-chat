@@ -56,6 +56,7 @@ const DirectMessages = ({ firebase }) => {
                   currentRoom={userToDm}
                   dms
                 />
+                <div id="space-last-seen" />
               </div>
             </Column>
             <Column size="12 md-9">

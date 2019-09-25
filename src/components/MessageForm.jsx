@@ -98,7 +98,7 @@ const MessageForm = ({
         uid,
         user: username,
         timestamp: moment().format('LLLL'),
-        message: newMessage,
+        message: newMessage.trim(),
         receiver: receiver ? receiver : ''
       };
       firebase.send(currentRoom, messageObj);
@@ -247,7 +247,8 @@ const MessageForm = ({
                     setCounter(e.target.value.length);
                   }}
                   onKeyUp={event =>
-                    event.key === 'Enter' && sendNewMessage(event)
+                    (event.keyCode === 10 || event.keyCode === 13) &&
+                    sendNewMessage(event)
                   }
                 />
                 <InputGroupAddon addonType="append">

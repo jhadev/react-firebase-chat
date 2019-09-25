@@ -113,7 +113,8 @@ const Home = ({ firebase }) => {
                         'Show Chat'
                       ) : (
                         <>
-                          Search <span className="font-italic">{room}</span>
+                          <i class="fas fa-search mr-1"></i>{' '}
+                          <span className="font-italic">{room}</span>
                         </>
                       )}
                     </button>

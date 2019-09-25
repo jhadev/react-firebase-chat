@@ -72,10 +72,6 @@ const Search = props => {
     setFormState
   ]);
 
-  // useEffect(() => {
-  //   document.getElementById('bottom').scrollIntoView(false);
-  // }, [formState.results, formState.filteredResults]);
-
   const usersInSearch = () => {
     const usersOnly = formState.results.map(({ user }) => user);
     return ['All', ...new Set(usersOnly)];
@@ -115,7 +111,8 @@ const Search = props => {
             <button
               className={`btn btn-${!props.showChat} btn-block`}
               onClick={() => props.dispatch({ type: 'TOGGLE_CHAT' })}>
-              Back to <span className="font-italic">{props.room}</span>
+              <i class="fas fa-backward mr-1"></i> {' to '}
+              <span className="font-italic">{props.room}</span>
             </button>
           </div>
         </Column>

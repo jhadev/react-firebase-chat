@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
+import moment from 'moment';
 import { withFirebase } from '../components/Firebase';
 import { useForm } from '../hooks/useForm';
 import * as ROUTES from '../constants/routes';
@@ -64,7 +65,8 @@ const SignUpFormBase = props => {
         return props.firebase.user(authUser.user.uid).set({
           username,
           email: casedEmail,
-          online: true
+          online: true,
+          signUpDate: moment().format('LLLL')
         });
       })
       .then(() => {

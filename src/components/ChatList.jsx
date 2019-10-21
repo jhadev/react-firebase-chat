@@ -44,21 +44,27 @@ const ChatList = ({ rooms, setChatRoom, currentRoom, dropdown, dms }) => {
       </DropdownMenu>
     </Dropdown>
   ) : (
-    <ListGroup className="mb-3 chatList">
-      {rooms.map(room => (
-        <ListGroupItem
-          tag="button"
-          active={currentRoom === (dms ? room.email : room) ? true : false}
-          action
-          key={dms ? room.email : room}
-          value={dms ? room.email : room}
-          name={dms ? room.email : room}
-          onClick={e => setChatRoom(e)}
-          className="text-center">
-          {dms ? <User status={room.online} user={room.email} /> : <>{room}</>}
-        </ListGroupItem>
-      ))}
-    </ListGroup>
+    <div>
+      <ListGroup className={dms ? `chatList` : `mb-2`}>
+        {rooms.map(room => (
+          <ListGroupItem
+            tag="button"
+            active={currentRoom === (dms ? room.email : room) ? true : false}
+            action
+            key={dms ? room.email : room}
+            value={dms ? room.email : room}
+            name={dms ? room.email : room}
+            onClick={e => setChatRoom(e)}
+            className="text-center">
+            {dms ? (
+              <User status={room.online} user={room.email} />
+            ) : (
+              <>{room}</>
+            )}
+          </ListGroupItem>
+        ))}
+      </ListGroup>
+    </div>
   );
 };
 

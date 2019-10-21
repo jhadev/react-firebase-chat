@@ -38,7 +38,7 @@ const DirectMessages = ({ firebase }) => {
 
   return (
     <>
-      <div className="white-space">
+      <div className="space">
         <Container>
           <Row helper="mt-4">
             <Column size="12 md-3">

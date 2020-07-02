@@ -8,7 +8,7 @@ import {
   Input,
   InputGroup,
   InputGroupText,
-  InputGroupAddon
+  InputGroupAddon,
 } from 'reactstrap';
 import uuid from 'uuidv4';
 import moment from 'moment';
@@ -30,7 +30,7 @@ const MessageForm = ({
   chat,
   receiver,
   uid,
-  dms
+  dms,
 }) => {
   const [newMessage, setNewMessage] = useState('');
   const [charCounter, setCounter] = useState(0);
@@ -41,9 +41,9 @@ const MessageForm = ({
 
   const { scrollTop, setScrollDirection } = useScroll(chat, 50);
 
-  useEffect(() => {
-    setScrollDirection(false);
-  }, [currentRoom, setScrollDirection, chat]);
+  // useEffect(() => {
+  //   setScrollDirection(false);
+  // }, [currentRoom, setScrollDirection, chat]);
 
   useEffect(() => {
     if (!dms) {
@@ -52,14 +52,14 @@ const MessageForm = ({
           username,
           uid,
           isTyping: true,
-          currentRoom
+          currentRoom,
         });
       } else if (charCounter === 0) {
         firebase.typing(uid).update({
           username,
           uid,
           isTyping: false,
-          currentRoom
+          currentRoom,
         });
       }
     }
@@ -67,18 +67,18 @@ const MessageForm = ({
 
   useEffect(() => {
     if (!dms) {
-      const handleTyping = snapshot => {
+      const handleTyping = (snapshot) => {
         if (snapshot.val()) {
           const allUsers = Object.values(snapshot.val());
 
           const typers = allUsers
             .filter(
-              user =>
+              (user) =>
                 user.isTyping &&
                 user.username !== username &&
                 currentRoom === user.currentRoom
             )
-            .map(user => user.username);
+            .map((user) => user.username);
 
           setWhoseTyping(typers);
         }
@@ -90,7 +90,7 @@ const MessageForm = ({
     }
   }, [currentRoom, dms, firebase, username]);
 
-  const sendNewMessage = e => {
+  const sendNewMessage = (e) => {
     e.preventDefault();
     if (newMessage !== '' && newMessage.length > 1 && charCounter <= maxCount) {
       let messageObj = {
@@ -99,7 +99,7 @@ const MessageForm = ({
         user: username,
         timestamp: moment().format('LLLL'),
         message: newMessage.trim(),
-        receiver: receiver ? receiver : ''
+        receiver: receiver ? receiver : '',
       };
       firebase.send(currentRoom, messageObj);
       sentSound.play();
@@ -121,7 +121,7 @@ const MessageForm = ({
         folder: 'react_chat',
         clientAllowedFormats: ['png', 'gif', 'jpeg', 'jpg'],
         maxFileSize: 10000000,
-        showUploadMoreButton: false
+        showUploadMoreButton: false,
       },
       (error, result) => {
         if (!error && result && result.event === 'success') {
@@ -130,13 +130,13 @@ const MessageForm = ({
           swal({
             button: {
               text: 'Close',
-              closeModal: true
+              closeModal: true,
             },
             icon: 'success',
             title: 'Success!',
-            text: `${url} has been inserted into the text box.`
+            text: `${url} has been inserted into the text box.`,
           });
-          setNewMessage(prevMessage =>
+          setNewMessage((prevMessage) =>
             prevMessage.length > 0
               ? prevMessage.concat(` ${result.info.secure_url}`)
               : `${result.info.secure_url}`
@@ -193,7 +193,7 @@ const MessageForm = ({
               <InputGroup className="my-2" size="md">
                 <InputGroupAddon
                   onClick={() =>
-                    setScrollDirection(prevDirection => !prevDirection)
+                    setScrollDirection((prevDirection) => !prevDirection)
                   }
                   addonType="prepend">
                   <InputGroupText id="scrollToTop">
@@ -242,11 +242,11 @@ const MessageForm = ({
                   name="text"
                   id="chatInput"
                   value={newMessage}
-                  onChange={e => {
+                  onChange={(e) => {
                     setNewMessage(e.target.value);
                     setCounter(e.target.value.length);
                   }}
-                  onKeyUp={event =>
+                  onKeyUp={(event) =>
                     event.key === 'Enter' && sendNewMessage(event)
                   }
                 />

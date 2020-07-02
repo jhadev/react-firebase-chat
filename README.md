@@ -22,4 +22,4 @@
 - Sweet Alert
 - React Switch
 
-[View Demo on Heroku](https://radiant-wave-85955.herokuapp.com/)
+[View Demo on Netlify](https://just-another-chat.netlify.app/)
